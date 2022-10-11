@@ -8,8 +8,8 @@
         <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>kopo</groupId>
-    <artifactId>poly</artifactId>
+    <groupId>css</groupId>
+    <artifactId>pcs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringBootOracle</name>
     <description>SpringBootOracle</description>

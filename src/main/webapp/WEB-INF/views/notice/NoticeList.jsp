@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="kopo.poly.dto.NoticeDTO" %>
-<%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="pcs.css.dto.NoticeDTO" %>
+<%@ page import="pcs.css.util.CmmUtil" %>
 <%
     session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
 
@@ -71,7 +71,7 @@
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %>
         </td>
-        <td align="center"><%=CmmUtil.nvl(rDTO.getUser_name()) %>
+        <td align="center"><%=CmmUtil.nvl(rDTO.getNick()) %>
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getReg_dt()) %>
         </td>

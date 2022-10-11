@@ -63,7 +63,6 @@ public class NoticeController {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".NoticeList end!");
-
         // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
         return "/notice/NoticeList";
 
@@ -118,7 +117,7 @@ public class NoticeController {
 
             NoticeDTO pDTO = new NoticeDTO();
 
-            pDTO.setReg_id(user_id);
+            pDTO.setUser_id(user_id);
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
@@ -292,7 +291,7 @@ public class NoticeController {
 
             NoticeDTO pDTO = new NoticeDTO();
 
-            pDTO.setReg_id(user_id);;
+            pDTO.setUser_id(user_id);;
             pDTO.setNotice_seq(nSeq);
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);

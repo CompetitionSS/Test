@@ -14,8 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service("NoticeService")
 public class NoticeService implements INoticeService {
+
+
     private final INoticeMapper noticeMapper;
 
+     @Transactional
     @Override
     public List<NoticeDTO> getNoticeList() throws Exception {
 
@@ -24,6 +27,7 @@ public class NoticeService implements INoticeService {
         return noticeMapper.getNoticeList();
 
     }
+
 
     @Transactional
     @Override

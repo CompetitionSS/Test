@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="pcs.css.util.CmmUtil" %>
 <%
 
 //전달받은 메시지

@@ -3,6 +3,7 @@
 
 <mapper namespace="pcs.css.persistance.mapper.IMainMapper">
 
+    
 
     <select id="SearchMainList" parameterType="MainDTO"  resultType="MainDTO">
            SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.YEAR, C.B_YEAR, C.R_DATE, C.URL
@@ -11,6 +12,31 @@
         <if test= 'c_name != null'>
         where c_name LIKE '%'||#{c_name}||'%'
         </if>
+        <if test='area != null'>
+            where area LIKE '%'||#{area}||'%'
+        </if>
+        <if test= 'deadline != null'>
+            where deadline LIKE '%'||#{deadline}||'%'
+        </if>
+        <if test= 'candidate != null'>
+            where candidate LIKE '%'||#{candidate}||'%'
+        </if>
+        <if test= 'organizer != null'>
+            where organizer LIKE '%'||#{organizer}||'%'
+        </if>
+        <if test= 'year != null'>
+            where year LIKE '%'||#{year}||'%'
+        </if>
+        <if test= 'b_year != null'>
+            where b_year LIKE '%'||#{b_year}||'%'
+        </if>
+        <if test= 'r_date != null'>
+            where r_date LIKE '%'||#{r_date}||'%'
+        </if>
+        <if test= 'url != null'>
+            where url LIKE '%'||#{url}||'%'
+        </if>
+
         ORDER BY C.YEAR DESC
     </select>
 

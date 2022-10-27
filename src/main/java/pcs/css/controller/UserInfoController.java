@@ -170,6 +170,12 @@ public class UserInfoController {
 
         return "/user/LoginForm";
     }
+    @GetMapping(value = "LogOut")
+    public String logOut() {
+        log.info(this.getClass().getName() + ".user/logOut!");
+
+        return "/user/LogOut";
+    }
 
 
     /**

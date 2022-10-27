@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입 화면</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script type="text/javascript">
         //회원가입 정보의 유효성 체크하기
         function doRegUserCheck(f) {
@@ -56,14 +58,15 @@
 <body>
 <h1>회원가입 화면</h1>
 <br/>
+
 <form name="f" method="post" action="/user/insertUserInfo" onsubmit="return doRegUserCheck(this);">
-    <label>* 아이디 : <input type="text" name="user_id" style="width:400px"/></label><br/>
-    <label>* 이름 : <input type="text" name="user_name" style="width:400px"/></label><br/>
+    <label for="validationServer01" class="form-label">* 아이디 : <input class="form-control is-valid" id="validationServer01" type="text" name="user_id" style="width:400px"/></label><br/>
+    <label for="validationServer02" class="form-label">* 이름 : <input class="form-control is-valid" id="validationServer02" type="text" name="user_name" style="width:400px"/></label><br/>
     <hr/>
-    <label>* 비밀번호 : <input type="password" name="password" style="width:400px"/></label><br/>
-    <label>* 비밀번호확인 : <input type="password" name="password2" style="width:400px"/></label><br/>
+    <label  for="validationServerUserpass" class="form-label">* 비밀번호 : <input class="form-control is-invalid" id="validationServerUserpass" type="password" name="password" style="width:400px"/></label><br/>
+    <label  for="validationServerUserpass2" class="form-label">* 비밀번호확인 : <input class="form-control is-invalid" id="validationServerUserpass2" type="password" name="password2" style="width:400px"/></label><br/>
     <hr/>
-    <label>* 이메일 : <input type="email" name="email" style="width:400px"/> </label><br/>
+    <label for="validationServerUseremail" class="form-label">* 이메일 : <input class="form-control is-invalid" id="validationServerUseremail" type="email" name="email" style="width:400px"/> </label><br/>
 
     <input type="submit" value="회원가입"/>
 </form>

@@ -19,11 +19,14 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입을 축하드립니다.</title>
+    <meta http-equiv="refresh" content="2; url=/user/LoginForm">
+    <div>2초 뒤 로그인 페이지로 이동합니다.</div>
     <script type="text/javascript">
         alert("<%=msg%>");
     </script>
 </head>
 <body>
 <%=CmmUtil.nvl(pDTO.getUser_name()) %>님의 회원가입을 축하드립니다.
+
 </body>
 </html>

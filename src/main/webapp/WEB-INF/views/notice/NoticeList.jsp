@@ -33,7 +33,8 @@
 <h2>공지사항</h2>
 <hr/>
 <br/>
-
+<input type="button" class ="signup-box" value="메인 페이지" onclick="location.href='/main/main'">
+</input>
 <table border="1" width="600px">
     <tr>
         <td width="100" align="center">순번</td>

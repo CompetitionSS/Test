@@ -8,15 +8,15 @@ import java.util.List;
 @Mapper
 public interface IMainMapper {
 
-    List<MainDTO> getMainList();
+    List<MainDTO> getMainList() throws Exception;
 
-    void InsertMainInfo(MainDTO pDTO);
+    void InsertMainInfo(MainDTO pDTO) throws Exception;
 
-    void updateMainReadCnt(MainDTO pDTO);
+    void updateMainReadCnt(MainDTO pDTO) throws Exception;
 
-    MainDTO getMainInfo(MainDTO pDTO);
+    MainDTO getMainInfo(MainDTO pDTO) throws Exception;
 
-    void updateMainInfo(MainDTO pDTO);
+    void updateMainInfo(MainDTO pDTO) throws Exception;
 
-    void deleteMainInfo(MainDTO pDTO);
+    void deleteMainInfo(MainDTO pDTO) throws Exception;
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "=//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pcs.css.persistance.mapper.IMainMapper">
+
+
+    <select id="SearchMainList" parameterType="MainDTO"  resultType="MainDTO">
+           SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.YEAR, C.B_YEAR, C.R_DATE, C.URL
+
+        FROM COMPETITION C
+        <if test= 'c_name != null'>
+        where c_name LIKE '%'||#{c_name}||'%'
+        </if>
+        ORDER BY C.YEAR DESC
+    </select>
+
+
+</mapper>

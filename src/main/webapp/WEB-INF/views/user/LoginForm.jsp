@@ -7,6 +7,13 @@
 
     <script type="text/javascript">
 
+        window.onload = function (){
+            let loginEmpty = <%=session%>;
+            if(loginEmpty){
+                console.log("로그인이 이미 되어있습니다.");
+            }
+
+        }
         //로그인을 위한 입력정보의 유효성 체크하기
         function doLoginUserCheck(f) {
 

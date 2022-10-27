@@ -10,7 +10,7 @@
 
     if (res.equals("1")) {
         msg = SS_USER_ID + "님이 로그인 되었습니다.";
-        session.setAttribute("USER_ID",SS_USER_ID);
+        session.setAttribute("SS_USER_ID",SS_USER_ID);
     } else if (res.equals("0")) {
         msg = "아이디, 비밀번호가 일치하지 않습니다.";
 

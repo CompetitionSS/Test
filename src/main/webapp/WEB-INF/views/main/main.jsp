@@ -1,20 +1,16 @@
 <%@ page import="org.apache.ibatis.jdbc.Null" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="" type="image/x-icon" />
     <title>constory - 너를 위한 공모전  </title>
-    <script type="text/javascript">
-        window.onload = function (){
-            var loginEmpty = <%=session.getAttribute("USER_ID")%>;
-            if(loginEmpty){
-                document.getElementById('user-box').style.display ='none';
-            }
-            else document.getElementById('user-box').style.display ='block';
-        }
-    </script>
+
+
+
+
     <style type="text/css">
         body {
             min-height: 100vh;
@@ -70,15 +66,23 @@
         <img src="" alt="사이트 로고" />
     </a>
     <h2>공모전 검색</h2>
+    <div class="mybox">
+        <% if(session.getAttribute("SS_USER_ID") == null){%>
     <div id="user-box">
         <input type="button" class ="login-box" value="로그인" onclick="location.href='/user/LoginForm'">
     </input>
         <input type="button" class ="signup-box" value="회원가입" onclick="location.href='/user/UserRegForm'">
         </input></div>
+    <%}else{%>
+<div id="logout-box">
+    <input type="button" class ="login-box" value="로그아웃" onclick="location.href='/user/LogOut'">
+    </input>
+</div> <%}%>
 </div>
 <div>
 <input type="button" class ="signup-box" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 </input>
+
 </div>
 
     <form name="ex" method="get" action="/main/SearchMain">

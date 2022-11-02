@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pcs.css.dto.NoticeDTO" %>
 <%@ page import="pcs.css.util.CmmUtil" %>
+<%@ page import="pcs.css.dto.NoticeQnaDTO" %>
 <%
     session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
 
-    List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
+    List<NoticeQnaDTO> rList = (List<NoticeQnaDTO>) request.getAttribute("rList");
 
 //게시판 조회 결과 보여주기
     if (rList == null) {
-        rList = new ArrayList<NoticeDTO>();
+        rList = new ArrayList<NoticeQnaDTO>();
 
     }
 
@@ -24,7 +24,7 @@
 
         //상세보기 이동
         function doDetail(seq) {
-            location.href = "/notice/NoticeInfo?nSeq=" + seq;
+            location.href = "/noticeQna/NoticeQnaInfo?nSeq=" + seq;
         }
 
     </script>
@@ -33,7 +33,7 @@
 <body>
 <img src="/img/asd.gif" alt="사진" onclick="location.href='/main/main'">
 <header align=center>
-    <h1>공지사항</h1>
+    <h1>QNA</h1>
     <hr>
 </header>
 
@@ -48,7 +48,7 @@
         <a href="/notice/NoticeList">공지사항</a>
     </li>
     <li class="on">
-        <a href="/noticeQna/NoticeQnaList">Qna</a>
+        <a href="/noticeQna/NoticeQnaList">Qna</a> </li>
     </li>
     <li class="on">
         <a href="/noticeReview/NoticeReviewList">Review</a>
@@ -70,10 +70,10 @@
     </tr>
     <%
         for (int i = 0; i < rList.size(); i++) {
-            NoticeDTO rDTO = rList.get(i);
+            NoticeQnaDTO rDTO = rList.get(i);
 
             if (rDTO == null) {
-                rDTO = new NoticeDTO();
+                rDTO = new NoticeQnaDTO();
             }
 
     %>
@@ -106,7 +106,7 @@
         }
     %>
 </table>
-<a href="/notice/NoticeReg" align="center">[글쓰기]</a>
+<a href="/noticeQna/NoticeQnaReg" align="center">[글쓰기]</a>
 </body>
 
 </html>

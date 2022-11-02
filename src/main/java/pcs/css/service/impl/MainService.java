@@ -8,6 +8,7 @@ import pcs.css.dto.MainDTO;
 import pcs.css.persistance.mapper.IMainMapper;
 import pcs.css.service.IMainService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,17 @@ public class MainService implements IMainService {
         return mainMapper.getMainList();
 
     }
+    @Transactional
+    @Override
+    public List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception{
+        log.info(this.getClass().getName()+".SearchMainList start!");
 
+        List<MainDTO> mList = mainMapper.SearchMainList(mDTO);
+        if(mList==null){
+            mList = new ArrayList<>();
+        }
+        return mList;
+    }
 
     @Transactional
     @Override

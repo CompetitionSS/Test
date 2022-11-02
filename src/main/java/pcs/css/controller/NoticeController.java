@@ -51,10 +51,12 @@ public class NoticeController {
 
         // 공지사항 리스트 가져오기
         List<NoticeDTO> rList = noticeService.getNoticeList();
+        for (NoticeDTO noticeDTO : rList) {
+            log.info(noticeDTO.getNotice_seq());
+        }
 
         if (rList == null) {
             rList = new ArrayList<>();
-
         }
 
         // 조회된 리스트 결과값 넣어주기

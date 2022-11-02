@@ -15,7 +15,9 @@
             })
         }
 
+
     </script>
+
 
 
 
@@ -68,6 +70,7 @@
     </style>
 
 </head>
+<script src="/js/jquery-3.6.1.min.js" type="text/javascript"></script>
 <body>
 <div class="header">
     <a href="main">
@@ -106,7 +109,8 @@
             <div class="row-content"><div class="centered-text"><input type="text" placeholder="ex) 데이터" autofocus=""  name="c_name" size="20" maxlength="10"></div></div>
             <div class="row-title"><div class="centered-text">날짜로 검색</div></div>
             <div class="row-content"><div class="centered-text">
-                <input type="date" name = "s_year"></div></div>
+                <input type="date" name = "s_year" value="2022-01-01" ></div>
+            <div><input type="checkbox" id ="s_year2" name="s_year2" value="2" >checked? </div></div>
         </div>
         <div class="row">
             <div class="row-title"><div class="centered-text">주최지역</div></div>
@@ -174,23 +178,23 @@
 
             </select></div></div>
             <div class="row-title"><div class="centered-text">연도</div></div>
-            <div class="row-content"><div class="centered-text"><input type="" name="b_year"  placeholder="20xx"></div></div>
+            <div class="row-content"><div class="centered-text"><input type="" value="" name="b_year"  placeholder="20xx"></div></div>
         </div>
         <div class="row">
             <div class="row-title"><div class="centered-text">주최사</div></div>
             <div class="row-content"><div class="centered-text">
-                <input type="checkbox" name="organizer"  onclick="checkall(this)">
+                <input type="checkbox" name="organizer" checked="checked"  onclick="checkall(this)">
                 전체<br>
-                <input type="checkbox" name="organizer" value="1" >정부/공공기관<br>
-                <input type="checkbox" name="organizer" value="2" >대기업<br>
-                <input type="checkbox" name="organizer" value="3">중견/중소/벤처기업
+                <input type="checkbox" name="organizer" checked="checked" value="1" >정부/공공기관<br>
+                <input type="checkbox" name="organizer" checked="checked" value="2" >대기업<br>
+                <input type="checkbox" name="organizer" checked="checked" value="3">중견/중소/벤처기업
                 <br>
-                <input type="checkbox" name="organizer" value="4">비영리/협회/재단
+                <input type="checkbox" name="organizer" checked="checked" value="4">비영리/협회/재단
                 <br>
             </div></div>
 
-            <div class="row-title"><div class="centered-text">검색 기준일</div></div>
-            <div class="row-content"><div class="centered-text">2022-09-29</div>
+            <div class="row-title"><div class="centered-text" >검색 기준일</div></div>
+            <div class="row-content"><div class="centered-text" id="year2"></div>
             </div>
 
 
@@ -200,6 +204,19 @@
     </div><br></form>
 
         </div>
+<script>
+    $( document ).ready( function() {
+        $("#s_year2").change(function () {
+            if ($("#s_year2").prop("checked")) {
+                $("#s_year2").val(1);
+                console.log($("#s_year2").val());
+            } else {
+                $("#s_year2").val(2);
+                console.log($("#s_year2").val());
+            }
+        });
+    });
 
+</script>
 </body>
 </html>

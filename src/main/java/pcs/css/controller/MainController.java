@@ -1,6 +1,7 @@
 package pcs.css.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.eclipse.jdt.internal.compiler.batch.Main;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +17,7 @@ import pcs.css.util.DateUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -44,7 +46,7 @@ public class MainController {
         }else{
             area =CmmUtil.nvl(request.getParameter("area")+request.getParameter("area2"));
         }
-        log.info(area);
+
         pDTO.setArea(area);
         String deadline;
         if(request.getParameter("deadline").equals("전체")){
@@ -56,12 +58,26 @@ public class MainController {
         pDTO.setDeadline(deadline);
         String candidate =CmmUtil.nvl(request.getParameter("candidate"));
         pDTO.setCandidate(candidate);
-        String organizer =CmmUtil.nvl(request.getParameter("organizer"));
+       // String organizer =CmmUtil.nvl(request.getParameter("organizer"));
 
-        pDTO.setOrganizer(organizer);
-        String s_year =CmmUtil.nvl(request.getParameter("s_year"), DateUtil.getDateTime("yyyyMMdd"));
+
+        List<String> organizer = new ArrayList<>(Arrays.asList(request.getParameterValues("organizer")));
+
+        String s_year ="";
+        pDTO.setS_organizer(organizer);
+        String s_year2 = "";
+        s_year2= CmmUtil.nvl(request.getParameter("s_year2"));
+        if(!s_year2.isEmpty()){
+            s_year =CmmUtil.nvl(request.getParameter("s_year"), DateUtil.getDateTime("yyyyMMdd"));
+        }else{
+            s_year = "전체";
+        }
+        log.info(s_year);
+
+
+
         pDTO.setS_year(s_year);
-        String b_year =CmmUtil.nvl(request.getParameter("b_year"), DateUtil.getDateTime("yyyyMMdd"));
+        String b_year =CmmUtil.nvl(request.getParameter("b_year"));
         pDTO.setB_year(b_year);
 
         List<MainDTO> mList = mainService.SearchMainList(pDTO);

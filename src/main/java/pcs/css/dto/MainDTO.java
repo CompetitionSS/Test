@@ -11,7 +11,7 @@ public class MainDTO {
     private String deadline;
     private String candidate;
     private String organizer;
-    private String year;
+    private String s_year;
     private String b_year;
     private String r_date;
     private String url;

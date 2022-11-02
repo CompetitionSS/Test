@@ -11,6 +11,8 @@ public interface IMainService {
     List<MainDTO> getMainList() throws Exception;
 
 
+
+
     void InsertMainInfo(MainDTO pDTO) throws Exception;
 
 
@@ -19,4 +21,6 @@ public interface IMainService {
     void updateMainInfo(MainDTO pDTO) throws Exception;
 
     void deleteMainInfo(MainDTO pDTO) throws Exception;
+
+    List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception;
 }

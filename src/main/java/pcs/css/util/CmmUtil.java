@@ -13,7 +13,12 @@ public class CmmUtil {
         }
         return res;
     }
+    /*public static String[] nvls(String[] str,String chg_str){
+        String[] res;
+        if(str == null){
 
+        }
+    }*/
     public static String nvl(String str){
         return nvl(str,"");
     }

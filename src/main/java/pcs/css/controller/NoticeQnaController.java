@@ -5,9 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import pcs.css.dto.NoticeDTO;
-import pcs.css.service.INoticeService;
+import pcs.css.dto.NoticeQnaDTO;
+import pcs.css.service.INoticeQnaService;
 import pcs.css.util.CmmUtil;
 
 import javax.annotation.Resource;
@@ -18,75 +17,69 @@ import java.util.List;
 
 @Slf4j
 @Controller
-public class NoticeController {
+public class NoticeQnaController {
 
     /*
 
      * 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
      */
-    @Resource(name = "NoticeService")
-    private INoticeService noticeService;
+    @Resource(name = "NoticeQnaService")
+    private INoticeQnaService noticeQnaService;
 
     /**
      * GetMapping은 GET방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
      * PostMapping은 POST방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
      * GetMapping(value = "index") =>  GET방식을 통해 접속되는 URL이 index인 경우 아래 함수를 실행함
      */
-    @GetMapping(value = "index")
-    public String Index() {
-        return "/index";
 
-    }
 
     /**
      * 게시판 리스트 보여주기
      *
      * GetMapping(value = "notice/NoticeList") =>  GET방식을 통해 접속되는 URL이 notice/NoticeList인 경우 아래 함수를 실행함
      */
-    @GetMapping(value = "notice/NoticeList")
-    public String NoticeList(ModelMap model) throws Exception {
+    @GetMapping(value = "noticeQna/NoticeQnaList")
+    public String NoticeQnaList(ModelMap model) throws Exception {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
-        log.info(this.getClass().getName() + ".NoticeList start!");
+        log.info(this.getClass().getName() + ".NoticeQna start!");
 
         // 공지사항 리스트 가져오기
-        List<NoticeDTO> rList = noticeService.getNoticeList();
-        for (NoticeDTO noticeDTO : rList) {
-            log.info(noticeDTO.getNotice_seq());
-        }
+        List<NoticeQnaDTO> rList = noticeQnaService.getNoticeQnaList();
 
         if (rList == null) {
             rList = new ArrayList<>();
+
         }
 
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("rList", rList);
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
-        log.info(this.getClass().getName() + ".NoticeList end!");
+        log.info(this.getClass().getName() + ".NoticeQnaList end!");
         // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
-        return "/notice/NoticeList";
+        return "/noticeQna/NoticeQnaList";
 
     }
 
 
-    @GetMapping(value = "notice/NoticeReg")
-    public String NoticeReg() {
+    @GetMapping(value = "noticeQna/NoticeQnaReg")
+    public String NoticeQnaReg() {
 
-        log.info(this.getClass().getName() + ".NoticeReg start!");
+        log.info(this.getClass().getName() + ".NoticeQnaReg start!");
 
-        log.info(this.getClass().getName() + ".NoticeReg end!");
+        log.info(this.getClass().getName() + ".NoticeQnaReg end!");
 
-        return "/notice/NoticeReg";
+        return "/noticeQna/NoticeQnaReg";
     }
 
     /**
      * 게시판 글 등록
      */
-    @PostMapping(value = "notice/NoticeInsert")
-    public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
+    @PostMapping(value = "noticeQna/NoticeQnaInsert")
+    public String NoticeQnaInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeInsert start!");
+        log.info(this.getClass().getName() + ".NoticeQnaInsert start!");
 
         String msg = "";
 
@@ -105,7 +98,7 @@ public class NoticeController {
             log.info("noticeYn : " + noticeYn);
             log.info("contents : " + contents);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            NoticeQnaDTO pDTO = new NoticeQnaDTO();
 
             pDTO.setUser_id(user_id);
             pDTO.setTitle(title);
@@ -115,7 +108,7 @@ public class NoticeController {
             /*
              * 게시글 등록하기위한 비즈니스 로직을 호출
              */
-            noticeService.InsertNoticeInfo(pDTO);
+            noticeQnaService.InsertNoticeQnaInfo(pDTO);
 
             // 저장이 완료되면 사용자에게 보여줄 메시지
             msg = "등록되었습니다.";
@@ -129,23 +122,23 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeInsert end!");
+            log.info(this.getClass().getName() + ".NoticeQnaInsert end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        return "/notice/MsgToList";
+        return "/noticeQna/MsgToListQna";
     }
 
     /**
      * 게시판 상세보기
      */
-    @GetMapping(value = "notice/NoticeInfo")
-    public String NoticeInfo(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = "noticeQna/NoticeQnaInfo")
+    public String NoticeQnaInfo(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeInfo start!");
+        log.info(this.getClass().getName() + ".NoticeQnaInfo start!");
 
         String msg = "";
 
@@ -165,18 +158,18 @@ public class NoticeController {
             /*
              * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
              */
-            NoticeDTO pDTO = new NoticeDTO();
+            NoticeQnaDTO pDTO = new NoticeQnaDTO();
             pDTO.setNotice_seq(nSeq);
 
             // 공지사항 상세정보 가져오기
-            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+            NoticeQnaDTO rDTO = noticeQnaService.getNoticeQnaInfo(pDTO);
 
             if (rDTO == null) {
-                rDTO = new NoticeDTO();
+                rDTO = new NoticeQnaDTO();
 
             }
 
-            log.info("getNoticeInfo success!!!");
+            log.info("getNoticeQnaInfo success!!!");
 
             // 조회된 리스트 결과값 넣어주기
             model.addAttribute("rDTO", rDTO);
@@ -190,25 +183,25 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeInsert end!");
+            log.info(this.getClass().getName() + ".NoticeQnaInsert end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        log.info(this.getClass().getName() + ".NoticeInfo end!");
+        log.info(this.getClass().getName() + ".NoticeQnaInfo end!");
 
-        return "/notice/NoticeInfo";
+        return "/noticeQna/NoticeQnaInfo";
     }
 
     /**
      * 게시판 수정 보기
      */
-    @GetMapping(value = "notice/NoticeEditInfo")
-    public String NoticeEditInfo(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = "noticeQna/NoticeQnaEditInfo")
+    public String NoticeQnaEditInfo(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeEditInfo start!");
+        log.info(this.getClass().getName() + ".NoticeQnaEditInfo start!");
 
         String msg = "";
 
@@ -218,7 +211,7 @@ public class NoticeController {
 
             log.info("nSeq : " + nSeq);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            NoticeQnaDTO pDTO = new NoticeQnaDTO();
 
             pDTO.setNotice_seq(nSeq);
 
@@ -227,11 +220,11 @@ public class NoticeController {
              * 쿼리와 동일하여, 같은 서비스 쿼리 사용함)
              * #######################################################
              */
-            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
-
+            NoticeQnaDTO rDTO = noticeQnaService.getNoticeQnaInfo(pDTO);
+//여기도
             if (rDTO == null) {
-                rDTO = new NoticeDTO();
-
+                rDTO = new NoticeQnaDTO();
+//여기도
             }
 
             // 조회된 리스트 결과값 넣어주기
@@ -243,25 +236,25 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeUpdate end!");
+            log.info(this.getClass().getName() + ".NoticeQnaUpdate end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        log.info(this.getClass().getName() + ".NoticeEditInfo end!");
+        log.info(this.getClass().getName() + ".NoticeQnaEditInfo end!");
 
-        return "/notice/NoticeEditInfo";
+        return "/noticeQna/NoticeQnaEditInfo";
     }
 
     /**
      * 게시판 글 수정
      */
-    @PostMapping(value = "notice/NoticeUpdate")
-    public String NoticeUpdate(HttpSession session, HttpServletRequest request, ModelMap model) {
+    @PostMapping(value = "noticeQna/NoticeQnaUpdate")
+    public String NoticeQnaUpdate(HttpSession session, HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeUpdate start!");
+        log.info(this.getClass().getName() + ".NoticeQnaUpdate start!");
 
         String msg = "";
 
@@ -279,7 +272,7 @@ public class NoticeController {
             log.info("noticeYn : " + noticeYn);
             log.info("contents : " + contents);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            NoticeQnaDTO pDTO = new NoticeQnaDTO();
 
             pDTO.setUser_id(user_id);;
             pDTO.setNotice_seq(nSeq);
@@ -288,7 +281,7 @@ public class NoticeController {
             pDTO.setContents(contents);
 
             // 게시글 수정하기 DB
-            noticeService.updateNoticeInfo(pDTO);
+            noticeQnaService.updateNoticeQnaInfo(pDTO);
 
             msg = "수정되었습니다.";
 
@@ -298,23 +291,23 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeUpdate end!");
+            log.info(this.getClass().getName() + ".NoticeQnaUpdate end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        return "/notice/MsgToList";
+        return "/noticeQna/MsgToListQna";
     }
 
     /**
      * 게시판 글 삭제
      */
-    @GetMapping(value = "notice/NoticeDelete")
-    public String NoticeDelete(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = "noticeQna/NoticeQnaDelete")
+    public String NoticeQnaDelete(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeDelete start!");
+        log.info(this.getClass().getName() + ".NoticeQnaDelete start!");
 
         String msg = "";
 
@@ -324,12 +317,12 @@ public class NoticeController {
 
             log.info("nSeq : " + nSeq);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            NoticeQnaDTO pDTO = new NoticeQnaDTO();
 
             pDTO.setNotice_seq(nSeq);
 
             // 게시글 삭제하기 DB
-            noticeService.deleteNoticeInfo(pDTO);
+            noticeQnaService.deleteNoticeQnaInfo(pDTO);
 
             msg = "삭제되었습니다.";
 
@@ -339,14 +332,14 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeDelete end!");
+            log.info(this.getClass().getName() + ".NoticeQnaDelete end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        return "/notice/MsgToList";
+        return "/noticeQna/MsgToListQna";
     }
 
 }

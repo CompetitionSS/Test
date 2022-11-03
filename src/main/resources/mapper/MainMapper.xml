@@ -3,41 +3,50 @@
 
 <mapper namespace="pcs.css.persistance.mapper.IMainMapper">
 
-    
 
-    <select id="SearchMainList" parameterType="MainDTO"  resultType="MainDTO">
-           SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.YEAR, C.B_YEAR, C.R_DATE, C.URL
 
-        FROM COMPETITION C
-        <if test= 'c_name != null'>
-        where c_name LIKE '%'||#{c_name}||'%'
-        </if>
-        <if test='area != null'>
-            where area LIKE '%'||#{area}||'%'
-        </if>
-        <if test= 'deadline != null'>
-            where deadline LIKE '%'||#{deadline}||'%'
-        </if>
-        <if test= 'candidate != null'>
-            where candidate LIKE '%'||#{candidate}||'%'
-        </if>
-        <if test= 'organizer != null'>
-            where organizer LIKE '%'||#{organizer}||'%'
-        </if>
-        <if test= 'year != null'>
-            where year LIKE '%'||#{year}||'%'
-        </if>
-        <if test= 'b_year != null'>
-            where b_year LIKE '%'||#{b_year}||'%'
-        </if>
-        <if test= 'r_date != null'>
-            where r_date LIKE '%'||#{r_date}||'%'
-        </if>
-        <if test= 'url != null'>
-            where url LIKE '%'||#{url}||'%'
+    <select id="SearchMainList" parameterType="MainDTO" resultType="MainDTO">
+     SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.S_YEAR, C.B_YEAR, C.R_DATE, C.URL
+
+         FROM COMPETITION C,DUAL
+    WHERE
+
+
+        <![CDATA[
+           c_name LIKE '%'||#{c_name,jdbcType=VARCHAR}||'%'
+  ]]>
+
+        <if test="area != null">
+
+            <![CDATA[  AND area LIKE '%'||#{area,jdbcType=VARCHAR}||'%' ]]>
+            </if>
+
+
+
+
+        <if test= "deadline != null">
+            <![CDATA[    AND TO_CHAR(deadline,'mmdd') >= #{deadline,jdbcType=VARCHAR}]]>
         </if>
 
-        ORDER BY C.YEAR DESC
+        <if test= "candidate != '전체'">
+          <if test="candidate != null">
+             AND candidate = #{candidate,jdbcType=VARCHAR}
+          </if>
+        </if>
+        <if test= "s_organizer != null">
+           AND organizer in
+            <foreach collection="s_organizer" item="item" index="index" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="s_year !=null and s_year!='전체'">
+            <![CDATA[  AND s_year  <= #{s_year,jdbcType=VARCHAR} AND deadline >= #{s_year,jdbcType=VARCHAR}]]>
+        </if>
+        <if test= "b_year != null">
+            <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
+        </if>
+
+  ORDER BY S_YEAR DESC
     </select>
 
 

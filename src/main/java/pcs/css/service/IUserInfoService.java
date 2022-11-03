@@ -4,6 +4,8 @@ package pcs.css.service;
 import org.apache.ibatis.annotations.Mapper;
 import pcs.css.dto.UserInfoDTO;
 
+import javax.servlet.http.HttpServletResponse;
+
 
 public interface IUserInfoService {
 
@@ -12,6 +14,8 @@ public interface IUserInfoService {
 
     // 로그인을 위해 아이디와 비밀번호가 일치하는지 확인하기
     int getUserLoginCheck(UserInfoDTO pDTO) throws Exception;
+
+    String find_id(HttpServletResponse response, String email) throws Exception;
 
     UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception;
 

@@ -13,6 +13,8 @@ import pcs.css.util.DateUtil;
 import pcs.css.util.EncryptUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +29,23 @@ public class UserInfoService implements IUserInfoService {
     //메일 발송을 위한 MailService 자바 객체 가져오기
     @Resource(name = "MailService")
     private IMailService mailService;
+    @Override
+    public String find_id(HttpServletResponse response, String email) throws Exception {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        String id = manager.find_id(email);
+
+        if (id == null) {
+            out.println("<script>");
+            out.println("alert('가입된 아이디가 없습니다.');");
+            out.println("history.go(-1);");
+            out.println("</script>");
+            out.close();
+            return null;
+        } else {
+            return id;
+        }
+    }
 
     @Override
     public UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception{

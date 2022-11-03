@@ -346,4 +346,5 @@ public class NoticeController {
 
         return "/notice/MsgToList";
     }
+
 }

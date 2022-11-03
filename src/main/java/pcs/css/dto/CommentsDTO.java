@@ -10,8 +10,9 @@ import lombok.Setter;
 public class CommentsDTO {
 
     private String seq;
-    private String user_id; // 작성자
-    private String date; //날짜
+    private String writer; // 작성자
+    private String content; //댓글내용
+    private String reg_dt; //날짜
 
 
 

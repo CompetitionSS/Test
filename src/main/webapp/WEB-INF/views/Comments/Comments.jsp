@@ -5,16 +5,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="" type="image/x-icon" />
-    <title>constory - 너를 위한 공모전  </title>
-    <script type="text/javascript">
-        function checkall (f){
-            const checkboxes = document.getElementsByName('organizer');
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = f.checked
-            })
-        }
 
+    <div>
+
+        <form method="post" action="/reply/write">
+
+            <p>
+                <label>댓글 작성자</label> <input type="text" name="writer">
+            </p>
+            <p>
+                <textarea rows="5" cols="50" name="content"></textarea>
+            </p>
+            <p>
+                <button type="submit">댓글 작성</button>
+            </p>
+        </form>
+
+    </div>
     </script>
 
 

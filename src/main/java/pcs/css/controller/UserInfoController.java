@@ -7,14 +7,23 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pcs.css.dto.MailDTO;
 import pcs.css.dto.UserInfoDTO;
+import pcs.css.service.IMailService;
 import pcs.css.service.IUserInfoService;
 import pcs.css.util.CmmUtil;
 import pcs.css.util.EncryptUtil;
 
 import javax.annotation.Resource;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @Slf4j
 @RequestMapping(value="/user")
@@ -26,6 +35,9 @@ public class UserInfoController {
      * */
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
+
+    @Resource(name = "MailService")
+    private IMailService mailService;
 
 
     /**
@@ -176,8 +188,31 @@ public class UserInfoController {
 
         return "/user/LogOut";
     }
+    /*@GetMapping(value = "LoginidSearch")
+    public String loginidSearch(HttpServletRequest request, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".user/loginidSearch ok!");
 
+        return "/user/LoginidSearch";
+    }
+    @GetMapping(value = "LoginpsSearch")
+    public String loginpsSearch(HttpServletRequest request, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".user/loginpsSearch ok!");
 
+        return "/user/LoginpsSearch";
+    }
+    @GetMapping(value = "FindID")
+    public String findid(HttpServletRequest request, ModelMap model) throws Exception{
+        UserInfoDTO pDTO = new UserInfoDTO();
+        String email = CmmUtil.nvl(request.getParameter("email"));
+        pDTO.setEmail(EncryptUtil.encAES128CBC(email));
+        model.addAttribute("pDTO", pDTO);
+        return "/user/LoginidSearch";
+    }
+    public String findps(HttpServletRequest request, ModelMap model) throws Exception{
+        MailDTO mailDTO = new MailDTO();
+        mailDTO.setToMail();
+        mailService.doSendMail()
+    }*/
     /**
      * 로그인 처리 및 결과 알려주는 화면으로 이동
      */
@@ -218,8 +253,6 @@ public class UserInfoController {
              * 						반드시 작성할 것
              * ########################################################################
              * */
-            log.info("user_id : " + user_id);
-            log.info("password : " + password);
 
             /*
              * ########################################################################

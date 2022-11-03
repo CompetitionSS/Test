@@ -28,6 +28,17 @@ public class UserInfoService implements IUserInfoService {
     @Resource(name = "MailService")
     private IMailService mailService;
 
+    @Override
+    public UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception{
+       UserInfoDTO  uDTO = userInfoMapper.getUserIDSearch(pDTO);
+
+        return uDTO;
+    }
+    @Override
+    public UserInfoDTO getUserIDPS(UserInfoDTO pDTO) throws Exception{
+        UserInfoDTO  uDTO = userInfoMapper.getUserIDPS(pDTO);
+        return uDTO;
+    }
 
     @Override
     public int insertUserInfo(UserInfoDTO pDTO) throws Exception {

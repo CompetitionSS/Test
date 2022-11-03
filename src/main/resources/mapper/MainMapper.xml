@@ -33,18 +33,18 @@
              AND candidate = #{candidate,jdbcType=VARCHAR}
           </if>
         </if>
-        <if test= "organizer != null">
-           AND organzier in
-            <foreach collection="organizer" item="item" index="index" separator="," open="(" close=")">
-                #{organzier,jdbcType=VARCHAR}
+        <if test= "s_organizer != null">
+           AND organizer in
+            <foreach collection="s_organizer" item="item" index="index" separator="," open="(" close=")">
+                #{item}
             </foreach>
         </if>
-      <!--  <if test="s_year !=null">
-            <![CDATA[  AND TO_CHAR(s_year,'yyyymmdd')  <= '%'||#{s_year,jdbcType=VARCHAR}||'%']]>
+        <if test="s_year !=null and s_year!='전체'">
+            <![CDATA[  AND s_year  <= #{s_year,jdbcType=VARCHAR} AND deadline >= #{s_year,jdbcType=VARCHAR}]]>
         </if>
         <if test= "b_year != null">
             <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
-        </if>-->
+        </if>
 
   ORDER BY S_YEAR DESC
     </select>

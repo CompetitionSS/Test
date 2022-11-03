@@ -6,11 +6,11 @@
 
 	<!-- 게시판 리스트 쿼리 -->
 	<select id="getNoticeList" resultType="NoticeDTO">
-		SELECT N.NOTICE_SEQ, N.TITLE, N.NOTICE_YN, N.READ_CNT, U.USER_ID, N.USER_ID
+		SELECT N.NOTICE_SEQ, N.TITLE, N.NOTICE_YN, N.READ_CNT,  N.USER_ID
 
-	      FROM NOTICE N, USERINFO U
-	     WHERE N.USER_ID = U.USER_ID
-	 	 ORDER BY N.NOTICE_YN, N.REG_DT DESC
+	      FROM NOTICE N
+
+	 	 ORDER BY NOTICE_SEQ DESC
 	</select>
 	
 	<!-- 게시판 등록 쿼리 -->

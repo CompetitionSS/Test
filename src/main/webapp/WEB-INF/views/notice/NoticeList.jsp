@@ -4,7 +4,7 @@
 <%@ page import="pcs.css.dto.NoticeDTO" %>
 <%@ page import="pcs.css.util.CmmUtil" %>
 <%
-    session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+
 
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
 
@@ -69,8 +69,8 @@
         <td width="100" align="center">등록일</td>
     </tr>
     <%
-        for (int i = 0; i < rList.size(); i++) {
-            NoticeDTO rDTO = rList.get(i);
+        for (NoticeDTO rDTO : rList) {
+
 
             if (rDTO == null) {
                 rDTO = new NoticeDTO();
@@ -80,8 +80,9 @@
     <tr>
         <td align="center">
             <%
+
                 //공지글이라면, [공지]표시
-                if (CmmUtil.nvl(rDTO.getNotice_yn()).equals("1")) {
+                if (CmmUtil.nvl(rDTO.getNotice_yn()).equals("y")||CmmUtil.nvl(rDTO.getNotice_yn()).equals("Y")) {
                     out.print("<b>[공지]</b>");
 
                     //공지글이 아니라면, 글번호 보여주기

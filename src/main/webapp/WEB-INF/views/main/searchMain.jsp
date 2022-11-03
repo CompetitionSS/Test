@@ -39,7 +39,7 @@
         <td width="300" align="center">마감일</td>
         <td width="200" align="center">응시대상자</td>
         <td width="200" align="center">주최사</td>
-        <td width="300" align="center">날짜</td>
+        <td width="300" align="center">시작 날짜</td>
         <td width="150" align="center">연도</td>
         <td width="300" align="center">검색 기준일</td>
 

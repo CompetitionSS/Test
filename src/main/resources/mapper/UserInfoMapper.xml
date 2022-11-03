@@ -30,6 +30,7 @@
               )
     </insert>
 
+
     <!-- 이메일로 회원 가입 중복 방지하기 -->
     <select id="getUserExists" parameterType="UserInfoDTO" resultType="UserInfoDTO">
         SELECT DECODE(COUNT(1), 0, 'N', 'Y') AS EXISTS_YN

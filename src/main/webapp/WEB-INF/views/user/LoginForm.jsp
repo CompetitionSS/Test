@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인 화면</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script type="text/javascript">
 
@@ -33,20 +34,58 @@
     </script>
 </head>
 <body>
-<h1>로그인 화면</h1>
+
 <br/>
 <form name="f" method="post" action="/user/getUserLoginCheck" onsubmit="return doLoginUserCheck(this);">
+    <div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input type="text" name="user_id" class="form-control" id="floatinguser_id" placeholder="user_id">
+                    <label for="floatinguser_id">"ID"를 입력하세요.</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" name="password" class="form-control" id="floatingpassword" placeholder="Password">
+                    <label for="floatingpassword">"Password"를 입력하세요.</label>
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary" value="login">
+                    로그인
+                </button>
+                <button type="button" class="btn btn-primary" onclick="location='/user/UserRegForm'"  value="회원가입">
+                    회원가입
+                </button>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
 
-    <label>아이디 :
-        <input type="text" name="user_id" />
-    </label><br/>
 
-    <label>비밀번호 :
-        <input type="password" name="password" />
-    </label>
-    <br/>
-    <input type="submit" value="로그인"/>
-    <input type="button" onclick="location='/user/UserRegForm'" value="회원가입">
+
+
+    </div>
+    </div>
+
+
+
 </form>
 </body>
 </html>

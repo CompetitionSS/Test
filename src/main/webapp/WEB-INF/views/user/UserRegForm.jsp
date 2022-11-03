@@ -53,22 +53,50 @@
 
     </script>
 
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-<h1>회원가입 화면</h1>
+
 <br/>
 
 <form name="f" method="post" action="/user/insertUserInfo" onsubmit="return doRegUserCheck(this);">
-    <label for="validationServer01" class="form-label">* 아이디 : <input class="form-control is-valid" id="validationServer01" type="text" name="user_id" style="width:400px"/></label><br/>
-    <label for="validationServer02" class="form-label">* 이름 : <input class="form-control is-valid" id="validationServer02" type="text" name="user_name" style="width:400px"/></label><br/>
-    <hr/>
-    <label  for="validationServerUserpass" class="form-label">* 비밀번호 : <input class="form-control is-invalid" id="validationServerUserpass" type="password" name="password" style="width:400px"/></label><br/>
-    <label  for="validationServerUserpass2" class="form-label">* 비밀번호확인 : <input class="form-control is-invalid" id="validationServerUserpass2" type="password" name="password2" style="width:400px"/></label><br/>
-    <hr/>
-    <label for="validationServerUseremail" class="form-label">* 이메일 : <input class="form-control is-invalid" id="validationServerUseremail" type="email" name="email" style="width:400px"/> </label><br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+        <h1 style="text-align: center">회원가입 하기~~!!</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <label for="validationServer01" class="form-label">* 아이디 : <input class="form-control" id="validationServer01" type="text" name="user_id" style="width:400px"/></label><br/>
+                <label for="validationServer02" class="form-label">* 이름 : <input class="form-control" id="validationServer02" type="text" name="user_name" style="width:400px"/></label><br/>
 
-    <input type="submit" value="회원가입"/>
+                <label  for="validationServerUserpass" class="form-label">* 비밀번호 : <input class="form-control" id="validationServerUserpass" type="password" name="password" style="width:400px"/></label><br/>
+                <label  for="validationServerUserpass2" class="form-label">* 비밀번호확인 : <input class="form-control" id="validationServerUserpass2" type="password" name="password2" style="width:400px"/></label><br/>
+
+                <label for="validationServerUseremail" class="form-label">* 이메일 : <input class="form-control" id="validationServerUseremail" type="email" name="email" style="width:400px"/> </label><br/>
+
+                <button class="btn btn-primary" type="submit">회원가입</button>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
 </form>
 </body>
 </html>

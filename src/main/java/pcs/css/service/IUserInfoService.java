@@ -15,9 +15,7 @@ public interface IUserInfoService {
     // 로그인을 위해 아이디와 비밀번호가 일치하는지 확인하기
     int getUserLoginCheck(UserInfoDTO pDTO) throws Exception;
 
-    String find_id(HttpServletResponse response, String email) throws Exception;
+    UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception;
 
-    UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception;
-
-    UserInfoDTO getUserIDPS(UserInfoDTO pDTO) throws Exception;
+    int find_ps(UserInfoDTO pDTO) throws Exception;
 }

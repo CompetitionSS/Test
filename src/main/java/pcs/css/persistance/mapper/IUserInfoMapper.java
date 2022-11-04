@@ -16,8 +16,9 @@ public interface IUserInfoMapper {
     // 로그인을 위해 아이디와 비밀번호가 일치하는지 확인하기
     UserInfoDTO getUserLoginCheck(UserInfoDTO pDTO) throws Exception;
 
-    UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception;
+    UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception;
 
-    UserInfoDTO getUserIDPS(UserInfoDTO pDTO) throws Exception;
+    void find_ps(UserInfoDTO pDTO) throws Exception;
+    UserInfoDTO find_pscheck(UserInfoDTO pDTO) throws Exception;
 }
 

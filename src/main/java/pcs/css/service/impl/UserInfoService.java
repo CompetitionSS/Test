@@ -29,34 +29,65 @@ public class UserInfoService implements IUserInfoService {
     //메일 발송을 위한 MailService 자바 객체 가져오기
     @Resource(name = "MailService")
     private IMailService mailService;
-    @Override
-    public String find_id(HttpServletResponse response, String email) throws Exception {
-        response.setContentType("text/html;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        String id = manager.find_id(email);
 
-        if (id == null) {
-            out.println("<script>");
-            out.println("alert('가입된 아이디가 없습니다.');");
-            out.println("history.go(-1);");
-            out.println("</script>");
-            out.close();
-            return null;
-        } else {
-            return id;
+    @Override
+    public UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception{
+       UserInfoDTO  uDTO = userInfoMapper.find_id(pDTO);
+       if(uDTO != null){
+           MailDTO mDTO = new MailDTO();
+           mDTO.setToMail(EncryptUtil.decAES128CBC(uDTO.getEmail()));
+           mDTO.setTitle("아이디 찾기 입니다.");
+           mDTO.setContents("회원님의 아이디 : "+uDTO.getUser_id());
+           mailService.doSendMail(mDTO);
+       }
+       log.info(getClass().getName() + "find_id Start!!");
+       log.info(uDTO.getEmail());
+
+        return uDTO;
+    }
+    public String RandomPs(int passwordlength){
+        char[] pwdcharSet = new char[]{
+                '0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j',
+                'k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+        };
+        int idx = 0;
+        StringBuffer sb = new StringBuffer();
+        for(int i =0 ; i<passwordlength;i++){
+            idx = (int)(pwdcharSet.length*Math.random());
+            sb.append(pwdcharSet[idx]);
         }
-    }
-
-    @Override
-    public UserInfoDTO getUserIDSearch(UserInfoDTO pDTO) throws Exception{
-       UserInfoDTO  uDTO = userInfoMapper.getUserIDSearch(pDTO);
-
-        return uDTO;
+        return sb.toString();
     }
     @Override
-    public UserInfoDTO getUserIDPS(UserInfoDTO pDTO) throws Exception{
-        UserInfoDTO  uDTO = userInfoMapper.getUserIDPS(pDTO);
-        return uDTO;
+    public int find_ps(UserInfoDTO pDTO) throws Exception{
+        if(pDTO ==null){
+            pDTO = new UserInfoDTO();
+        }
+        int res = 0;
+        String psnew = RandomPs(8);
+        UserInfoDTO  uDTO = new UserInfoDTO();
+        uDTO.setEmail(pDTO.getEmail());
+        uDTO.setUser_id(pDTO.getUser_id());
+        uDTO.setPassword(EncryptUtil.encHashSHA256(psnew));
+        log.info(uDTO.getEmail());
+        userInfoMapper.find_ps(uDTO);
+        log.info(getClass().getName() + "find_ps Start!!");
+
+        UserInfoDTO cDTO = userInfoMapper.find_pscheck(uDTO);
+        if(cDTO != null){
+            MailDTO mDTO = new MailDTO();
+            mDTO.setToMail(EncryptUtil.decAES128CBC(uDTO.getEmail()));
+            mDTO.setTitle("새로운 비밀번호로 로그인 후 비밀번호 변경 바랍니다.");
+            mDTO.setContents("회원님의 비밀번호 : "+psnew);
+            mailService.doSendMail(mDTO);
+            res = 1;
+        }else{
+            res = 2;
+        }
+       return res;
+
+
+
     }
 
     @Override

@@ -72,6 +72,12 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="location='/user/UserRegForm'"  value="회원가입">
                     회원가입
+                </button><br><br>
+                <button type="button" class="btn btn-primary" onclick="location='/user/LoginidSearch'"  value="아이디 찾기">
+                    아이디 찾기
+                </button>
+                <button type="button" class="btn btn-primary" onclick="location='/user/LoginpsSearch'"  value="비밀번호찾기">
+                    비밀번호 찾기
                 </button>
             </div>
             <div class="col-md-4">

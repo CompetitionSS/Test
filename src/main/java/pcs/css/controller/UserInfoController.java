@@ -36,9 +36,6 @@ public class UserInfoController {
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
 
-    @Resource(name = "MailService")
-    private IMailService mailService;
-
 
     /**
      * 회원가입 화면으로 이동
@@ -188,31 +185,67 @@ public class UserInfoController {
 
         return "/user/LogOut";
     }
-    /*@GetMapping(value = "LoginidSearch")
-    public String loginidSearch(HttpServletRequest request, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".user/loginidSearch ok!");
+    @GetMapping(value = "LoginidSearch")
+    public String loginidSearch(){
+        log.info(this.getClass().getName() + ".loginidsearch start!");
 
         return "/user/LoginidSearch";
     }
     @GetMapping(value = "LoginpsSearch")
-    public String loginpsSearch(HttpServletRequest request, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".user/loginpsSearch ok!");
+    public String loginpsSearch(){
+        log.info(this.getClass().getName() + ".loginpssearch start!");
 
         return "/user/LoginpsSearch";
     }
-    @GetMapping(value = "FindID")
-    public String findid(HttpServletRequest request, ModelMap model) throws Exception{
+
+
+    @GetMapping(value = "find_id")
+    public String find_id(HttpServletRequest request, ModelMap model) throws Exception{
         UserInfoDTO pDTO = new UserInfoDTO();
+        log.info(this.getClass().getName() + ".find_id start!");
         String email = CmmUtil.nvl(request.getParameter("email"));
+
         pDTO.setEmail(EncryptUtil.encAES128CBC(email));
-        model.addAttribute("pDTO", pDTO);
-        return "/user/LoginidSearch";
+        UserInfoDTO rDTO =  userInfoService.find_id(pDTO);
+        log.info(rDTO.getEmail());
+        model.addAttribute("rDTO", rDTO);
+        return "/user/Loginidcheck";
     }
-    public String findps(HttpServletRequest request, ModelMap model) throws Exception{
-        MailDTO mailDTO = new MailDTO();
-        mailDTO.setToMail();
-        mailService.doSendMail()
-    }*/
+    @GetMapping(value = "find_ps")
+    public String find_ps(HttpServletRequest request, ModelMap model) throws Exception{
+        int res = 0;
+        UserInfoDTO pDTO = new UserInfoDTO();
+        try {
+
+            log.info(this.getClass().getName() + ".find_ps start!");
+            String email = CmmUtil.nvl(request.getParameter("email"));
+            pDTO.setUser_id(CmmUtil.nvl(request.getParameter("user_id")));
+            pDTO.setEmail(EncryptUtil.encAES128CBC(email));
+           res = userInfoService.find_ps(pDTO);
+
+            model.addAttribute("rDTO", pDTO);
+        }catch (Exception e){
+            res = 2;
+            log.info(e.toString());
+            e.printStackTrace();
+        }finally {
+            log.info(this.getClass().getName() + ".insertUserInfo end!");
+
+            /* 로그인 처리 결과를 jsp에 전달하기 위해 변수 사용
+             * 숫자 유형의 데이터 타입은 값을 전달하고 받는데 불편함이  있어
+             * 문자 유형(String)으로 강제 형변환하여 jsp에 전달한다.
+             * */
+            model.addAttribute("res", String.valueOf(res));
+
+            //변수 초기화(메모리 효율화 시키기 위해 사용함)
+            pDTO = null;
+
+        }
+
+
+        model.addAttribute("rDTO", pDTO);
+        return "/user/Loginpscheck";
+    }
     /**
      * 로그인 처리 및 결과 알려주는 화면으로 이동
      */

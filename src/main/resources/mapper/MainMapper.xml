@@ -46,8 +46,28 @@
             <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
         </if>
 
-  ORDER BY S_YEAR DESC
+  ORDER BY R_DATE DESC
     </select>
+    <select id="getMainList" parameterType="MainDTO" resultType="MainDTO">
+    SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.S_YEAR, C.B_YEAR, C.R_DATE, C.URL
 
+    FROM COMPETITION C,DUAL
+    ORDER BY R_DATE desc
+    </select>
+    <insert id="InsertMainInfo" parameterType="MainDTO">
+        INSERT INTO COMPETITION
+        (
+            C_NAME, AREA, DEADLINE, CANDIDATE, ORGANIZER, S_YEAR, B_YEAR, R_DATE, URL
+        )
+        VALUES(
+                      #{c_name}, #{area}, #{deadline}, #{candidate}, #{organizer}, #{s_year}, #{b_year}, SYSDATE,#{url}
+
+              )
+    </insert>
+    <select id="getMainExists" parameterType="MainDTO" resultType="MainDTO">
+        SELECT DECODE(COUNT(1), 0, 'N', 'Y') AS EXISTS_YN
+        FROM COMPETITION
+        WHERE C_NAME = #{c_name}
+    </select>
 
 </mapper>

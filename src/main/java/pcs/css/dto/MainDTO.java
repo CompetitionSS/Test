@@ -19,7 +19,8 @@ public class MainDTO {
     private String r_date;
     private String url;
     private List<String> s_organizer;
-    private String collect_time;
+    private String organizer2;
+    private String exists_yn;
 
   /*  // 검색 시 조회를 위한 가상 변수 들
     private String s_c_name;

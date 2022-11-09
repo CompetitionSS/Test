@@ -23,4 +23,7 @@ public interface IMainService {
     void deleteMainInfo(MainDTO pDTO) throws Exception;
 
     List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception;
+
+    void mainCrawling() throws Exception;
+
 }

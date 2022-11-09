@@ -95,5 +95,24 @@ public class MainController {
         return "/main/searchMain";
     }
 
+    @GetMapping(value = "main/mainCrawling")
+    public String mainCrawling(ModelMap model) throws Exception {
 
+        log.info(this.getClass().getName() + ".mainCrawling Start!");
+
+        mainService.mainCrawling();
+        List<MainDTO> mList = mainService.getMainList();
+        if (mList == null) {
+            mList = new ArrayList<>();
+
+        }
+
+        model.addAttribute("mList", mList);
+        // 조회된 리스트 결과값 넣어주기
+
+
+        log.info(this.getClass().getName() + ".mainCrawling End!");
+
+        return "/main/mainCrawling";
+    }
 }

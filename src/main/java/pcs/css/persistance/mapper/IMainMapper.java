@@ -21,4 +21,6 @@ public interface IMainMapper {
     void deleteMainInfo(MainDTO pDTO) throws Exception;
 
     List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception;
+
+    MainDTO getMainExists(MainDTO pDTO) throws Exception;
 }

@@ -10,7 +10,7 @@
     <title>constory - 너를 위한 공모전  </title>
     <script type="text/javascript">
         function checkall (f){
-            const checkboxes = document.getElementsByName('organizer');
+            const checkboxes = document.getElementsByName('organizer2');
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = f.checked
             })
@@ -25,7 +25,7 @@
 
 
 </head>
-<script src="/js/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
 <body>
 
 <div class="container">
@@ -249,13 +249,13 @@
             <div class="input-group">
                 <span class="input-group-text" style="text-align: center" id="inputGroup-sizing-default">주최사</span>
             <div class="form-check">
-                <input type="checkbox" name="organizer" checked="checked"  onclick="checkall(this)">
+                <input type="checkbox" name="organizer2" checked="checked"  onclick="checkall(this)">
                 전체<br>
-                <input type="checkbox" name="organizer" checked="checked" value="1" >정부/공공기관<br>
-                <input type="checkbox" name="organizer" checked="checked" value="2" >대기업<br>
-                <input type="checkbox" name="organizer" checked="checked" value="3">중견/중소/벤처기업
+                <input type="checkbox" name="organizer2" checked="checked" value="1" >정부/공공기관<br>
+                <input type="checkbox" name="organizer2" checked="checked" value="2" >대기업<br>
+                <input type="checkbox" name="organizer2" checked="checked" value="3">중견/중소/벤처기업
                 <br>
-                <input type="checkbox" name="organizer" checked="checked" value="4">비영리/협회/재단
+                <input type="checkbox" name="organizer2" checked="checked" value="4">비영리/협회/재단
                 <br>
         </div>
     </div>

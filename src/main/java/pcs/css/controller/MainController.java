@@ -97,7 +97,7 @@ public class MainController {
         pDTO.setArea(area);
         String deadline;
         if(request.getParameter("deadline").equals("전체")){
-            deadline=CmmUtil.nvl(request.getParameter("deadline2"), DateUtil.getDateTime("dd"));
+            deadline=CmmUtil.nvl( 10+request.getParameter("deadline2"), DateUtil.getDateTime("MMdd"));
         }else{
             deadline=CmmUtil.nvl(request.getParameter("deadline")+request.getParameter("deadline2"), DateUtil.getDateTime("MMdd"));
         }
@@ -108,7 +108,7 @@ public class MainController {
        // String organizer =CmmUtil.nvl(request.getParameter("organizer"));
 
 
-        List<String> organizer = new ArrayList<>(Arrays.asList(request.getParameterValues("organizer")));
+        List<String> organizer = new ArrayList<>(Arrays.asList(request.getParameterValues("organizer2")));
 
         String s_year ="";
         pDTO.setS_organizer(organizer);
@@ -119,7 +119,6 @@ public class MainController {
         }else{
             s_year = "전체";
         }
-        log.info(s_year);
 
 
 

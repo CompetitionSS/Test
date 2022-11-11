@@ -5,11 +5,9 @@ import org.apache.ibatis.annotations.Param;
 import org.eclipse.jdt.internal.compiler.batch.Main;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import pcs.css.dto.MainDTO;
+import pcs.css.dto.PageDTO;
 import pcs.css.service.IMainService;
 import pcs.css.util.CmmUtil;
 import pcs.css.util.DateUtil;
@@ -32,11 +30,60 @@ public class MainController {
         log.info(this.getClass().getName() + ".Main start!");
         return "/main/main";
     }
+    @GetMapping(value = "main/mainList")
+    public String MainList(HttpServletRequest request, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".MainList start!");
+        MainDTO mDTO = new MainDTO();
 
+       int count = mainService.count(mDTO);
+
+       String no = CmmUtil.nvl(request.getParameter("num"));
+       int num, start, finish = 0;
+       if(no.isEmpty()){
+           num = 1;
+       }else num = Integer.parseInt(no);
+        log.info(no);
+       finish = count - ((num-1)* 10);
+       start = finish - 9 ;
+       if(start < 1) start = 1;
+       mDTO.setStart(start);
+       mDTO.setFinish(finish);
+        List<MainDTO> mList = mainService.getMainList2(mDTO);
+        int pageNum_cnt = 10;
+        // 표시되는 페이지 번호 중 마지막 번호
+        int endPageNum = (int)(Math.ceil((double)num / (double)pageNum_cnt)) * pageNum_cnt;
+        // 표시되는 페이지 번호 중 첫번째 번호
+        int startPageNum = endPageNum - (pageNum_cnt - 1);
+        // 마지막 번호 재계산
+        int endPageNum_tmp = (int)(Math.ceil((double)count / (double)pageNum_cnt));
+        if(endPageNum > endPageNum_tmp) {
+            endPageNum = endPageNum_tmp;
+        }
+
+        boolean prev = num != 1;
+        boolean next = num * pageNum_cnt < count;
+
+
+        // 현재 페이지
+        model.addAttribute("select", num);
+        model.addAttribute("startPageNum", startPageNum);
+        model.addAttribute("endPageNum", endPageNum);
+        log.info(String.valueOf(prev));
+        // 이전 및 다음
+        model.addAttribute("prev", prev);
+        model.addAttribute("next", next);
+        if(mList == null) {
+            mList = new ArrayList<>();
+        }
+        model.addAttribute("mList", mList);
+        log.info(this.getClass().getName() + ".MainList end!");
+        return "/main/mainList";
+    }
     @GetMapping(value = "main/searchMain")
     public String SearchMain(HttpServletRequest request, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".SearchMain start!");
         MainDTO pDTO = new MainDTO();
+
         String c_name =CmmUtil.nvl(request.getParameter("c_name"));
         pDTO.setC_name(c_name);
         String area;
@@ -96,7 +143,7 @@ public class MainController {
     }
 
     @GetMapping(value = "main/mainCrawling")
-    public String mainCrawling(ModelMap model) throws Exception {
+    public String mainCrawling(HttpServletRequest request,ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".mainCrawling Start!");
 

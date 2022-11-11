@@ -4,6 +4,8 @@ package pcs.css.persistance.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import pcs.css.dto.UserInfoDTO;
 
+import java.util.List;
+
 @Mapper
 public interface IUserInfoMapper {
 
@@ -20,5 +22,7 @@ public interface IUserInfoMapper {
 
     void find_ps(UserInfoDTO pDTO) throws Exception;
     UserInfoDTO find_pscheck(UserInfoDTO pDTO) throws Exception;
+
+    List<UserInfoDTO> getUserList();
 }
 

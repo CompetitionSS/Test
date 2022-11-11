@@ -61,6 +61,15 @@
 
                 <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 
+                <%}else if(session.getAttribute("SS_USER_ID").equals("admin")){%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+                <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="크롤링 결과 확인" onclick="location.href='/main/mainCrawling'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
+
                 <%}else{%>
                 <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
 

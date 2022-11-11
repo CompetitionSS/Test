@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pcs.css.dto.MainDTO;
+import pcs.css.dto.PageDTO;
 import pcs.css.persistance.mapper.IMainMapper;
 import pcs.css.service.IMainService;
 import pcs.css.util.CmmUtil;
@@ -27,6 +28,12 @@ import java.util.*;
 public class MainService implements IMainService {
     private final IMainMapper mainMapper;
 
+    @Override
+    public int count(MainDTO mDTO) throws Exception{
+        log.info(this.getClass().getName()+".count start!!");
+
+        return mainMapper.count(mDTO);
+    }
 
     @Transactional
     @Override
@@ -35,6 +42,14 @@ public class MainService implements IMainService {
         log.info(this.getClass().getName() + ".getMainList start!");
 
         return mainMapper.getMainList();
+
+    }
+    @Override
+    public List<MainDTO> getMainList2(MainDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getMainList start!");
+
+        return mainMapper.getMainList2(pDTO);
 
     }
     @Transactional
@@ -104,7 +119,7 @@ public class MainService implements IMainService {
         String url1 = "https://www.wevity.com/?c=find&s=1&gub=1&cidx=20";
         String url2 = "&gp=";
 
-        for(int url3 = 1; url3< 10;url3++){
+        for(int url3 = 11; url3< 20;url3++){
             String url = url1+url2+url3;
             Document doc1 = null; //
 
@@ -176,6 +191,7 @@ public class MainService implements IMainService {
                                 mList.get(ListCount).setS_year(mMap.get("s_year"));
                                 mMap.put("deadline", element3.child(i).text().substring(5).split("~")[1].split("D")[0].trim());
                                 mList.get(ListCount).setDeadline(mMap.get("deadline"));
+                                mList.get(ListCount).setB_year(mMap.get("deadline").substring(0,4));
                                 break;
                             case 7:
                                 if(element3.child(i).text().length() > 5){
@@ -198,7 +214,7 @@ public class MainService implements IMainService {
 
 
                         mList.get(ListCount).setArea("서울시강서구");
-                        mList.get(ListCount).setB_year(mMap.get("deadline").substring(0,3));
+
 
 
                     }

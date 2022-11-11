@@ -2,9 +2,11 @@ package pcs.css.service;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import pcs.css.dto.NoticeDTO;
 import pcs.css.dto.UserInfoDTO;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 public interface IUserInfoService {
@@ -18,4 +20,6 @@ public interface IUserInfoService {
     UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception;
 
     int find_ps(UserInfoDTO pDTO) throws Exception;
+
+    List<UserInfoDTO> getUserList() throws Exception;
 }

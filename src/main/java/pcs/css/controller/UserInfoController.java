@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pcs.css.dto.MailDTO;
+import pcs.css.dto.NoticeDTO;
 import pcs.css.dto.UserInfoDTO;
 import pcs.css.service.IMailService;
 import pcs.css.service.IUserInfoService;
@@ -24,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RequestMapping(value="/user")
@@ -46,7 +49,28 @@ public class UserInfoController {
 
         return "/user/UserRegForm";
     }
+    @GetMapping(value = "UserManagement")
+    public String userManagement(HttpServletRequest request,ModelMap model) throws Exception{
+        log.info(this.getClass().getName() + ".userManagement start!");
 
+        // 공지사항 리스트 가져오기
+        List<UserInfoDTO> uList = userInfoService.getUserList();
+        for (UserInfoDTO userDTO : uList) {
+            log.info(userDTO.getUser_seq());
+        }
+
+        if (uList == null) {
+            uList = new ArrayList<>();
+        }
+
+        // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("uList", uList);
+
+        // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
+        log.info(this.getClass().getName() + ".userManagement end!");
+
+        return "/user/UserManagement";
+    }
 
     /**
      * 회원가입 로직 처리

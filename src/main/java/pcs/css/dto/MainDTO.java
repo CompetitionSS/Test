@@ -22,6 +22,8 @@ public class MainDTO {
     private String organizer2;
     private String exists_yn;
 
+    private int start;
+    private int finish;
   /*  // 검색 시 조회를 위한 가상 변수 들
     private String s_c_name;
     private String s_area;

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pcs.css.dto.MailDTO;
+import pcs.css.dto.NoticeDTO;
 import pcs.css.dto.UserInfoDTO;
 import pcs.css.persistance.mapper.IUserInfoMapper;
 import pcs.css.service.IMailService;
@@ -15,6 +16,7 @@ import pcs.css.util.EncryptUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +31,16 @@ public class UserInfoService implements IUserInfoService {
     //메일 발송을 위한 MailService 자바 객체 가져오기
     @Resource(name = "MailService")
     private IMailService mailService;
+
+    @Override
+    public List<UserInfoDTO> getUserList() throws Exception {
+
+        log.info(this.getClass().getName() + ".getUserList start!");
+
+        return userInfoMapper.getUserList();
+
+    }
+
 
     @Override
     public UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception{

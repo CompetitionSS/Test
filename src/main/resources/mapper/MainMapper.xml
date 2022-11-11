@@ -3,7 +3,12 @@
 
 <mapper namespace="pcs.css.persistance.mapper.IMainMapper">
 
-
+    <select id="count" parameterType="MainDTO" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        COMPETITION
+    </select>
 
     <select id="SearchMainList" parameterType="MainDTO" resultType="MainDTO">
      SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.S_YEAR, C.B_YEAR, C.R_DATE, C.URL
@@ -47,11 +52,22 @@
         </if>
 
   ORDER BY R_DATE DESC
-    </select>
-    <select id="getMainList" parameterType="MainDTO" resultType="MainDTO">
-    SELECT C.C_NAME, C.AREA, C.DEADLINE, C.CANDIDATE, C.ORGANIZER, C.S_YEAR, C.B_YEAR, C.R_DATE, C.URL
 
-    FROM COMPETITION C,DUAL
+    </select>
+    <select id="getMainList" resultType="MainDTO">
+    SELECT *
+
+    FROM COMPETITION
+    ORDER BY R_DATE desc
+    </select>
+    <select id="getMainList2" parameterType="MainDTO"  resultType="MainDTO">
+    SELECT *
+    FROM(
+            SELECT ROW_NUMBER() OVER (ORDER BY R_DATE) NUM, C.*
+            FROM COMPETITION C
+            ORDER BY R_DATE desc
+            )
+    WHERE NUM BETWEEN #{start} AND #{finish}
     ORDER BY R_DATE desc
     </select>
     <insert id="InsertMainInfo" parameterType="MainDTO">

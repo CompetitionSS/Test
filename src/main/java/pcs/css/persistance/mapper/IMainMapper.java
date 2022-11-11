@@ -2,6 +2,7 @@ package pcs.css.persistance.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import pcs.css.dto.MainDTO;
+import pcs.css.dto.PageDTO;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface IMainMapper {
 
     List<MainDTO> getMainList() throws Exception;
+
+    List<MainDTO> getMainList2(MainDTO pDTO) throws Exception;
 
     void InsertMainInfo(MainDTO pDTO) throws Exception;
 
@@ -23,4 +26,6 @@ public interface IMainMapper {
     List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception;
 
     MainDTO getMainExists(MainDTO pDTO) throws Exception;
+
+    int count(MainDTO pDTO) throws Exception;
 }

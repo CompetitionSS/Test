@@ -34,44 +34,34 @@ public class MainController {
     public String MainList(HttpServletRequest request, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".MainList start!");
         MainDTO mDTO = new MainDTO();
-
+        PageDTO pageDTO;
        int count = mainService.count(mDTO);
-
+        log.info(String.valueOf(count));
        String no = CmmUtil.nvl(request.getParameter("num"));
-       int num, start, finish = 0;
-       if(no.isEmpty()){
-           num = 1;
-       }else num = Integer.parseInt(no);
-        log.info(no);
-       finish = count - ((num-1)* 10);
-       start = finish - 9 ;
-       if(start < 1) start = 1;
-       mDTO.setStart(start);
-       mDTO.setFinish(finish);
-        List<MainDTO> mList = mainService.getMainList2(mDTO);
-        int pageNum_cnt = 10;
-        // 표시되는 페이지 번호 중 마지막 번호
-        int endPageNum = (int)(Math.ceil((double)num / (double)pageNum_cnt)) * pageNum_cnt;
-        // 표시되는 페이지 번호 중 첫번째 번호
-        int startPageNum = endPageNum - (pageNum_cnt - 1);
-        // 마지막 번호 재계산
-        int endPageNum_tmp = (int)(Math.ceil((double)count / (double)pageNum_cnt));
-        if(endPageNum > endPageNum_tmp) {
-            endPageNum = endPageNum_tmp;
-        }
 
-        boolean prev = num != 1;
-        boolean next = num * pageNum_cnt < count;
+       if(no.isEmpty()){
+           pageDTO = new PageDTO(1,count);
+       }else {
+           pageDTO = new PageDTO(Integer.parseInt(no),count);
+       }
+
+
+
+
+        List<MainDTO> mList = mainService.getMainList2(pageDTO);
+
+
+
 
 
         // 현재 페이지
-        model.addAttribute("select", num);
-        model.addAttribute("startPageNum", startPageNum);
-        model.addAttribute("endPageNum", endPageNum);
-        log.info(String.valueOf(prev));
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
+
         // 이전 및 다음
-        model.addAttribute("prev", prev);
-        model.addAttribute("next", next);
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
         if(mList == null) {
             mList = new ArrayList<>();
         }
@@ -126,12 +116,40 @@ public class MainController {
         String b_year =CmmUtil.nvl(request.getParameter("b_year"));
         pDTO.setB_year(b_year);
 
+
+
+        PageDTO pageDTO;
+        int count = mainService.Searchcount(pDTO);
+        log.info(String.valueOf(count));
+        String no = CmmUtil.nvl(request.getParameter("num"));
+        log.info(no);
+
+        if(no.isEmpty()){
+
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(no),count);
+
+        }
+
+
+        pDTO.setStart(pageDTO.getStart());
+
+        pDTO.setFinish(pageDTO.getFinish());
+
         List<MainDTO> mList = mainService.SearchMainList(pDTO);
         if (mList == null) {
             mList = new ArrayList<>();
 
         }
 
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
+
+        // 이전 및 다음
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
         model.addAttribute("mList", mList);
         // 조회된 리스트 결과값 넣어주기
 

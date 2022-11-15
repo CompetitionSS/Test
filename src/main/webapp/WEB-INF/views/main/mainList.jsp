@@ -24,10 +24,10 @@
 </head>
 <body>
 <br/>
-<form action="/main/mainCrawling" method="get">
-    <button type="submit" class ="btn btn-outline-primary">크롤링 실행
+
+    <button type="button" class ="btn btn-outline-primary">크롤링 실행
     </button>
-</form>
+
 <table border="1" width="1600px">
     <tr>
         <td width="300" height="90" align="center">공모전명</td>

@@ -164,4 +164,8 @@ public class ChatController {
         return "/index";
 
     }
+    @GetMapping(value = "/chat/chatBot")
+    public String Chatbot(){
+        return "/chat/chatBot";
+    }
 }

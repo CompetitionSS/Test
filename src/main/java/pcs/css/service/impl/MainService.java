@@ -34,7 +34,12 @@ public class MainService implements IMainService {
 
         return mainMapper.count(mDTO);
     }
+    @Override
+    public int Searchcount(MainDTO mDTO) throws Exception{
+        log.info(this.getClass().getName()+".count start!!");
 
+        return mainMapper.Searchcount(mDTO);
+    }
     @Transactional
     @Override
     public List<MainDTO> getMainList() throws Exception {
@@ -45,7 +50,7 @@ public class MainService implements IMainService {
 
     }
     @Override
-    public List<MainDTO> getMainList2(MainDTO pDTO) throws Exception {
+    public List<MainDTO> getMainList2(PageDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".getMainList start!");
 
@@ -57,10 +62,12 @@ public class MainService implements IMainService {
     public List<MainDTO> SearchMainList(MainDTO mDTO) throws Exception{
         log.info(this.getClass().getName()+".SearchMainList start!");
 
+
         List<MainDTO> mList = mainMapper.SearchMainList(mDTO);
         if(mList==null){
             mList = new ArrayList<>();
         }
+
         return mList;
     }
 
@@ -119,7 +126,7 @@ public class MainService implements IMainService {
         String url1 = "https://www.wevity.com/?c=find&s=1&gub=1&cidx=20";
         String url2 = "&gp=";
 
-        for(int url3 = 11; url3< 20;url3++){
+        for(int url3 = 21; url3< 22;url3++){
             String url = url1+url2+url3;
             Document doc1 = null; //
 
@@ -177,11 +184,10 @@ public class MainService implements IMainService {
                             case 8:
                                 break;
                             case 1:
-                                if(element3.child(i).text().length() > 5) {
+                                if (element3.child(i).text().length() > 5) {
                                     mMap.put("candidate", element3.child(i).text().substring(5));
 
-                                }
-                                else{
+                                } else {
                                     mMap.put("candidate", "제한없음");
                                 }
                                 mList.get(ListCount).setCandidate(mMap.get("candidate"));
@@ -191,13 +197,13 @@ public class MainService implements IMainService {
                                 mList.get(ListCount).setS_year(mMap.get("s_year"));
                                 mMap.put("deadline", element3.child(i).text().substring(5).split("~")[1].split("D")[0].trim());
                                 mList.get(ListCount).setDeadline(mMap.get("deadline"));
-                                mList.get(ListCount).setB_year(mMap.get("deadline").substring(0,4));
+                                mList.get(ListCount).setB_year(mMap.get("deadline").substring(0, 4));
                                 break;
                             case 7:
-                                if(element3.child(i).text().length() > 5){
+                                if (element3.child(i).text().length() > 5) {
                                     mMap.put("url", element3.child(i).text().substring(5));
 
-                                }else{
+                                } else {
                                     mMap.put("url", "https://www.naver.com/");
                                 }
                                 mList.get(ListCount).setUrl(mMap.get("url"));
@@ -210,38 +216,32 @@ public class MainService implements IMainService {
                         }
 
 
-
-
-
                         mList.get(ListCount).setArea("서울시강서구");
-
 
 
                     }
                     ListCount++;
                 }
-                ListCount= 0;
+                ListCount = 0;
                 for (Element element2 : elements1) {
                     String c_name = element2.getElementsByClass("tit-area").text();
 
                     int c_nameIndex = c_name.indexOf("조회수");
-                    if (c_nameIndex > 0) {
-                        c_name = c_name.substring(0, c_nameIndex);
-
-                        mList.get(ListCount).setC_name(c_name);
-                        log.info(mList.get(ListCount).getC_name());
-                        log.info(mList.get(ListCount).getOrganizer());
-                        log.info( mList.get(ListCount).getDeadline());
-                        log.info( mList.get(ListCount).getB_year());
-                        log.info( mList.get(ListCount).getS_year());
-                        MainDTO mainDTO = mainMapper.getMainExists(mList.get(ListCount));
-                        if(!CmmUtil.nvl(mainDTO.getExists_yn()).equals("Y")){
-                            mainMapper.InsertMainInfo(mList.get(ListCount));
-                        }
-
-                        ListCount++;
+                    c_name = c_name.substring(0, c_nameIndex);
+                    mList.get(ListCount).setC_name(c_name);
+                    log.info(mList.get(ListCount).getC_name());
+                    log.info(mList.get(ListCount).getOrganizer());
+                    log.info(mList.get(ListCount).getDeadline());
+                    log.info(mList.get(ListCount).getB_year());
+                    log.info(mList.get(ListCount).getS_year());
+                    MainDTO mainDTO = mainMapper.getMainExists(mList.get(ListCount));
+                    if (!CmmUtil.nvl(mainDTO.getExists_yn()).equals("Y")) {
+                        mainMapper.InsertMainInfo(mList.get(ListCount));
                     }
+
+                    ListCount++;
                 }
+
 
 
 

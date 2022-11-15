@@ -5,19 +5,30 @@ import lombok.Data;
 
 @Data
 public class PageDTO {
-    private int pageNum;// 현재 페이지 번호
-    private int amount;
-    private int recordSize;       // 페이지당 출력할 데이터 개수
-    private int pageSize;         // 화면 하단에 출력할 페이지 사이즈
-
-
-    public PageDTO() {
-        this.pageNum = 1;
-        this.recordSize = 10;
-        this.pageSize = 10;
+   private int num, start, finish = 0;
+   private int pageNum_cnt = 10;
+    private int endPageNum = 0;
+    // 표시되는 페이지 번호 중 첫번째 번호
+    private int startPageNum = 0;
+    private int endPageNum_tmp;
+    private boolean prev;
+    private boolean next;
+    public PageDTO(int a,int count){
+       num = a;
+       finish = count - ((num-1)* 10);
+       start = finish - 9 ;
+       endPageNum = (int)(Math.ceil((double)num / (double)pageNum_cnt)) * pageNum_cnt;
+       startPageNum = endPageNum - (pageNum_cnt - 1);
+       endPageNum_tmp = endpage(count);
+        if(endPageNum > endPageNum_tmp) {
+            endPageNum = endPageNum_tmp;
+        }
+        if(start < 1) start = 1;
+        prev = num != 1;
+        next = num * pageNum_cnt < count;
+   }
+    int endpage(int count){
+            return (int)(Math.ceil((double)count / (double)pageNum_cnt));
     }
 
-    public int getOffset() {
-        return (pageNum - 1) * recordSize;
-    }
 }

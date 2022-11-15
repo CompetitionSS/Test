@@ -1,51 +1,56 @@
+<%@ page contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Hello WebSocket</title>
     <link href="css/chatbot.css" rel="stylesheet">
-    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+
     <script src="js/app.js" charset="UTF-8"></script>
+    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <!-- Channel Plugin Scripts -->
+    <script>
+        (function() {
+            var w = window;
+            if (w.ChannelIO) {
+                return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+            }
+            var ch = function() {
+                ch.c(arguments);
+            };
+            ch.q = [];
+            ch.c = function(args) {
+                ch.q.push(args);
+            };
+            w.ChannelIO = ch;
+            function l() {
+                if (w.ChannelIOInitialized) {
+                    return;
+                }
+                w.ChannelIOInitialized = true;
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+                s.charset = 'UTF-8';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            }
+            if (document.readyState === 'complete') {
+                l();
+            } else if (window.attachEvent) {
+                window.attachEvent('onload', l);
+            } else {
+                window.addEventListener('DOMContentLoaded', l, false);
+                window.addEventListener('load', l, false);
+            }
+        })();
+        ChannelIO('boot', {
+            "pluginKey": "235cd768-4afe-4ebc-bcd1-e7448b26e366"
+        });
+    </script>
+    <!-- End Channel Plugin -->
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">웹소켓 연결:</label>
-                    <button id="connect" class="btn btn-default" type="submit">연결</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">해제
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="msg">문의사항</label>
-                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
-                </div>
-                <button id="send" class="btn btn-default" disabled type="submit">보내기</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>메세지</th>
-                </tr>
-                </thead>
-                <tbody id="communicate">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 </body>
 </html>

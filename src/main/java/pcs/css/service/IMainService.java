@@ -10,8 +10,10 @@ import java.util.List;
 public interface IMainService {
 
 
+    int Searchcount(MainDTO mDTO) throws Exception;
+
     List<MainDTO> getMainList() throws Exception;
-    List<MainDTO> getMainList2(MainDTO pDTO) throws Exception;
+    List<MainDTO> getMainList2(PageDTO pDTO) throws Exception;
 
     int count(MainDTO pDTO) throws Exception;
 

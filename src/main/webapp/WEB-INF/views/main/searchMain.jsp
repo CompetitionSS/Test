@@ -7,9 +7,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+    boolean prev = (boolean) request.getAttribute("prev");
+    boolean next = (boolean) request.getAttribute("next");
 
+    int startPageNum = (int) request.getAttribute("startPageNum");
+    int endPageNum = (int) request.getAttribute("endPageNum");
+    int select = (int) request.getAttribute("select");
     List<MainDTO> mList = (List<MainDTO>) request.getAttribute("mList");
     MainDTO pDTO = (MainDTO) request.getAttribute("pDTO");
+    String purl =  request.getRequestURL().toString().replaceAll(".jsp","");
+    String c = request.getQueryString();
+    String a = purl.replaceFirst("/WEB-INF/views/","")+"?" + c.replaceFirst("&num="+select,"");
+
+
    /* List<MainDTO> sList = new ArrayList<>();
 
     for(int i = 0; i< mList.size();i++){
@@ -27,8 +37,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
     <title>메인 리스트</title>
+    <link href="css/chatbot.css" rel="stylesheet">
+    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <script src="js/app.js" charset="UTF-8"></script>
+    <!-- Channel Plugin Scripts -->
+    <script>
+        (function() {
+            var w = window;
+            if (w.ChannelIO) {
+                return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+            }
+            var ch = function() {
+                ch.c(arguments);
+            };
+            ch.q = [];
+            ch.c = function(args) {
+                ch.q.push(args);
+            };
+            w.ChannelIO = ch;
+            function l() {
+                if (w.ChannelIOInitialized) {
+                    return;
+                }
+                w.ChannelIOInitialized = true;
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+                s.charset = 'UTF-8';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            }
+            if (document.readyState === 'complete') {
+                l();
+            } else if (window.attachEvent) {
+                window.attachEvent('onload', l);
+            } else {
+                window.addEventListener('DOMContentLoaded', l, false);
+                window.addEventListener('load', l, false);
+            }
+        })();
+        ChannelIO('boot', {
+            "pluginKey": "235cd768-4afe-4ebc-bcd1-e7448b26e366"
+        });
+    </script>
 </head>
 <body>
 <br/>
@@ -83,5 +138,29 @@
     <%
         }
     %>
-
+</table>
+<div style="text-align: center; margin-bottom: 50px;">
+    <% if(prev) {%>
+    <button type="button" class="btn btn-secondary" onclick="location.href='<%=a%>&num=<%=select-1%>'">Prev</button>
+    <%}%>
+    <div class="btn-group " style="margin: 0 auto; display: inline-block;">
+        <% for (int i = startPageNum; i <= endPageNum; i++) {
+            if(select == i) {%>
+        <a style="color: red;" href="<%=a%>&num=<%=i%>">
+            <button class="btn btn-secondary" >
+                <%=i%>
+            </button></a>
+        <%} else {%>
+        <a style="" href="<%=a%>&num=<%=i%>">
+            <button class="btn btn-secondary" >
+                <%=i%>
+            </button></a>
+        <% }
+        } %>
+    </div>
+    <% if(next) {%>
+    <button type="button" class="btn btn-secondary" onclick="location.href='<%=a%>&num=<%=select+1%>'">Next</button>
+    <% } %>
+</div>
+</body>
 </html>

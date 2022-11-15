@@ -4,44 +4,74 @@
 <mapper namespace="pcs.css.persistance.mapper.IMainMapper">
 
     <select id="count" parameterType="MainDTO" resultType="int">
-        SELECT
-        COUNT(*)
-        FROM
-        COMPETITION
+        SELECT COUNT(*)
+        FROM COMPETITION
     </select>
 
-    <select id="SearchMainList" parameterType="MainDTO" resultType="MainDTO">
-     SELECT *
-         FROM COMPETITION ,DUAL
-    WHERE
-
-
-        <![CDATA[
+    <select id="Searchcount" parameterType="MainDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM COMPETITION
+        WHERE <![CDATA[
            c_name LIKE '%'||#{c_name,jdbcType=VARCHAR}||'%'
   ]]>
 
         <if test="area != null">
 
             <![CDATA[  AND area LIKE '%'||#{area,jdbcType=VARCHAR}||'%' ]]>
-            </if>
-
-
+        </if>
 
 
         <if test= "deadline != null">
 
-            <![CDATA[    AND TO_CHAR(deadline,'mmdd') >= #{deadline,jdbcType=VARCHAR}]]>
+            <![CDATA[    AND TO_CHAR(deadline,'MMdd') >= #{deadline,jdbcType=VARCHAR}]]>
         </if>
 
         <if test= '!candidate.equals("전체") and candidate != null'>
-              <![CDATA[  AND candidate  LIKE  '%'||#{candidate,jdbcType=VARCHAR}||'%' ]]>
+            <![CDATA[  AND candidate  LIKE  '%'||#{candidate,jdbcType=VARCHAR}||'%' ]]>
         </if>
-        <if test= "s_organizer != null">
-           AND organizer2 in
-            <foreach collection="s_organizer" item="item" index="index" separator="," open="(" close=")">
-                #{item}
-            </foreach>
+         <if test= "s_organizer != null">
+        AND organizer2 in
+        <foreach collection="s_organizer" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+           </if>
+        <if test='s_year != null and !s_year.equals("전체")'>
+            <![CDATA[  AND s_year  <= #{s_year,jdbcType=VARCHAR} AND deadline >= #{s_year,jdbcType=VARCHAR}]]>
         </if>
+        <if test= "b_year != null">
+            <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
+        </if>
+    </select>
+
+    <select id="SearchMainList" parameterType="MainDTO" resultType="MainDTO">
+        SELECT *
+        FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY R_DATE) NUM, C.*
+            FROM COMPETITION C
+            WHERE   <![CDATA[
+           c_name LIKE '%'||#{c_name,jdbcType=VARCHAR}||'%'
+  ]]>
+
+        <if test="area != null">
+
+            <![CDATA[  AND area LIKE '%'||#{area,jdbcType=VARCHAR}||'%' ]]>
+        </if>
+
+
+        <if test= "deadline != null">
+
+            <![CDATA[    AND TO_CHAR(deadline,'MMdd') >= #{deadline,jdbcType=VARCHAR}]]>
+        </if>
+
+        <if test= '!candidate.equals("전체") and candidate != null'>
+            <![CDATA[  AND candidate  LIKE  '%'||#{candidate,jdbcType=VARCHAR}||'%' ]]>
+        </if>
+         <if test= "s_organizer != null">
+            AND organizer2 in
+             <foreach collection="s_organizer" item="item" index="index" separator="," open="(" close=")">
+                 #{item}
+             </foreach>
+         </if>
         <if test='s_year != null and !s_year.equals("전체")'>
             <![CDATA[  AND s_year  <= #{s_year,jdbcType=VARCHAR} AND deadline >= #{s_year,jdbcType=VARCHAR}]]>
         </if>
@@ -49,34 +79,31 @@
             <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
         </if>
 
-  ORDER BY R_DATE DESC
+        )
+        WHERE NUM BETWEEN #{start} AND #{finish}
+        ORDER BY R_DATE DESC
 
     </select>
     <select id="getMainList" resultType="MainDTO">
-    SELECT *
+        SELECT *
 
-    FROM COMPETITION
-    ORDER BY R_DATE desc
+        FROM COMPETITION
+        ORDER BY R_DATE desc
     </select>
-    <select id="getMainList2" parameterType="MainDTO"  resultType="MainDTO">
-    SELECT *
-    FROM(
-            SELECT ROW_NUMBER() OVER (ORDER BY R_DATE) NUM, C.*
-            FROM COMPETITION C
-            ORDER BY R_DATE desc
-            )
-    WHERE NUM BETWEEN #{start} AND #{finish}
-    ORDER BY R_DATE desc
+    <select id="getMainList2" parameterType="PageDTO" resultType="MainDTO">
+        SELECT *
+        FROM (
+                 SELECT ROW_NUMBER() OVER (ORDER BY R_DATE) NUM, C.*
+                 FROM COMPETITION C
+                 ORDER BY R_DATE desc
+             )
+        WHERE NUM BETWEEN #{start} AND #{finish}
+        ORDER BY R_DATE desc
     </select>
     <insert id="InsertMainInfo" parameterType="MainDTO">
         INSERT INTO COMPETITION
-        (
-            C_NAME, AREA, DEADLINE, CANDIDATE, ORGANIZER, S_YEAR, B_YEAR, R_DATE, URL
-        )
-        VALUES(
-                      #{c_name}, #{area}, #{deadline}, #{candidate}, #{organizer}, #{s_year}, #{b_year}, SYSDATE,#{url}
-
-              )
+        (C_NAME, AREA, DEADLINE, CANDIDATE, ORGANIZER, S_YEAR, B_YEAR, R_DATE, URL)
+        VALUES (#{c_name}, #{area}, #{deadline}, #{candidate}, #{organizer}, #{s_year}, #{b_year}, SYSDATE, #{url})
     </insert>
     <select id="getMainExists" parameterType="MainDTO" resultType="MainDTO">
         SELECT DECODE(COUNT(1), 0, 'N', 'Y') AS EXISTS_YN

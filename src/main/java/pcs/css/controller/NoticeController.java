@@ -62,6 +62,33 @@ public class NoticeController {
     }
 
 
+    @GetMapping(value = "noticeReview/NoticeReviewList")
+    public String ReviewList(ModelMap model) throws Exception {
+
+        // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
+        log.info(this.getClass().getName() + ".ReviewList start!");
+
+        // 공지사항 리스트 가져오기
+        List<NoticeDTO> rList = noticeService.getReviewList();
+        for (NoticeDTO noticeDTO : rList) {
+            log.info(noticeDTO.getNotice_seq());
+        }
+
+        if (rList == null) {
+            rList = new ArrayList<>();
+        }
+
+        // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("rList", rList);
+
+        // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
+        log.info(this.getClass().getName() + ".ReviewList end!");
+        // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
+        return "/noticeReview/NoticeReviewList";
+
+    }
+
+
     @GetMapping(value = "notice/NoticeReg")
     public String NoticeReg() {
 
@@ -70,6 +97,15 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeReg end!");
 
         return "/notice/NoticeReg";
+    }
+    @GetMapping(value = "noticeReview/NoticeReviewReg")
+    public String NoticeReviewReg() {
+
+        log.info(this.getClass().getName() + ".NoticeReg start!");
+
+        log.info(this.getClass().getName() + ".NoticeReg end!");
+
+        return "/noticeReview/NoticeReviewReg";
     }
 
     /**
@@ -129,6 +165,65 @@ public class NoticeController {
         }
 
         return "/notice/MsgToList";
+    }
+
+
+
+
+    @PostMapping(value = "noticeReview/NoticeReviewInsert")
+    public String ReviewInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
+
+        log.info(this.getClass().getName() + ".ReviewInsert start!");
+
+        String msg = "";
+
+        try {
+            /*
+             * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
+             */
+            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
+            String title = CmmUtil.nvl(request.getParameter("title")); // 제목
+            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
+            String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+
+
+            log.info("user_id : " + user_id);
+            log.info("title : " + title);
+            log.info("noticeYn : " + noticeYn);
+            log.info("contents : " + contents);
+
+            NoticeDTO pDTO = new NoticeDTO();
+
+            pDTO.setUser_id(user_id);
+            pDTO.setTitle(title);
+            pDTO.setNotice_yn(noticeYn);
+            pDTO.setContents(contents);
+
+            /*
+             * 게시글 등록하기위한 비즈니스 로직을 호출
+             */
+            noticeService.InsertNoticeInfo(pDTO);
+
+            // 저장이 완료되면 사용자에게 보여줄 메시지
+            msg = "등록되었습니다.";
+
+
+        } catch (Exception e) {
+
+            // 저장이 실패되면 사용자에게 보여줄 메시지
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            log.info(this.getClass().getName() + ".NoticeReviewInsert end!");
+
+            // 결과 메시지 전달하기
+            model.addAttribute("msg", msg);
+
+        }
+
+        return "/notice/MsgToListReview";
     }
 
     /**
@@ -342,3 +437,6 @@ public class NoticeController {
     }
 
 }
+
+
+

@@ -10,8 +10,10 @@ public interface INoticeMapper {
 
     //게시판 리스트
     List<NoticeDTO> getNoticeList() throws Exception;
+    List<NoticeDTO> getReviewList() throws Exception;
     //게시판 글 등록
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
+    void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
 
     //게시판 상세보기
     NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;

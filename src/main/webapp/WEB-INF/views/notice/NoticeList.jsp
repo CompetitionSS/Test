@@ -28,22 +28,81 @@
         }
 
     </script>
+    <link  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+         
+    </style>
 </head>
 
 <body>
-<img src="/img/asd.gif" alt="사진" onclick="location.href='/main/main'">
-<header align=center>
-    <h1>공지사항</h1>
-    <hr>
-</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <a href="main"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
 
-<div align=right>
-    <a href="/user/LoginForm">로그인</a>
-    <a href="/user/UserRegForm">회원가입</a>
+
+    <div class="col-md-4">
+    </div>
 </div>
-<div>커뮤니티</div>
-<hr>
-<ul>
+</div>
+
+
+<div class="container" style="height: 100px">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <% if(session.getAttribute("SS_USER_ID") == null){%>
+
+                <input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+
+
+
+                <%}else{%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+
+
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" style="height: 100px;">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/noticeQna/NoticeQnaList">qna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/noticeReview/NoticeReviewList">공모전 리뷰</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<%--<ul>             //이동키
     <li class="on">
         <a href="/notice/NoticeList">공지사항</a>
     </li>
@@ -54,12 +113,14 @@
         <a href="/noticeReview/NoticeReviewList">Review</a>
     </li>
 
-</ul>
+</ul>--%>
 
-<hr/>
-<br/>
 
-<table border="1" width="600px" align="center">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="margin: auto; width: 600px" >
+<table>
     <tr>
 
         <td width="100" align="center">순번</td>
@@ -107,7 +168,43 @@
         }
     %>
 </table>
-<a href="/notice/NoticeReg" align="center">[글쓰기]</a>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="height: 100px" >
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="width: 150px; margin: auto">
+<button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right";>글쓰기</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" style="margin: auto; width: 100px;" >
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

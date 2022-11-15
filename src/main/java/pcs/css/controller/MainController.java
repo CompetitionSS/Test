@@ -26,8 +26,41 @@ public class MainController {
     private IMainService mainService;
 
     @GetMapping(value = "main/main")
-    public String MainInfo() throws Exception {
+    public String MainInfo(HttpServletRequest request, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".Main start!");
+        MainDTO mDTO = new MainDTO();
+        PageDTO pageDTO;
+        int count = mainService.count(mDTO);
+        log.info(String.valueOf(count));
+        String no = CmmUtil.nvl(request.getParameter("num"));
+
+        if(no.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(no),count);
+        }
+
+
+
+
+        List<MainDTO> mList = mainService.getMainList2(pageDTO);
+
+
+
+
+
+        // 현재 페이지
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
+
+        // 이전 및 다음
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
+        if(mList == null) {
+            mList = new ArrayList<>();
+        }
+        model.addAttribute("mList", mList);
         return "/main/main";
     }
     @GetMapping(value = "main/mainList")

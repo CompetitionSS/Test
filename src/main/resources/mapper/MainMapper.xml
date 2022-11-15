@@ -81,7 +81,7 @@
 
         )
         WHERE NUM BETWEEN #{start} AND #{finish}
-        ORDER BY R_DATE DESC
+        ORDER BY DEADLINE DESC
 
     </select>
     <select id="getMainList" resultType="MainDTO">
@@ -95,10 +95,10 @@
         FROM (
                  SELECT ROW_NUMBER() OVER (ORDER BY R_DATE) NUM, C.*
                  FROM COMPETITION C
-                 ORDER BY R_DATE desc
+                 ORDER BY DEADLINE desc
              )
         WHERE NUM BETWEEN #{start} AND #{finish}
-        ORDER BY R_DATE desc
+        ORDER BY DEADLINE desc
     </select>
     <insert id="InsertMainInfo" parameterType="MainDTO">
         INSERT INTO COMPETITION

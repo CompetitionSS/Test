@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pcs.css.dto.MainDTO" %>
+<%@ page import="pcs.css.util.DateUtil" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -39,6 +40,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+    />
+
+    <script src='https://kit.fontawesome.com/9e30f8c908.js' crossorigin='anonymous'></script>
     <title>메인 리스트</title>
     <link href="css/chatbot.css" rel="stylesheet">
     <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
@@ -87,7 +96,7 @@
 </head>
 <body>
 <br/>
-<table border="1" width="1600px">
+<table class="table table-striped table-bordered mt-4">
     <tr>
         <td width="300" height="90" align="center">공모전명</td>
         <td width="200" align="center">지역</td>
@@ -109,28 +118,28 @@
             }
 
     %>
-    <tr>
+  <%--  <tr>
         <td colspan="8" align="center"><a href="<%=CmmUtil.nvl(rDTO.getUrl()) %>"><%=CmmUtil.nvl(rDTO.getUrl()) %></a>
         </td>
-    </tr>
+    </tr>--%>
     <tr>
 
-        <td align="center"><%=CmmUtil.nvl(rDTO.getC_name()) %>
+        <td align="center"><a href = "<%=CmmUtil.nvl(rDTO.getUrl()) %>"><%=CmmUtil.nvl(rDTO.getC_name()) %></a>
 
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getArea()) %>
         </td>
-        <td align="center"><%=CmmUtil.nvl(rDTO.getDeadline()) %>
+        <td align="center"><%=CmmUtil.nvl(rDTO.getDeadline().substring(0,10)) %>
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getCandidate()) %>
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getOrganizer()) %>
         </td>
-        <td align="center"><%=CmmUtil.nvl(rDTO.getS_year()) %>
+        <td align="center"><%=CmmUtil.nvl(rDTO.getS_year().substring(0,10)) %>
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getB_year()) %>
         </td>
-        <td align="center"><%=CmmUtil.nvl(rDTO.getR_date()) %>
+        <td align="center"><%=CmmUtil.nvl(rDTO.getR_date().substring(0,10)) %>
         </td>
 
     </tr>

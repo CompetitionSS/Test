@@ -10,7 +10,19 @@
 
 	      FROM NOTICE N
 
+		WHERE N.REVIEW='N' OR N.REVIEW='n'
+
 	 	 ORDER BY NOTICE_SEQ DESC
+	</select>
+
+	<select id="getReviewList" resultType="NoticeDTO">
+		SELECT Y.NOTICE_SEQ, Y.TITLE, Y.NOTICE_YN, Y.READ_CNT,  Y.USER_ID
+
+		FROM NOTICE Y
+
+		WHERE Y.REVIEW='Y' OR Y.REVIEW='y'
+
+		ORDER BY NOTICE_SEQ DESC
 	</select>
 	
 	<!-- 게시판 등록 쿼리 -->
@@ -18,12 +30,25 @@
 		INSERT INTO NOTICE
 			(
 				NOTICE_SEQ, TITLE, NOTICE_YN,READ_CNT,USER_ID,REG_DT, CONTENTS,
-		      	REG_ID
+		      	REG_ID,REVIEW
 			)
 		VALUES(
 			(SELECT NVL(MAX(A.NOTICE_SEQ),0)+1 FROM NOTICE A),
-			#{title}, #{notice_yn},0,#{user_id},  SYSDATE, #{contents},#{user_id}
+			#{title}, #{notice_yn},0,#{user_id},  SYSDATE, #{contents},#{user_id},'N'
 		)
+	</insert>
+
+
+	<insert id="InsertReviewInfo" parameterType="NoticeDTO"> /*리뷰 등록 쿼리*/
+		INSERT INTO NOTICE
+		(
+			NOTICE_SEQ, TITLE, NOTICE_YN,READ_CNT,USER_ID,REG_DT, CONTENTS,
+			REG_ID,REVIEW
+		)
+		VALUES(
+					  (SELECT NVL(MAX(A.NOTICE_SEQ),0)+1 FROM NOTICE A),
+					  #{title}, #{notice_yn},0,#{user_id},  SYSDATE, #{contents},#{user_id},'Y'
+			  )
 	</insert>
 	
 	<!-- 게시판 상세보기 쿼리 -->

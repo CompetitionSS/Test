@@ -28,6 +28,16 @@ public class NoticeService implements INoticeService {
 
     }
 
+    @Transactional
+    @Override
+    public List<NoticeDTO> getReviewList() throws Exception {
+
+        log.info(this.getClass().getName() + ".getReviewList start!");
+
+        return noticeMapper.getReviewList();
+
+    }
+
 
     @Transactional
     @Override
@@ -36,6 +46,17 @@ public class NoticeService implements INoticeService {
         log.info(this.getClass().getName() + ".InsertNoticeInfo start!");
 
         noticeMapper.InsertNoticeInfo(pDTO);
+    }
+
+
+
+    @Transactional
+    @Override
+    public void InsertReviewInfo(NoticeDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".InsertReviewInfo start!");
+
+        noticeMapper.InsertReviewInfo(pDTO);
     }
 
     @Transactional

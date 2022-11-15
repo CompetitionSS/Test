@@ -14,5 +14,6 @@ public class NoticeDTO {
     private String read_cnt; // 조회수
     private String user_id; // 등록자 아이디
     private String reg_dt; // 등록일
+    private String review;
 
 }

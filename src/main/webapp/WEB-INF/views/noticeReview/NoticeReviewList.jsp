@@ -2,15 +2,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pcs.css.util.CmmUtil" %>
-<%@ page import="pcs.css.dto.NoticeReviewDTO" %>
+<%@ page import="pcs.css.dto.NoticeDTO" %>
+<%@ page import="pcs.css.dto.NoticeDTO" %>
 <%
     session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
 
-    List<NoticeReviewDTO> rList = (List<NoticeReviewDTO>) request.getAttribute("rList");
+    List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
 
 //게시판 조회 결과 보여주기
     if (rList == null) {
-        rList = new ArrayList<NoticeReviewDTO>();
+        rList = new ArrayList<NoticeDTO>();
 
     }
 
@@ -19,7 +20,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-    <title>공지 리스트</title>
+    <title>리뷰 리스트</title>
     <script type="text/javascript">
 
         //상세보기 이동
@@ -70,10 +71,10 @@
     </tr>
     <%
         for (int i = 0; i < rList.size(); i++) {
-            NoticeReviewDTO rDTO = rList.get(i);
+            NoticeDTO rDTO = rList.get(i);
 
             if (rDTO == null) {
-                rDTO = new NoticeReviewDTO();
+                rDTO = new NoticeDTO();
             }
 
     %>

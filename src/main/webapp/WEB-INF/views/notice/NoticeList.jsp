@@ -40,7 +40,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <a href="main"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
+            <a href="/main/main"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
         </div>
         <div class="col-md-4">
         </div>
@@ -119,8 +119,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="margin: auto; width: 600px" >
-<table>
+        <div class="col-md-12"  width: 600px" >
+<table class="table table-striped table-bordered mt-4" >
     <tr>
 
         <td width="100" align="center">순번</td>
@@ -152,8 +152,8 @@
 
                 }
             %></td>
-        <td align="center">
-            <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getNotice_seq())%>');">
+        <td align="center" >
+            <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getNotice_seq())%>');" style="text-decoration: none">
                 <%=CmmUtil.nvl(rDTO.getTitle()) %>
             </a>
         </td>

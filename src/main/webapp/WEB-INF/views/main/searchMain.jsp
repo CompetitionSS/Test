@@ -7,7 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+
     boolean prev = (boolean) request.getAttribute("prev");
     boolean next = (boolean) request.getAttribute("next");
 

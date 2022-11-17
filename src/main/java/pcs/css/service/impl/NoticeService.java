@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
 import pcs.css.persistance.mapper.INoticeMapper;
 import pcs.css.service.INoticeService;
@@ -37,7 +38,13 @@ public class NoticeService implements INoticeService {
         return noticeMapper.getReviewList();
 
     }
+    @Transactional
+    @Override
+    public List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception{
+         log.info(this.getClass().getName() + ".getCommentsList start!");
 
+         return noticeMapper.getCommentsList(pDTO);
+    }
 
     @Transactional
     @Override
@@ -72,7 +79,10 @@ public class NoticeService implements INoticeService {
         return noticeMapper.getNoticeInfo(pDTO);
 
     }
-
+    @Override
+    public void InsertComment(CommentDTO cDTO)throws Exception{
+         noticeMapper.InsertComment(cDTO);
+    }
     @Transactional
     @Override
     public void updateNoticeInfo(NoticeDTO pDTO) throws Exception {

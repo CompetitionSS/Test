@@ -1,6 +1,7 @@
 package pcs.css.persistance.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
 
 import java.util.List;
@@ -14,10 +15,11 @@ public interface INoticeMapper {
     //게시판 글 등록
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
     void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
-
+    void InsertComment(CommentDTO cDTO) throws Exception;
     //게시판 상세보기
     NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;
-
+    //게시판 댓글보기
+    List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception;
     //게시판 조회수 업데이트
     void updateNoticeReadCnt(NoticeDTO pDTO) throws Exception;
 

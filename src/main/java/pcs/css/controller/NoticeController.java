@@ -1,14 +1,17 @@
 package pcs.css.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.helper.DataUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
 import pcs.css.service.INoticeService;
 import pcs.css.util.CmmUtil;
+import pcs.css.util.DateUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +73,7 @@ public class NoticeController {
 
         // 공지사항 리스트 가져오기
         List<NoticeDTO> rList = noticeService.getReviewList();
+
         for (NoticeDTO noticeDTO : rList) {
             log.info(noticeDTO.getNotice_seq());
         }
@@ -225,7 +229,25 @@ public class NoticeController {
 
         return "/notice/MsgToListReview";
     }
+    @PostMapping(value = "notice/InsertComment")
+    public String InsertComment(HttpServletRequest request) throws Exception {
+        log.info(this.getClass().getName() + ".InsertComment start!");
+        String notice_seq = request.getParameter("notice_seq");
+        String user_id = request.getParameter("user_id");
+        String contents = request.getParameter("contents");
 
+        CommentDTO cDTO = new CommentDTO();
+        cDTO.setNotice_seq(notice_seq);
+        cDTO.setUser_id(user_id);
+        cDTO.setContents(contents);
+        log.info(notice_seq);
+        log.info( user_id);
+        log.info(contents);
+        noticeService.InsertComment(cDTO);
+
+        log.info(this.getClass().getName() + ".InsertComment end!");
+        return "redirect:/notice/NoticeInfo?nSeq="+notice_seq;
+    }
     /**
      * 게시판 상세보기
      */
@@ -258,6 +280,8 @@ public class NoticeController {
             // 공지사항 상세정보 가져오기
             NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
 
+            List<CommentDTO> cList = noticeService.getCommentsList(pDTO);
+
             if (rDTO == null) {
                 rDTO = new NoticeDTO();
 
@@ -267,6 +291,7 @@ public class NoticeController {
 
             // 조회된 리스트 결과값 넣어주기
             model.addAttribute("rDTO", rDTO);
+            model.addAttribute("cList",cList);
 
 
         } catch (Exception e) {

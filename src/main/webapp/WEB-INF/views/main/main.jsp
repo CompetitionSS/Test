@@ -19,6 +19,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <link rel="icon" href="" type="image/x-icon" />
@@ -90,7 +91,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <a href="main"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
+            <a href="/main/main"style="text-decoration: none"> <h1 style="text-align: center">"constory" <span class="badge bg-secondary">"너를 위한 공모전 "</span></h1></a>
         </div>
         <div class="col-md-4">
         </div>
@@ -335,6 +336,10 @@
 
     <br>
 </form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
 <table class="table table-striped table-bordered mt-4">
     <tr>
         <td width="300" height="90" align="center">공모전명</td>
@@ -360,7 +365,7 @@
 
     <tr>
 
-        <td align="center"><a href = "<%=CmmUtil.nvl(rDTO.getUrl()) %>"><%=CmmUtil.nvl(rDTO.getC_name()) %></a>
+        <td align="center"><a href = "<%=CmmUtil.nvl(rDTO.getUrl()) %>" style="text-decoration: none"><%=CmmUtil.nvl(rDTO.getC_name()) %></a>
 
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getArea()) %>
@@ -384,7 +389,13 @@
         }
     %>
 </table>
-    <div style="text-align: center; margin-bottom: 50px;">
+        </div>
+    </div>
+</div>
+
+
+
+            <div style="text-align: center; margin-bottom: 50px;">
         <% if(prev) {%>
         <button type="button" class="btn btn-secondary" onclick="location.href='/main/main?num=<%=select-1%>'">Prev</button>
         <%}%>

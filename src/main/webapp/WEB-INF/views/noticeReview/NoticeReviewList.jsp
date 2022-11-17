@@ -19,6 +19,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
     <title>리뷰 리스트</title>
     <script type="text/javascript">
@@ -32,7 +33,7 @@
 </head>
 
 <body>
-<img src="/img/asd.gif" alt="사진" onclick="location.href='/main/main'">
+<%--<img src="/img/asd.gif" alt="사진" onclick="location.href='/main/main'">
 <header align=center>
     <h1>REVIEW</h1>
     <hr>
@@ -58,9 +59,81 @@
 </ul>
 
 <hr/>
-<br/>
+<br/>--%>
 
-<table border="1" width="600px" align="center">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+    </div>
+</div>
+</div>
+
+
+<div class="container" style="height: 100px">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <% if(session.getAttribute("SS_USER_ID") == null){%>
+
+                <input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+
+
+
+                <%}else{%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+
+
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" style="height: 100px;">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/noticeQna/NoticeQnaList">qna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/noticeReview/NoticeReviewList">공모전 리뷰</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+<table border="1" width="600px" align="center" class="table table-striped table-bordered mt-4">
     <tr>
 
         <td width="100" align="center">순번</td>
@@ -92,7 +165,7 @@
                 }
             %></td>
         <td align="center">
-            <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getNotice_seq())%>');">
+            <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getNotice_seq())%>');" style="text-decoration: none">
                 <%=CmmUtil.nvl(rDTO.getTitle()) %>
             </a>
         </td>
@@ -107,7 +180,50 @@
         }
     %>
 </table>
-<a href="/noticeReview/NoticeReviewReg" align="center">[글쓰기]</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" style="height: 100px" >
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="width: 150px; margin: auto">
+            <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right";>글쓰기</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" style="margin: auto; width: 100px;" >
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 </body>
 
 </html>

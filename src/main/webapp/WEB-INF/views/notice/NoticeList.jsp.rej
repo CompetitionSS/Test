@@ -1,0 +1,9 @@
+diff a/src/main/webapp/WEB-INF/views/notice/NoticeList.jsp b/src/main/webapp/WEB-INF/views/notice/NoticeList.jsp	(rejected hunks)
+@@ -171,7 +171,6 @@
+ 
+ <div class="container" style="height: 100px" >
+     <div class="row">
+-        <div class="col-md-4" style="width: 150px; margin: auto">
+ 
+         <div class="col-md-12" style="float: right">
+ <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right";>글쓰기</button>

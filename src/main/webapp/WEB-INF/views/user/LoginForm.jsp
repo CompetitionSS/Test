@@ -43,7 +43,8 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1>
+                <a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center" >"constory" <span class="badge bg-secondary">"로그인"</span></h1></a>
+
             </div>
             <div class="col-md-4">
             </div>
@@ -72,7 +73,7 @@
                 </button>
                 <button type="button" class="btn btn-primary" onclick="location='/user/UserRegForm'"  value="회원가입">
                     회원가입
-                </button><br><br>
+                </button>
                 <button type="button" class="btn btn-primary" onclick="location='/user/LoginidSearch'"  value="아이디 비밀번호 찾기">
                     아이디&nbsp;/&nbsp; 비밀번호 찾기
                 </button>

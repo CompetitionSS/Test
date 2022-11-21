@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
+import pcs.css.dto.PageDTO;
 import pcs.css.service.INoticeService;
 import pcs.css.util.CmmUtil;
 import pcs.css.util.DateUtil;
@@ -43,13 +44,26 @@ public class NoticeController {
      * GetMapping(value = "notice/NoticeList") =>  GET방식을 통해 접속되는 URL이 notice/NoticeList인 경우 아래 함수를 실행함
      */
     @GetMapping(value = "notice/NoticeList")
-    public String NoticeList(ModelMap model) throws Exception {
+    public String NoticeList(HttpServletRequest request,ModelMap model) throws Exception {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".NoticeList start!");
+        NoticeDTO nDTO = new NoticeDTO();
+        PageDTO pageDTO;
+        int count = noticeService.noticeCount(nDTO);
+        log.info(String.valueOf(count));
+        String no = CmmUtil.nvl(request.getParameter("num"));
 
+        if(no.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(no),count);
+        }
+
+        nDTO.setStart(pageDTO.getStart());
+        nDTO.setFinish(pageDTO.getFinish());
         // 공지사항 리스트 가져오기
-        List<NoticeDTO> rList = noticeService.getNoticeList();
+        List<NoticeDTO> rList = noticeService.getNoticeList(nDTO);
         if (rList == null) {
             rList = new ArrayList<>();
         }
@@ -57,6 +71,14 @@ public class NoticeController {
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("rList", rList);
 
+        // 현재 페이지
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
+
+        // 이전 및 다음
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".NoticeList end!");
         // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
@@ -66,17 +88,25 @@ public class NoticeController {
 
 
     @GetMapping(value = "noticeReview/NoticeReviewList")
-    public String ReviewList(ModelMap model) throws Exception {
+    public String ReviewList(HttpServletRequest request,ModelMap model) throws Exception {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
-        log.info(this.getClass().getName() + ".ReviewList start!");
+        NoticeDTO nDTO = new NoticeDTO();
+        PageDTO pageDTO;
+        int count = noticeService.reviewCount(nDTO);
 
-        // 공지사항 리스트 가져오기
-        List<NoticeDTO> rList = noticeService.getReviewList();
+        String no = CmmUtil.nvl(request.getParameter("num"));
 
-        for (NoticeDTO noticeDTO : rList) {
-            log.info(noticeDTO.getNotice_seq());
+        if(no.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(no),count);
         }
+
+        nDTO.setStart(pageDTO.getStart());
+        nDTO.setFinish(pageDTO.getFinish());
+
+        List<NoticeDTO> rList = noticeService.getReviewList(nDTO);
 
         if (rList == null) {
             rList = new ArrayList<>();
@@ -84,6 +114,15 @@ public class NoticeController {
 
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("rList", rList);
+
+        // 현재 페이지
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
+
+        // 이전 및 다음
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".ReviewList end!");

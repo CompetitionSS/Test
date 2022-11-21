@@ -10,8 +10,8 @@ import java.util.List;
 public interface INoticeMapper {
 
     //게시판 리스트
-    List<NoticeDTO> getNoticeList() throws Exception;
-    List<NoticeDTO> getReviewList() throws Exception;
+    List<NoticeDTO> getNoticeList(NoticeDTO pDTO) throws Exception;
+    List<NoticeDTO> getReviewList(NoticeDTO nDTO) throws Exception;
     //게시판 글 등록
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
     void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
@@ -28,4 +28,8 @@ public interface INoticeMapper {
 
     //게시판 글 삭제
     void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
+
+    //게시판 페이징 카운트
+    int noticeCount(NoticeDTO nDTO) throws Exception;
+    int reviewCount(NoticeDTO nDTO) throws Exception;
 }

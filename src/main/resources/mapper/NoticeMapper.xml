@@ -5,14 +5,17 @@
 <mapper namespace="pcs.css.persistance.mapper.INoticeMapper">
 
 	<!-- 게시판 리스트 쿼리 -->
-	<select id="getNoticeList" resultType="NoticeDTO">
-		SELECT N.NOTICE_SEQ, N.TITLE, N.NOTICE_YN, N.READ_CNT,  N.USER_ID
 
-	      FROM NOTICE N
-
-		WHERE N.REVIEW='N' OR N.REVIEW='n'
-
-	 	 ORDER BY NOTICE_SEQ DESC
+	<select id="getNoticeList" parameterType="NoticeDTO" resultType="NoticeDTO">
+		SELECT *
+		FROM (
+				 SELECT ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ) NUM, N.*
+				 FROM NOTICE N
+				 WHERE REVIEW='N' OR REVIEW='n'
+				 ORDER BY NOTICE_SEQ desc
+			 )
+		WHERE NUM BETWEEN #{start} AND #{finish}
+		ORDER BY NOTICE_SEQ desc
 	</select>
     <select id="getCommentsList" parameterType="NoticeDTO" resultType="CommentDTO">
 		SELECT C.USER_ID, C.CONTENTS, C.CHG_DT
@@ -20,14 +23,16 @@
 		WHERE NOTICE_SEQ = #{notice_seq}
 	</select>
 
-	<select id="getReviewList" resultType="NoticeDTO">
-		SELECT Y.NOTICE_SEQ, Y.TITLE, Y.NOTICE_YN, Y.READ_CNT,  Y.USER_ID
-
-		FROM NOTICE Y
-
-		WHERE Y.REVIEW='Y' OR Y.REVIEW='y'
-
-		ORDER BY NOTICE_SEQ DESC
+	<select id="getReviewList" parameterType="NoticeDTO" resultType="NoticeDTO">
+		SELECT *
+		FROM (
+				 SELECT ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ) NUM, N.*
+				 FROM NOTICE N
+				 WHERE REVIEW='Y' OR REVIEW='y'
+				 ORDER BY NOTICE_SEQ desc
+			 )
+		WHERE NUM BETWEEN #{start} AND #{finish}
+		ORDER BY NOTICE_SEQ desc
 	</select>
 	
 	<!-- 게시판 등록 쿼리 -->
@@ -71,7 +76,17 @@
 	      FROM NOTICE N
 	     WHERE N.NOTICE_SEQ = #{notice_seq}
 	</select>
-	
+	<!-- 자유 게시판 페이징 카운트 -->
+	<select id="noticeCount" parameterType="NoticeDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM NOTICE N
+		WHERE N.REVIEW='N' OR N.REVIEW='n'
+	</select>
+	<select id="reviewCount" parameterType="NoticeDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM NOTICE N
+		WHERE N.REVIEW='Y' OR N.REVIEW='y'
+	</select>
 
 	
 	<!-- 조회수 증가 쿼리 -->

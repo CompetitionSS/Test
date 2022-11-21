@@ -5,9 +5,17 @@
 <%@ page import="pcs.css.dto.NoticeDTO" %>
 <%@ page import="pcs.css.dto.NoticeDTO" %>
 <%
-    session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+
+
+    boolean prev = (boolean) request.getAttribute("prev");
+    boolean next = (boolean) request.getAttribute("next");
+
+    int startPageNum = (int) request.getAttribute("startPageNum");
+    int endPageNum = (int) request.getAttribute("endPageNum");
+    int select = (int) request.getAttribute("select");
 
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
+
 
 //게시판 조회 결과 보여주기
     if (rList == null) {
@@ -184,9 +192,30 @@
 
 
 <div class="container" style="height: 100px" >
+<<<<<<< HEAD
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
+=======
+    <div class="row" >
+        <div class="col-md-4" style="width: 150px; margin: auto ">
+            <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right">글쓰기</button>
+        </div>
+        <div>
+            <form action="/notice/SearchList" method="get" style="text-align: center" >
+
+                <label>
+                    <select name="search" style="height: 40px">
+                        <option value="title">제목</option>
+                        <option value="user_id">작성자</option>
+                        <option value="contents">글 내용</option>
+                    </select>
+                    <input type="text" style="height: 40px; width: 600px"  />
+                </label>
+
+            </form>
+
+>>>>>>> origin/main
         </div>
     </div>
 </div>
@@ -196,26 +225,33 @@
     <div class="row">
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
-                <ul class="pagination" style="margin: auto; width: 100px;" >
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                <div style="text-align: center; margin-bottom: 50px;" class="col-md-12 ">
+                    <% if(prev) {%>
+                    <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
+                    <%}%>
+                    <div class="col-md-12 " style="margin: 0 auto; display: inline-block;">
+                        <% for (int i = startPageNum; i <= endPageNum; i++) {
+                            if(select == i) {%>
+                        <div style="color: red;" class="page-link" >
+                            <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
+                                <%=i%> </button>
+                        </div>
+                        <%} else {%>
+                        <div style=""  class="page-link">
+                            <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
+                                <%=i%>
+                            </button></div>
+                        <% }
+                        } %>
+                    </div>
+                    <% if(next) {%>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
+                    <% } %>
+                </div>
             </nav>
         </div>
     </div>
 </div>
-
 
 
 

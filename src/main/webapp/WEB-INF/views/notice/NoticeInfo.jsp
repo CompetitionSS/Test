@@ -80,6 +80,7 @@
             <a href="javascript:doCoEdit();" id = "update">[수정]</a>
             <a href="javascript:doCoDelete();" id = "delete">[삭제]</a>
         </td>
+        
     </tr>
         <%}%>
 

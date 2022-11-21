@@ -95,7 +95,6 @@
                     <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
                 </li>
                 <li class="nav-item">
-                <li class="nav-item">
                     <a class="nav-link" href="/noticeQna/NoticeQnaList">qna</a>
                 </li>
                 <li class="nav-item">

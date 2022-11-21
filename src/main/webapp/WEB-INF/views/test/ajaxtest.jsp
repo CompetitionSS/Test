@@ -10,7 +10,10 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript">
+
     $(document).ready(function() {
+
+
       $.ajax({
         type: "GET",
         url: "/notice/Comment",
@@ -19,9 +22,11 @@
         error: function() {
           console.log('통신실패!!');
         },
-        success: function(response) {
+        success: function(data) {
+          var a = JSON.stringify(data);
 
-          console.log("통신데이터 값 : " + response);
+          console.log(a);
+          console.log(data);
         }
       });
     });

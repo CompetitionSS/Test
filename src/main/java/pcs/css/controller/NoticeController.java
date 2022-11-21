@@ -2,6 +2,8 @@ package pcs.css.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
 import org.jsoup.helper.DataUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,14 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Controller
 public class NoticeController {
 
-    /*
 
-     * 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
+     /* 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
      */
     @Resource(name = "NoticeService")
     private INoticeService noticeService;
@@ -327,17 +330,20 @@ public class NoticeController {
 
     @GetMapping(value ="notice/Comment")
     @ResponseBody
-    public String CommentCheck( ) throws Exception {
+    public JSONArray CommentCheck(String notice_seq ) throws Exception {
             NoticeDTO nDTO = new NoticeDTO();
-            nDTO.setNotice_seq("4");
+            nDTO.setNotice_seq(notice_seq);
             List<CommentDTO> cList =  noticeService.getCommentsList(nDTO);
-        ObjectMapper mapper = new ObjectMapper();
-        StringBuilder jsonString = new StringBuilder();
-        for(CommentDTO cDTO : cList){
-            jsonString.append(mapper.writeValueAsString(cDTO));
-        }
-        log.info(jsonString.toString());
-        return jsonString.toString();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JSONArray jsonArray = new JSONArray();
+          if(cList!= null){
+              for (CommentDTO commentDTO : cList) {
+                  jsonArray.put(objectMapper.writeValueAsString(commentDTO));
+                  log.info(jsonArray.getString(0));
+              }
+          }
+
+        return jsonArray;
     }
     @GetMapping(value ="test/ajaxtest")
     public String Ajaxtest(){

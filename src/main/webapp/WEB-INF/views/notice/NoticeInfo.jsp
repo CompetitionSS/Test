@@ -224,7 +224,12 @@
         $.ajax({
             url:"/notice/CommentUpdate",
             type: 'put',
-            data:JSON.stringify(jsondata),
+            data:JSON.stringify( {
+                "notice_seq" : notice_seq,
+                "ref" : ref,
+                "ref_rank" : ref_rank,
+                "contents" : contents
+            }),
             success:function(data){
                 let obj=JSON.parse(data);      //data를 받아와서 JSON형태로 변환
                 let array=["<ol>"];

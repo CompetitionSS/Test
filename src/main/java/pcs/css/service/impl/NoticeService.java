@@ -33,7 +33,20 @@ public class NoticeService implements INoticeService {
 
         return noticeMapper.reviewCount(nDTO);
     }
-     @Transactional
+    @Transactional
+    @Override
+    public CommentDTO commentUpdate(CommentDTO cDTO) throws Exception {
+        return noticeMapper.commentUpdate(cDTO);
+    }
+
+    @Override
+    public CommentDTO commentcheck(CommentDTO cDTO) throws Exception {
+        return noticeMapper.commentcheck(cDTO);
+    }
+
+
+
+    @Transactional
     @Override
     public List<NoticeDTO> getNoticeList(NoticeDTO nDTO) throws Exception {
 
@@ -93,9 +106,15 @@ public class NoticeService implements INoticeService {
         return noticeMapper.getNoticeInfo(pDTO);
 
     }
+
     @Override
     public void InsertComment(CommentDTO cDTO)throws Exception{
-         noticeMapper.InsertComment(cDTO);
+        log.info(this.getClass().getName() + ".InsertComment start!");
+        if(cDTO.getRef()==null){
+            cDTO.setRef(String.valueOf(noticeMapper.commentCount(cDTO)));
+            cDTO.setRef_rank("0");
+        }
+        noticeMapper.InsertComment(cDTO);
     }
     @Transactional
     @Override

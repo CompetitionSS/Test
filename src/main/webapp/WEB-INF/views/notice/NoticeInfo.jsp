@@ -8,6 +8,7 @@
 <%
     NoticeDTO rDTO = (NoticeDTO) request.getAttribute("rDTO");
     List<CommentDTO> cList = (List<CommentDTO>) request.getAttribute("cList");
+
     if (rDTO == null) {
         rDTO = new NoticeDTO();
 
@@ -20,7 +21,6 @@
 
 
     String ss_user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-
 //본인이 작성한 글만 수정 가능하도록 하기(1:작성자 아님 / 2: 본인이 작성한 글 / 3: 로그인안함)
     int edit = 1;
 
@@ -32,6 +32,8 @@
     } else if (ss_user_id.equals(CmmUtil.nvl(rDTO.getUser_id()))) {
         edit = 2;
 
+    }else if(!ss_user_id.equals("null")){
+        edit = 4;
     }
 
     System.out.println("user_id : " + CmmUtil.nvl(rDTO.getUser_id()));
@@ -43,7 +45,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
     <title>게시판 글보기</title>
-    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+
+
+    </style>
 </head>
 <body>
 <table border="1">
@@ -72,16 +78,48 @@
     </tr>
 
         <% for(CommentDTO comment : cList){
-
+            if(!comment.getRef_rank().equals("0")){
+                %>
+            <tr><td><%=comment.getUser_id()%></td>
+                <td hidden=""><%=comment.getRef()%></td>
+             <td>ㄴ<%=comment.getContents()%></td>
+             <td><%=CmmUtil.nvl(comment.getChg_dt())%></td>
+         <td align="center" colspan="4">
+        <a href="javascript:doCoEdit();" class= "update">[수정]</a>
+        <a href="javascript:doCoInsert();" class= "insert">[대댓글]</a>
+        <a href="javascript:doCoDelete();" class= "delete">[삭제]</a>
+                </td>
+                </tr><%
+            }else{
             %>  <tr><td><%=comment.getUser_id()%></td>
         <td><%=comment.getContents()%></td>
         <td><%=CmmUtil.nvl(comment.getChg_dt())%></td>
         <td align="center" colspan="4">
-            <a href="javascript:doCoEdit();" id = "update">[수정]</a>
-            <a href="javascript:doCoDelete();" id = "delete">[삭제]</a>
+            <a href="javascript:doCoEdit();" class= "update">[수정]</a>
+            <a href="javascript:doCoInsert(this);" class= "insert">[대댓글]</a>
+            <a href="javascript:doCoDelete();" class= "delete">[삭제]</a>
         </td>
-        
-    </tr>
+          </tr>
+    <%}%>
+         <tr >
+
+             <td colspan="4" >
+             <div class="reply" style="display: inline-block"  >
+                 <form name="f" action="/notice/InsertReply" method="post" >
+                     <div>
+                         <input type="hidden" name = "notice_seq" value = "<%=rDTO.getNotice_seq()%>">
+                         <input type="hidden" name = "ref" value = "<%=comment.getRef()%>">
+                         <input type="hidden" name = "ref_rank" value = "<%=comment.getRef_rank()%>">
+                         <input type="hidden" name = "user_id" value = "<%=ss_user_id%>">
+                         <textarea type="contents" name = "contents" style="width: 520px;height: 50px" ></textarea>
+                         <button type="submit" class="btn btn-primary" style="float: top; width:70px;height: 50px">등록</button>
+                     </div>
+
+                 </form>
+
+             </div>
+             </td>
+         </tr>
         <%}%>
 
 </table>
@@ -107,13 +145,20 @@
 
     //수정하기
     function doEdit() {
-        if ("<%=edit%>" == 2) {
-
-        } else if ("<%=edit%>" == 3) {
+        if ("<%=edit%>" == 3) {
             alert("로그인 하시길 바랍니다.");
 
         } else {
-            alert("본인이 작성한 글만 수정 가능합니다.");
+
+
+        }
+    }
+    function doCoInsert(f) {
+         if ("<%=edit%>" == 3) {
+            alert("로그인 하시길 바랍니다.");
+
+        } else {
+
 
         }
     }
@@ -172,11 +217,19 @@
 </script>
 <script>
     $(document).ready(function(){
-        $("#update").click(getMemberList); //id="listButton"인 태그에 click하면 function getMemberList() 실행
+        $("#update").click(getCommentList);//id="listButton"인 태그에 click하면 function getMemberList() 실행
+
     });
     function getMemberList(){
         $.ajax({
-            url:"NoticeInfo.jsp",                    //list.jsp에 AJAX요청
+            url:"/notice/CommentUpdate",
+            type: 'put',
+            data:JSON.stringify( {
+                "notice_seq" : notice_seq,
+                "ref" : ref,
+                "ref_rank" : ref_rank,
+                "contents" : contents
+            }),
             success:function(data){
                 let obj=JSON.parse(data);      //data를 받아와서 JSON형태로 변환
                 let array=["<ol>"];
@@ -190,6 +243,28 @@
                 //array의 요소들을 다 합쳐서 하나로 만든후 id="result"인 태그에 html로 출력
             }
         });
+    }
+    function  getCommentList(){
+        $.ajax({
+            url:"/notice/Comment",
+            type:'GET',
+            data:JSON.stringify(response),
+            success:function(response){
+                var notice_seq = response.notice_seq;
+                var ref = response.ref;
+                var ref_rank = response.ref_rank;
+                var contents = response.contents;
+                var jsondata = {
+                    "notice_seq" : notice_seq,
+                    "ref" : ref,
+                    "ref_rank" : ref_rank,
+                    "contents" : contents
+                };
+
+                $("#update").html(array.join(""));
+            }
+
+        })
     }
 </script>
 </html>

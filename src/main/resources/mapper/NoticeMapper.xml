@@ -16,11 +16,13 @@
 			 )
 		WHERE NUM BETWEEN #{start} AND #{finish}
 		ORDER BY NOTICE_SEQ desc
+
 	</select>
     <select id="getCommentsList" parameterType="NoticeDTO" resultType="CommentDTO">
-		SELECT C.USER_ID, C.CONTENTS, C.CHG_DT
+		SELECT C.USER_ID, C.CONTENTS, C.CHG_DT,C.REF, C.REF_RANK
 		FROM COMMENTS C
 		WHERE NOTICE_SEQ = #{notice_seq}
+		order by REF ASC, REF_RANK ASC
 	</select>
 
 	<select id="getReviewList" parameterType="NoticeDTO" resultType="NoticeDTO">
@@ -50,10 +52,11 @@
 	<insert id="InsertComment" parameterType="CommentDTO">
 		INSERT INTO COMMENTS
 		(
-			NOTICE_SEQ,USER_ID,CONTENTS,REG_DT,CHG_DT,COMMENT_SEQ
+			NOTICE_SEQ,USER_ID,CONTENTS,REG_DT,CHG_DT,COMMENT_SEQ, REF, REF_RANK
 		)
 		VALUES(
-				  #{notice_seq}, #{user_id},#{contents},SYSDATE,SYSDATE,(SELECT NVL(MAX(A.COMMENT_SEQ),0)+1 FROM COMMENTS A)
+				  #{notice_seq}, #{user_id},#{contents},SYSDATE,SYSDATE,(SELECT NVL(MAX(A.COMMENT_SEQ),0)+1 FROM COMMENTS A),
+		       #{ref},#{ref_rank}
 			  )
 	</insert>
 
@@ -76,6 +79,12 @@
 	      FROM NOTICE N
 	     WHERE N.NOTICE_SEQ = #{notice_seq}
 	</select>
+	<!--코멘트 찾기 쿼리-->
+	<select id="commentcheck" resultType="CommentDTO">
+		SELECT *
+		FROM COMMENTS
+		WHERE NOTICE_SEQ =#{notice_seq} and user_id = #{user_id} and ref = #{ref} and ref_rank = #{ref_rank}
+	</select>
 	<!-- 자유 게시판 페이징 카운트 -->
 	<select id="noticeCount" parameterType="NoticeDTO" resultType="int">
 		SELECT COUNT(*)
@@ -87,8 +96,12 @@
 		FROM NOTICE N
 		WHERE N.REVIEW='Y' OR N.REVIEW='y'
 	</select>
+	<select id="commentCount" parameterType="CommentDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM comments
+		WHERE notice_seq=#{notice_seq}
+	</select>
 
-	
 	<!-- 조회수 증가 쿼리 -->
 	<update id="updateNoticeReadCnt" parameterType="NoticeDTO">
 		UPDATE NOTICE SET

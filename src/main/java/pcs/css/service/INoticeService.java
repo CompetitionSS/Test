@@ -26,4 +26,8 @@ public interface INoticeService {
 
     int noticeCount(NoticeDTO nDTO) throws  Exception;
     int reviewCount(NoticeDTO nDTO) throws  Exception;
+
+    CommentDTO commentUpdate(CommentDTO cDTO) throws Exception;
+
+    CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
 }

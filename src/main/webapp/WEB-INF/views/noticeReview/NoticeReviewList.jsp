@@ -193,10 +193,13 @@
 
 <div class="container" style="height: 100px" >
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
 =======
+=======
+>>>>>>> origin/main
     <div class="row" >
         <div class="col-md-4" style="width: 150px; margin: auto ">
             <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right">글쓰기</button>
@@ -215,6 +218,14 @@
 
             </form>
 
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
+=======
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
+>>>>>>> origin/kodong
 >>>>>>> origin/main
         </div>
     </div>

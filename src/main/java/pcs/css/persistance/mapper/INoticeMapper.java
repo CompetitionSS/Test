@@ -18,6 +18,7 @@ public interface INoticeMapper {
     void InsertComment(CommentDTO cDTO) throws Exception;
     //게시판 상세보기
     NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;
+    CommentDTO getCommentInfo(CommentDTO cDTO) throws Exception;
     //게시판 댓글보기
     List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception;
     //게시판 조회수 업데이트
@@ -25,11 +26,14 @@ public interface INoticeMapper {
 
     //게시판 글 수정
     void updateNoticeInfo(NoticeDTO pDTO) throws Exception;
-
+    CommentDTO commentUpdate(CommentDTO cDTO) throws Exception;
     //게시판 글 삭제
     void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
 
     //게시판 페이징 카운트
     int noticeCount(NoticeDTO nDTO) throws Exception;
     int reviewCount(NoticeDTO nDTO) throws Exception;
+    int commentCount(CommentDTO nDTO) throws Exception;
+
+    CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
 }

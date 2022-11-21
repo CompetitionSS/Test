@@ -1,12 +1,13 @@
 package pcs.css.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
 import org.jsoup.helper.DataUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
 import pcs.css.dto.PageDTO;
@@ -19,14 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Controller
 public class NoticeController {
 
-    /*
 
-     * 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
+     /* 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
      */
     @Resource(name = "NoticeService")
     private INoticeService noticeService;
@@ -279,13 +281,74 @@ public class NoticeController {
         cDTO.setNotice_seq(notice_seq);
         cDTO.setUser_id(user_id);
         cDTO.setContents(contents);
-        log.info(notice_seq);
-        log.info( user_id);
-        log.info(contents);
+
         noticeService.InsertComment(cDTO);
 
         log.info(this.getClass().getName() + ".InsertComment end!");
         return "redirect:/notice/NoticeInfo?nSeq="+notice_seq;
+    }
+    @PostMapping(value = "notice/InsertReply")
+    public String InsertReply(HttpServletRequest request) throws Exception {
+        log.info(this.getClass().getName() + ".InsertReply start!");
+        String notice_seq = request.getParameter("notice_seq");
+        String user_id = request.getParameter("user_id");
+        String contents = request.getParameter("contents");
+        String ref = request.getParameter("ref");
+        String ref_rank = request.getParameter("ref_rank");
+
+        log.info(notice_seq);
+        log.info(user_id);
+        log.info(contents);
+        log.info(ref);
+        log.info(ref_rank);
+
+        ref_rank = String.valueOf(Integer.parseInt(ref_rank) + 1);
+        CommentDTO cDTO = new CommentDTO();
+        cDTO.setNotice_seq(notice_seq);
+        cDTO.setUser_id(user_id);
+        cDTO.setContents(contents);
+        cDTO.setRef(ref);
+        cDTO.setRef_rank(ref_rank);
+
+        noticeService.InsertComment(cDTO);
+
+        log.info(this.getClass().getName() + ".InsertReply end!");
+        return "redirect:/notice/NoticeInfo?nSeq="+notice_seq;
+    }
+    @PutMapping(value ="notice/CommentUpdate")
+    @ResponseBody
+    public CommentDTO CommentUpdate(String notice_seq, String ref,String ref_rank, String Contents ) throws Exception {
+        CommentDTO cDTO = new CommentDTO();
+        cDTO.setNotice_seq(notice_seq);
+        cDTO.setRef(ref);
+        cDTO.setRef_rank(ref_rank);
+        cDTO.setContents(Contents);
+
+
+        return noticeService.commentUpdate(cDTO);
+    }
+
+    @GetMapping(value ="notice/Comment")
+    @ResponseBody
+    public JSONArray CommentCheck(String notice_seq ) throws Exception {
+            NoticeDTO nDTO = new NoticeDTO();
+            nDTO.setNotice_seq(notice_seq);
+            List<CommentDTO> cList =  noticeService.getCommentsList(nDTO);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JSONArray jsonArray = new JSONArray();
+          if(cList!= null){
+              for (CommentDTO commentDTO : cList) {
+                  jsonArray.put(objectMapper.writeValueAsString(commentDTO));
+                  log.info(jsonArray.getString(0));
+              }
+          }
+
+        return jsonArray;
+    }
+    @GetMapping(value ="test/ajaxtest")
+    public String Ajaxtest(){
+
+        return "/test/ajaxtest";
     }
     /**
      * 게시판 상세보기

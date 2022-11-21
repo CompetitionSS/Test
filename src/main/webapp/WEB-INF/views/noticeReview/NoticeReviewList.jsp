@@ -190,21 +190,17 @@
 </div>
 
 
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
+        </div>
+    </div>
+</div>
+
 
 <div class="container" style="height: 100px" >
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
-=======
-=======
->>>>>>> origin/main
-    <div class="row" >
-        <div class="col-md-4" style="width: 150px; margin: auto ">
-            <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right">글쓰기</button>
-        </div>
-        <div>
             <form action="/notice/SearchList" method="get" style="text-align: center" >
 
                 <label>
@@ -215,19 +211,8 @@
                     </select>
                     <input type="text" style="height: 40px; width: 600px"  />
                 </label>
-
+                <button type="submit" class="btn btn-primary">검색</button>
             </form>
-
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
-=======
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
->>>>>>> origin/kodong
->>>>>>> origin/main
-        </div>
     </div>
 </div>
 
@@ -266,7 +251,7 @@
 
 
 
-
+        </form>
 </body>
 
 </html>

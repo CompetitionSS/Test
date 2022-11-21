@@ -47,7 +47,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <a href="/main/main"> <h1 style="text-align: center">"   " <span class="badge bg-secondary">" "</span></h1></a>
+            <a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center">"constory" <span class="badge bg-secondary">"자유 게시판"</span></h1></a>
         </div>
         <div class="col-md-4">
         </div>
@@ -94,21 +94,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
                 </li>
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-                <li class="nav-item">
-<<<<<<< HEAD
-                <li class="nav-item">
-=======
-                    <a class="nav-link" href="/noticeQna/NoticeQnaList">qna</a>
-                </li>
->>>>>>> origin/main
                 <li class="nav-item">
                     <a class="nav-link" href="/noticeReview/NoticeReviewList">공모전 리뷰</a>
                 </li>
@@ -193,8 +178,8 @@
 
 <div class="container" style="height: 100px" >
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4" style="width: 150px; margin: auto">
+
+        <div class="col-md-12" <%--style="width: 150px; margin: auto"--%>>
 <button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right";>글쓰기</button>
         </div>
         <div>
@@ -214,7 +199,7 @@
         </div>
     </div>
 </div>
-<
+
 
 <div class="container">
     <div class="row">

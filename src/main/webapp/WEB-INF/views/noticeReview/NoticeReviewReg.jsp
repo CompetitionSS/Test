@@ -114,7 +114,7 @@ function calBytes(str){
 			<div class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					<a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center" >"constory" <span class="badge bg-secondary">"게시글 작성"</span></h1></a>
+					<a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center" >"constory" <span class="badge bg-secondary">"리뷰 작성"</span></h1></a>
 				</div>
 				<div class="col-md-4"></div>
 			</div>

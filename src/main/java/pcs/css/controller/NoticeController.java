@@ -271,66 +271,51 @@ public class NoticeController {
         return "/notice/MsgToListReview";
     }
     @PostMapping(value = "notice/InsertComment")
-    public String InsertComment(HttpServletRequest request) throws Exception {
+    @ResponseBody
+    public void InsertComment(String notice_seq, String user_id, String contents) throws Exception {
         log.info(this.getClass().getName() + ".InsertComment start!");
-        String notice_seq = request.getParameter("notice_seq");
-        String user_id = request.getParameter("user_id");
-        String contents = request.getParameter("contents");
-
         CommentDTO cDTO = new CommentDTO();
         cDTO.setNotice_seq(notice_seq);
         cDTO.setUser_id(user_id);
         cDTO.setContents(contents);
-
         noticeService.InsertComment(cDTO);
 
         log.info(this.getClass().getName() + ".InsertComment end!");
-        return "redirect:/notice/NoticeInfo?nSeq="+notice_seq;
+
     }
     @PostMapping(value = "notice/InsertReply")
-    public String InsertReply(HttpServletRequest request) throws Exception {
+    @ResponseBody
+    public void InsertReply(String notice_seq,String user_id,String contents,String ref, String ref_rank) throws Exception {
         log.info(this.getClass().getName() + ".InsertReply start!");
-        String notice_seq = request.getParameter("notice_seq");
-        String user_id = request.getParameter("user_id");
-        String contents = request.getParameter("contents");
-        String ref = request.getParameter("ref");
-        String ref_rank = request.getParameter("ref_rank");
 
-        log.info(notice_seq);
-        log.info(user_id);
-        log.info(contents);
-        log.info(ref);
-        log.info(ref_rank);
-
-        ref_rank = String.valueOf(Integer.parseInt(ref_rank) + 1);
         CommentDTO cDTO = new CommentDTO();
         cDTO.setNotice_seq(notice_seq);
         cDTO.setUser_id(user_id);
         cDTO.setContents(contents);
         cDTO.setRef(ref);
-        cDTO.setRef_rank(ref_rank);
+        cDTO.setRef_rank(String.valueOf(Integer.parseInt(ref_rank) + 1));
 
         noticeService.InsertComment(cDTO);
 
         log.info(this.getClass().getName() + ".InsertReply end!");
-        return "redirect:/notice/NoticeInfo?nSeq="+notice_seq;
+
     }
-    @PutMapping(value ="notice/CommentUpdate")
+    @PostMapping(value ="notice/CommentUpdate")
     @ResponseBody
-    public CommentDTO CommentUpdate(String notice_seq, String ref,String ref_rank, String Contents ) throws Exception {
+    public void CommentUpdate(String comment_seq, String contents ) throws Exception {
         CommentDTO cDTO = new CommentDTO();
-        cDTO.setNotice_seq(notice_seq);
-        cDTO.setRef(ref);
-        cDTO.setRef_rank(ref_rank);
-        cDTO.setContents(Contents);
 
+        log.info(contents);
+        log.info(comment_seq);
+        cDTO.setComment_seq(comment_seq);
+        cDTO.setContents(contents);
+         noticeService.commentUpdate(cDTO);
 
-        return noticeService.commentUpdate(cDTO);
     }
 
     @GetMapping(value ="notice/Comment")
     @ResponseBody
-    public JSONArray CommentCheck(String notice_seq ) throws Exception {
+    public Object CommentCheck(String notice_seq ) throws Exception {
             NoticeDTO nDTO = new NoticeDTO();
             nDTO.setNotice_seq(notice_seq);
             List<CommentDTO> cList =  noticeService.getCommentsList(nDTO);
@@ -339,20 +324,21 @@ public class NoticeController {
           if(cList!= null){
               for (CommentDTO commentDTO : cList) {
                   jsonArray.put(objectMapper.writeValueAsString(commentDTO));
-                  log.info(jsonArray.getString(0));
+
               }
           }
 
-        return jsonArray;
+        return jsonArray.toString();
     }
-    @GetMapping(value ="test/ajaxtest")
-    public String Ajaxtest(){
+    @DeleteMapping(value="notice/commentDelete")
+    @ResponseBody
+    public void CommentDelete(String comment_seq) throws Exception{
+        CommentDTO cDTO = new CommentDTO();
+        cDTO.setComment_seq(comment_seq);
+        noticeService.deleteComment(cDTO);
 
-        return "/test/ajaxtest";
     }
-    /**
-     * 게시판 상세보기
-     */
+
     @GetMapping(value = "notice/NoticeInfo")
     public String NoticeInfo(HttpServletRequest request, ModelMap model) {
 

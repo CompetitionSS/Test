@@ -24,7 +24,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="" type="image/x-icon" />
     <title>constory - 너를 위한 공모전  </title>
-    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-3.6.1.min.js" type="text/javascript"></script>
     <!-- Channel Plugin Scripts -->
     <script>
         (function() {
@@ -83,7 +83,6 @@
 
 
 </head>
-<script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
 <body>
 
 <div class="container">

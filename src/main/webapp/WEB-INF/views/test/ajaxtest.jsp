@@ -12,21 +12,23 @@
   <script type="text/javascript">
 
     $(document).ready(function() {
-
+      var page = document.location.href;
+      page.charAt(page.length-1);
 
       $.ajax({
         type: "GET",
         url: "/notice/Comment",
-        dataType: "JSON",
+        dataType: "json",
+        data:{notice_seq : page},
         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
         error: function() {
           console.log('통신실패!!');
         },
         success: function(data) {
-          var a = JSON.stringify(data);
 
-          console.log(a);
-          console.log(data);
+
+          console.log(data[0].notice_seq);
+
         }
       });
     });

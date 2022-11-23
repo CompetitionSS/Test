@@ -50,8 +50,7 @@
     <script src='https://kit.fontawesome.com/9e30f8c908.js' crossorigin='anonymous'></script>
     <title>메인 리스트</title>
     <link href="css/chatbot.css" rel="stylesheet">
-    <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
-    <script src="js/app.js" charset="UTF-8"></script>
+    <script src="/js/jquery-3.6.1.min.js" type="text/javascript"></script>
     <!-- Channel Plugin Scripts -->
     <script>
         (function() {
@@ -95,7 +94,63 @@
     </script>
 </head>
 <body>
-<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="/main/main"><img src="/img/asd.gif" style="float: left; height: 70%"></a>
+        </div>
+        <div class="col-md-4">
+            <a href="/main/main"style="text-decoration: none"> <h1 style="text-align: center">"constory" <span class="badge bg-secondary">"너를 위한 공모전 "</span></h1></a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+    </div>
+</div>
+
+
+
+<div class="container" style="height: 150px">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <% if(session.getAttribute("SS_USER_ID") == null){%>
+
+                <input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+
+
+                <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+
+                <%}else if(session.getAttribute("SS_USER_ID").equals("admin")){%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+                <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="크롤링 결과 확인" onclick="location.href='/main/mainList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
+
+                <%}else{%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+                <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+
+                <%}%>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
 <table class="table table-striped table-bordered mt-4">
     <tr>
         <td width="300" height="90" align="center">공모전명</td>
@@ -148,6 +203,9 @@
         }
     %>
 </table>
+        </div>
+    </div>
+</div>
 <div style="text-align: center; margin-bottom: 50px;">
     <% if(prev) {%>
     <button type="button" class="btn btn-secondary" onclick="location.href='<%=a%>&num=<%=select-1%>'">Prev</button>

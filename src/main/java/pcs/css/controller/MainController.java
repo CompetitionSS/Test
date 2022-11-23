@@ -120,11 +120,16 @@ public class MainController {
         pDTO.setArea(area);
         String deadline;
         if(request.getParameter("deadline").equals("전체")){
-            deadline=CmmUtil.nvl( 10+request.getParameter("deadline2"), DateUtil.getDateTime("MMdd"));
+            deadline=CmmUtil.nvl( "11"+request.getParameter("deadline2"), DateUtil.getDateTime("yyyyMMdd"));
         }else{
-            deadline=CmmUtil.nvl(request.getParameter("deadline")+request.getParameter("deadline2"), DateUtil.getDateTime("MMdd"));
-        }
+            if(Integer.parseInt(request.getParameter("deadline"))<10){
+                deadline=CmmUtil.nvl("0"+request.getParameter("deadline")+"-"+request.getParameter("deadline2"), DateUtil.getDateTime("yyyyMMdd"));
+            }else{
+                deadline=CmmUtil.nvl(request.getParameter("deadline")+request.getParameter("deadline2"), DateUtil.getDateTime("MMdd"));
+            }
 
+        }
+        log.info(deadline);
         pDTO.setDeadline(deadline);
         String candidate =CmmUtil.nvl(request.getParameter("candidate"));
         pDTO.setCandidate(candidate);
@@ -153,7 +158,7 @@ public class MainController {
 
         PageDTO pageDTO;
         int count = mainService.Searchcount(pDTO);
-        log.info(String.valueOf(count));
+
         String no = CmmUtil.nvl(request.getParameter("num"));
         log.info(no);
 

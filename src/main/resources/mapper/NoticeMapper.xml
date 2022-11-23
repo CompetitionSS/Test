@@ -47,11 +47,11 @@
 		INSERT INTO NOTICE
 			(
 				NOTICE_SEQ, TITLE, NOTICE_YN,READ_CNT,USER_ID,REG_DT, CONTENTS,
-		      	REG_ID,REVIEW
+		      	REG_ID,REVIEW,NICK
 			)
 		VALUES(
 			(SELECT NVL(MAX(A.NOTICE_SEQ),0)+1 FROM NOTICE A),
-			#{title}, #{notice_yn},0,#{user_id},  SYSDATE, #{contents},#{user_id},'N'
+			#{title}, #{notice_yn},0,#{user_id},  SYSDATE, #{contents},#{user_id},#{review},#{user_id}
 		)
 	</insert>
 	<insert id="InsertComment" parameterType="CommentDTO">
@@ -145,5 +145,10 @@
 		WHERE COMMENT_SEQ = #{comment_seq}
 
 	</delete>
-			
+	<select id="Reviewyn" resultType="string">
+		SELECT REVIEW
+		 FROM NOTICE
+		WHERE NOTICE_SEQ = #{notice_seq}
+
+	</select>
 </mapper>

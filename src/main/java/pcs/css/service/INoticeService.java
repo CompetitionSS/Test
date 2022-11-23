@@ -34,4 +34,5 @@ public interface INoticeService {
     void deleteComment(CommentDTO cDTO) throws Exception;
 
     int commentCount(CommentDTO nDTO) throws Exception;
+    String Reviewyn(NoticeDTO nDTO) throws Exception;
 }

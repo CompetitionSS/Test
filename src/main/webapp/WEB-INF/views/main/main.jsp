@@ -19,9 +19,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
 
-    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <link rel="icon" href="" type="image/x-icon" />
@@ -103,7 +101,7 @@
     <div class="col-md-4">
     </div>
 </div>
-</div>
+
 
 
 <div class="container" style="height: 150px">
@@ -126,7 +124,7 @@
 
                 <input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 
-                <input type="button" class ="btn btn-outline-primary" value="크롤링 결과 확인" onclick="location.href='/main/mainCrawling'">
+                <input type="button" class ="btn btn-outline-primary" value="크롤링 결과 확인" onclick="location.href='/main/mainList'">
 
                 <input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
 

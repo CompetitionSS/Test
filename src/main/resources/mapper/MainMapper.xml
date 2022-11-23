@@ -41,6 +41,7 @@
         <if test= "b_year != null">
             <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
         </if>
+        ORDER BY DEADLINE DESC
     </select>
 
     <select id="SearchMainList" parameterType="MainDTO" resultType="MainDTO">
@@ -78,7 +79,7 @@
         <if test= "b_year != null">
             <![CDATA[  AND b_year LIKE '%'||#{b_year,jdbcType=VARCHAR}||'%' ]]>
         </if>
-
+        ORDER BY DEADLINE DESC
         )
         WHERE NUM BETWEEN #{start} AND #{finish}
         ORDER BY DEADLINE DESC
@@ -88,7 +89,7 @@
         SELECT *
 
         FROM COMPETITION
-        ORDER BY R_DATE desc
+        ORDER BY DEADLINE desc
     </select>
     <select id="getMainList2" parameterType="PageDTO" resultType="MainDTO">
         SELECT *

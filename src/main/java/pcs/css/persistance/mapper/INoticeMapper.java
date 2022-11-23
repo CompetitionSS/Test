@@ -38,4 +38,5 @@ public interface INoticeMapper {
     CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
 
     void deleteComment(CommentDTO cDTO) throws Exception;
+    String Reviewyn(NoticeDTO nDTO) throws Exception;
 }

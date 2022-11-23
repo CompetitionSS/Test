@@ -225,14 +225,21 @@ public class UserInfoController {
 
     @GetMapping(value = "find_id")
     public String find_id(HttpServletRequest request, ModelMap model) throws Exception{
+        int res = 0;
         UserInfoDTO pDTO = new UserInfoDTO();
         log.info(this.getClass().getName() + ".find_id start!");
         String email = CmmUtil.nvl(request.getParameter("email"));
 
         pDTO.setEmail(EncryptUtil.encAES128CBC(email));
         UserInfoDTO rDTO =  userInfoService.find_id(pDTO);
-        log.info(rDTO.getEmail());
+        if(rDTO!= null){
+            res = 1;
+        }else{
+            res = 2;
+        }
+
         model.addAttribute("rDTO", rDTO);
+        model.addAttribute("res", String.valueOf(res));
         return "/user/Loginidcheck";
     }
     @GetMapping(value = "find_ps")

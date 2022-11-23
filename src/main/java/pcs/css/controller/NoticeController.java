@@ -90,7 +90,7 @@ public class NoticeController {
 
 
     @GetMapping(value = "noticeReview/NoticeReviewList")
-    public String ReviewList(HttpServletRequest request,ModelMap model) throws Exception {
+    public String NoticeReviewList(HttpServletRequest request,ModelMap model) throws Exception {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
         NoticeDTO nDTO = new NoticeDTO();
@@ -157,38 +157,42 @@ public class NoticeController {
      * 게시판 글 등록
      */
     @PostMapping(value = "notice/NoticeInsert")
-    public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
+    public String NoticeInsert(HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeInsert start!");
 
         String msg = "";
-
+        boolean yn = false;
         try {
             /*
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
              */
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
+            String user_id = CmmUtil.nvl(request.getParameter("user_id"));
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
-
+            String ReviewYN = CmmUtil.nvl(request.getParameter("ReviewYN"));
 
             log.info("user_id : " + user_id);
             log.info("title : " + title);
             log.info("noticeYn : " + noticeYn);
             log.info("contents : " + contents);
-
+            log.info("ReviewYN : " + ReviewYN);
             NoticeDTO pDTO = new NoticeDTO();
 
             pDTO.setUser_id(user_id);
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
+            pDTO.setReview(ReviewYN);
 
             /*
              * 게시글 등록하기위한 비즈니스 로직을 호출
              */
             noticeService.InsertNoticeInfo(pDTO);
+            if(ReviewYN.equals("Y")||ReviewYN.equals("y")){
+                yn = true;
+            }
 
             // 저장이 완료되면 사용자에게 보여줄 메시지
             msg = "등록되었습니다.";
@@ -206,70 +210,18 @@ public class NoticeController {
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
-
+            model.addAttribute("yn", yn);
         }
 
-        return "/notice/MsgToList";
+            return "/notice/MsgToList";
+
+
     }
 
 
 
 
-    @PostMapping(value = "noticeReview/NoticeReviewInsert")
-    public String ReviewInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".ReviewInsert start!");
-
-        String msg = "";
-
-        try {
-            /*
-             * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
-             */
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
-            String title = CmmUtil.nvl(request.getParameter("title")); // 제목
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
-            String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
-
-
-            log.info("user_id : " + user_id);
-            log.info("title : " + title);
-            log.info("noticeYn : " + noticeYn);
-            log.info("contents : " + contents);
-
-            NoticeDTO pDTO = new NoticeDTO();
-
-            pDTO.setUser_id(user_id);
-            pDTO.setTitle(title);
-            pDTO.setNotice_yn(noticeYn);
-            pDTO.setContents(contents);
-
-            /*
-             * 게시글 등록하기위한 비즈니스 로직을 호출
-             */
-            noticeService.InsertNoticeInfo(pDTO);
-
-            // 저장이 완료되면 사용자에게 보여줄 메시지
-            msg = "등록되었습니다.";
-
-
-        } catch (Exception e) {
-
-            // 저장이 실패되면 사용자에게 보여줄 메시지
-            msg = "실패하였습니다. : " + e.getMessage();
-            log.info(e.toString());
-            e.printStackTrace();
-
-        } finally {
-            log.info(this.getClass().getName() + ".NoticeReviewInsert end!");
-
-            // 결과 메시지 전달하기
-            model.addAttribute("msg", msg);
-
-        }
-
-        return "/noticeReview/MsgToListReview";
-    }
     @PostMapping(value = "notice/InsertComment")
     @ResponseBody
     public void InsertComment(String notice_seq, String user_id, String contents) throws Exception {
@@ -325,7 +277,7 @@ public class NoticeController {
              }else {
             pageDTO = new PageDTO(Integer.parseInt(num),count);
             }
-             nDTO.setStart(pageDTO.getStart());
+            nDTO.setStart(pageDTO.getStart());
             nDTO.setFinish(pageDTO.getFinish());
             List<CommentDTO> cList =  noticeService.getCommentsList(nDTO);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -338,6 +290,32 @@ public class NoticeController {
           }
 
         return jsonArray.toString();
+    }
+    @GetMapping(value ="notice/CommentCount")
+    @ResponseBody
+    public String CommentCount(String notice_seq)throws Exception{
+        CommentDTO nDTO = new CommentDTO();
+        nDTO.setNotice_seq(notice_seq);
+        int count = noticeService.commentCount(nDTO);
+
+        return String.valueOf(count);
+    }
+    @GetMapping(value ="notice/CommentPage")
+    @ResponseBody
+    public Object CommentPageCheck(String notice_seq,String num ) throws Exception {
+        CommentDTO nDTO = new CommentDTO();
+        nDTO.setNotice_seq(notice_seq);
+        PageDTO pageDTO;
+        int count = noticeService.commentCount(nDTO);
+
+        if(num.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(num),count);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        return objectMapper.writeValueAsString(pageDTO);
     }
     @DeleteMapping(value="notice/commentDelete")
     @ResponseBody
@@ -463,19 +441,18 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeUpdate start!");
 
         String msg = "";
-
+        boolean yn = false;
         try {
 
             String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID")); // 아이디
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
 
             log.info("user_id : " + user_id);
             log.info("nSeq : " + nSeq);
             log.info("title : " + title);
-            log.info("noticeYn : " + noticeYn);
+
             log.info("contents : " + contents);
 
             NoticeDTO pDTO = new NoticeDTO();
@@ -483,12 +460,13 @@ public class NoticeController {
             pDTO.setUser_id(user_id);;
             pDTO.setNotice_seq(nSeq);
             pDTO.setTitle(title);
-            pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
 
             // 게시글 수정하기 DB
             noticeService.updateNoticeInfo(pDTO);
-
+            if(noticeService.Reviewyn(pDTO).equals("Y")||noticeService.Reviewyn(pDTO).equals("y")){
+                yn = true;
+            }
             msg = "수정되었습니다.";
 
         } catch (Exception e) {
@@ -501,7 +479,7 @@ public class NoticeController {
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
-
+            model.addAttribute("yn",yn);
         }
 
         return "/notice/MsgToList";
@@ -516,7 +494,7 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeDelete start!");
 
         String msg = "";
-
+        boolean yn = false;
         try {
 
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
@@ -526,6 +504,9 @@ public class NoticeController {
             NoticeDTO pDTO = new NoticeDTO();
 
             pDTO.setNotice_seq(nSeq);
+            if(noticeService.Reviewyn(pDTO).equals("Y")||noticeService.Reviewyn(pDTO).equals("y")){
+                yn = true;
+            }
 
             // 게시글 삭제하기 DB
             noticeService.deleteNoticeInfo(pDTO);
@@ -542,6 +523,7 @@ public class NoticeController {
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
+            model.addAttribute("yn",yn);
 
         }
 

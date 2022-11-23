@@ -55,6 +55,11 @@ public class NoticeService implements INoticeService {
         return noticeMapper.commentCount(nDTO);
     }
 
+    @Override
+    public String Reviewyn(NoticeDTO nDTO) throws Exception {
+        return noticeMapper.Reviewyn(nDTO);
+    }
+
 
     @Transactional
     @Override

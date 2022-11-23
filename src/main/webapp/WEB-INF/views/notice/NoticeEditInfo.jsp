@@ -115,9 +115,7 @@ function calBytes(str){
 		<div class="col-md-4"></div>
 	</div>
 </div>
-
-
-<div class="container" style="height: 100px">
+<div class="container" style="height: 150px">
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4"></div>
@@ -128,15 +126,27 @@ function calBytes(str){
 				<input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
 
 				<input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
-				<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 
+				<input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
 
+				<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
+
+				<%}else if(session.getAttribute("SS_USER_ID").equals("admin")){%>
+				<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+				<input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
+
+				<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
+
+				<input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
 
 				<%}else{%>
 				<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
 				<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+				<input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
 
-
+				<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
 				<%}%>
 			</div>
@@ -146,40 +156,6 @@ function calBytes(str){
 
 <form name="f" method="post" action="/notice/NoticeUpdate" onsubmit="return doSubmit(this);">
 <input type="hidden" name="nSeq" value="<%=CmmUtil.nvl(request.getParameter("nSeq")) %>" />
-	<%--<table border="1">
-		<col width="100px" />
-		<col width="500px" />
-		<tr>
-			<td align="center">제목</td>
-			<td>
-			<input type="text" name="title" maxlength="100" 
-				   value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" style="width: 450px"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="center">공지글 여부</td>
-			<td>
-				예<input type="radio" name="noticeYn" value="1"
-						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>	/>
-			        아니오<input type="radio" name="noticeYn" value="2" 
-			        	<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>	/>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<textarea 
-						name="contents" style="width: 550px; height: 400px"
-						><%=CmmUtil.nvl(rDTO.getContents()) %></textarea>
-			</td>
-		</tr>
-	<tr>
-		<td align="center" colspan="2">
-			<input type="submit" value="수정" />
-			<input type="reset" value="다시 작성" />
-		</td>
-	</tr>		
-	</table>--%>
-
 
 	<div class="container">
 		<div class="row">
@@ -189,16 +165,6 @@ function calBytes(str){
 					<span class="input-group-text" id="basic-addon1">제목</span>
 					<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="title" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>">
 				</div>
-			</div>
-			<div class="col-3">
-				<%--<div class="form-check form-switch">
-					<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked name="noticeYn" value="Y" <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "Y") %>>
-					<label class="form-check-label" for="flexSwitchCheckChecked">공지글여부</label>
-				</div>--%>
-					예<input type="radio" name="noticeYn" value="1"
-						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>	/>
-					아니오<input type="radio" name="noticeYn" value="2"
-						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>	/>
 			</div>
 		</div>
 	</div>

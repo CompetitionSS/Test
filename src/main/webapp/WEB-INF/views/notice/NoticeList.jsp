@@ -20,7 +20,14 @@
         rList = new ArrayList<NoticeDTO>();
 
     }
+    String ss_user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
 
+    String edit = "1";
+
+//로그인 안했다면....
+    if (ss_user_id.equals("")) {
+        edit = "2";
+    }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,7 +40,15 @@
         function doDetail(seq) {
             location.href = "/notice/NoticeInfo?nSeq=" + seq;
         }
+        function reg(){
+            let loginyn = "<%=edit%>";
+            if(loginyn!=="2"){
+                location.href='/notice/NoticeReg';
+            }else{
+                alert("로그인 후 이용바랍니다.")
+            }
 
+        }
     </script>
     <link  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
@@ -72,12 +87,16 @@
                 <input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
 
                 <input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+                <input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
 
+                <input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
 
                 <%}else{%>
                 <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+                <input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
 
+                <input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
 
                 <%}%>
@@ -88,20 +107,7 @@
 
 
 
-<div class="container" style="height: 100px;">
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/noticeReview/NoticeReviewList">공모전 리뷰</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+
 
 
 
@@ -181,7 +187,7 @@
     <div class="row">
 
         <div class="col-md-12" <%--style="width: 150px; margin: auto"--%>>
-<button class="btn btn-primary" onclick="location='/notice/NoticeReg'" style="float: right";>글쓰기</button>
+<button class="btn btn-primary" onclick="reg()" style="float: right";>글쓰기</button>
         </div>
         <div>
             <form action="/notice/SearchList" method="get" style="text-align: center" >
@@ -207,27 +213,29 @@
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
 <div style="text-align: center; margin-bottom: 50px;" class="col-md-12 ">
-    <% if(prev) {%>
-    <button type="button" class="btn btn-secondary"  onclick="location.href='/notice/NoticeList?num=<%=select-1%>'"><<</button>
-    <%}%>
+
     <div class="col-md-12 " style="margin: 0 auto; display: inline-block;">
+        <% if(prev) {%>
+        <button type="button" class="btn btn-secondary"  onclick="location.href='/notice/NoticeList?num=<%=select-1%>'"><<</button>
+        <%}%>
         <% for (int i = startPageNum; i <= endPageNum; i++) {
             if(select == i) {%>
-        <div style="color: red;" class="page-link" >
+
             <button class="btn btn-secondary" onclick="location.href='/notice/NoticeList?num=<%=i%>'">
                 <%=i%> </button>
-           </div>
+
         <%} else {%>
-        <div style=""  class="page-link">
+
             <button class="btn btn-secondary" onclick="location.href='/notice/NoticeList?num=<%=i%>'">
                 <%=i%>
-            </button></div>
+            </button>
         <% }
         } %>
+        <% if(next) {%>
+        <button type="button" class="btn btn-secondary" onclick="location.href='/notice/NoticeList?num=<%=select+1%>'">>></button>
+        <% } %>
     </div>
-    <% if(next) {%>
-    <button type="button" class="btn btn-secondary" onclick="location.href='/notice/NoticeList?num=<%=select+1%>'">>></button>
-    <% } %>
+
 </div>
             </nav>
         </div>

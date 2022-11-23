@@ -34,43 +34,13 @@
 
         //상세보기 이동
         function doDetail(seq) {
-            location.href = "/noticeReview/NoticeReviewInfo?nSeq=" + seq;
+            location.href = "/notice/NoticeInfo?nSeq=" + seq;
         }
 
     </script>
 </head>
 
 <body>
-<%--<img src="/img/asd.gif" alt="사진" onclick="location.href='/main/main'">
-<header align=center>
-    <h1>REVIEW</h1>
-    <hr>
-</header>
-
-<div align=right>
-    <a href="/user/LoginForm">로그인</a>
-    <a href="/user/UserRegForm">회원가입</a>
-</div>
-<div>커뮤니티</div>
-<hr>
-<ul>
-    <li class="on">
-        <a href="/notice/NoticeList">공지사항</a>
-    </li>
-    <li class="on">
-        <a href="/noticeQna/NoticeQnaList">Qna</a> </li>
-    </li>
-    <li class="on">
-        <a href="/noticeReview/NoticeReviewList">Review</a>
-    </li>
-
-</ul>
-
-<hr/>
-<br/>--%>
-
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -83,10 +53,9 @@
         </div>
     </div>
 </div>
-</div>
 
 
-<div class="container" style="height: 100px">
+<div class="container" style="height: 150px">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4"></div>
@@ -98,40 +67,32 @@
 
                 <input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
 
+                <input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
 
+                <input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
+
+                <%}else if(session.getAttribute("SS_USER_ID").equals("admin")){%>
+                <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+
+                <input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
 
                 <%}else{%>
                 <input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
 
 
+                <input type="button" class ="btn btn-outline-primary" value="자유게시판" onclick="location.href='/notice/NoticeList'">
+
+                <input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
                 <%}%>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<div class="container" style="height: 100px;">
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/notice/NoticeList">자유 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/noticeReview/NoticeReviewList">공모전 리뷰</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-
-
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -173,7 +134,7 @@
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %>
         </td>
-        <td align="center"><%=CmmUtil.nvl(rDTO.getNick()) %>
+        <td align="center"><%=CmmUtil.nvl(rDTO.getUser_id()) %>
         </td>
         <td align="center"><%=CmmUtil.nvl(rDTO.getReg_dt()) %>
         </td>
@@ -198,6 +159,7 @@
 
 <div class="container" style="height: 100px" >
     <div class="row">
+        <div class="col-md-12" style="margin: 0 auto; display: inline-block;">
             <form action="/notice/SearchList" method="get" style="text-align: center" >
 
                 <label>
@@ -210,6 +172,7 @@
                 </label>
                 <button type="submit" class="btn btn-primary">검색</button>
             </form>
+        </div>
     </div>
 </div>
 
@@ -219,27 +182,30 @@
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
                 <div style="text-align: center; margin-bottom: 50px;" class="col-md-12 ">
-                    <% if(prev) {%>
-                    <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
-                    <%}%>
+
                     <div class="col-md-12 " style="margin: 0 auto; display: inline-block;">
+                        <div style="color: red;" class="page-link" >
+                        <% if(prev) {%>
+                        <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
+                        <%}%>
                         <% for (int i = startPageNum; i <= endPageNum; i++) {
                             if(select == i) {%>
-                        <div style="color: red;" class="page-link" >
+
                             <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
                                 <%=i%> </button>
-                        </div>
+
                         <%} else {%>
-                        <div style=""  class="page-link">
                             <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
                                 <%=i%>
-                            </button></div>
+                            </button>
                         <% }
                         } %>
+                        <% if(next) {%>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
+                        <% } %>
+                        </div>
                     </div>
-                    <% if(next) {%>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
-                    <% } %>
+
                 </div>
             </nav>
         </div>

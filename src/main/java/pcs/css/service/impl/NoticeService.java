@@ -50,6 +50,11 @@ public class NoticeService implements INoticeService {
        noticeMapper.deleteComment(cDTO);
     }
 
+    @Override
+    public int commentCount(CommentDTO nDTO) throws Exception {
+        return noticeMapper.commentCount(nDTO);
+    }
+
 
     @Transactional
     @Override
@@ -72,7 +77,7 @@ public class NoticeService implements INoticeService {
     }
     @Transactional
     @Override
-    public List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception{
+    public List<CommentDTO> getCommentsList(CommentDTO pDTO) throws Exception{
          log.info(this.getClass().getName() + ".getCommentsList start!");
 
          return noticeMapper.getCommentsList(pDTO);

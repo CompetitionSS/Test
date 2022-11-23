@@ -20,7 +20,7 @@ public interface INoticeMapper {
     NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;
     CommentDTO getCommentInfo(CommentDTO cDTO) throws Exception;
     //게시판 댓글보기
-    List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception;
+    List<CommentDTO> getCommentsList(CommentDTO pDTO) throws Exception;
     //게시판 조회수 업데이트
     void updateNoticeReadCnt(NoticeDTO pDTO) throws Exception;
 

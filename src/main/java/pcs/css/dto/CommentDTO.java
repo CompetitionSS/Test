@@ -16,4 +16,7 @@ public class CommentDTO {
     private String comment_seq;
     private String ref;
     private String ref_rank;
+
+    private int start;
+    private int finish;
 }

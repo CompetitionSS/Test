@@ -315,9 +315,18 @@ public class NoticeController {
 
     @GetMapping(value ="notice/Comment")
     @ResponseBody
-    public Object CommentCheck(String notice_seq ) throws Exception {
-            NoticeDTO nDTO = new NoticeDTO();
+    public Object CommentCheck(String notice_seq,String num ) throws Exception {
+            CommentDTO nDTO = new CommentDTO();
             nDTO.setNotice_seq(notice_seq);
+            PageDTO pageDTO;
+            int count = noticeService.commentCount(nDTO);
+            if(num.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+             }else {
+            pageDTO = new PageDTO(Integer.parseInt(num),count);
+            }
+             nDTO.setStart(pageDTO.getStart());
+            nDTO.setFinish(pageDTO.getFinish());
             List<CommentDTO> cList =  noticeService.getCommentsList(nDTO);
             ObjectMapper objectMapper = new ObjectMapper();
             JSONArray jsonArray = new JSONArray();
@@ -347,28 +356,18 @@ public class NoticeController {
         String msg = "";
 
         try {
-            /*
-             * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
-             */
+
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 공지글번호(PK)
 
-            /*
-             * ####################################################################################
-             * 반드시, 값을 받았으면, 꼭 로그를 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
-             * ####################################################################################
-             */
             log.info("nSeq : " + nSeq);
-
-            /*
-             * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
-             */
             NoticeDTO pDTO = new NoticeDTO();
             pDTO.setNotice_seq(nSeq);
-
+            CommentDTO cDTO = new CommentDTO();
+            cDTO.setNotice_seq(nSeq);
             // 공지사항 상세정보 가져오기
             NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
 
-            List<CommentDTO> cList = noticeService.getCommentsList(pDTO);
+            List<CommentDTO> cList = noticeService.getCommentsList(cDTO);
 
             if (rDTO == null) {
                 rDTO = new NoticeDTO();

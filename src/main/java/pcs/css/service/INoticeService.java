@@ -11,7 +11,7 @@ public interface INoticeService {
 
     List<NoticeDTO> getNoticeList(NoticeDTO nDTO) throws Exception;
     List<NoticeDTO> getReviewList(NoticeDTO nDTO) throws Exception;
-    List<CommentDTO> getCommentsList(NoticeDTO pDTO) throws Exception;
+    List<CommentDTO> getCommentsList(CommentDTO pDTO) throws Exception;
 
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
     void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
@@ -32,4 +32,6 @@ public interface INoticeService {
     CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
 
     void deleteComment(CommentDTO cDTO) throws Exception;
+
+    int commentCount(CommentDTO nDTO) throws Exception;
 }

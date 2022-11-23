@@ -18,10 +18,15 @@
 		ORDER BY NOTICE_SEQ desc
 
 	</select>
-    <select id="getCommentsList" parameterType="NoticeDTO" resultType="CommentDTO">
+    <select id="getCommentsList" parameterType="CommentDTO" resultType="CommentDTO">
 		SELECT *
-		FROM COMMENTS C
-		WHERE NOTICE_SEQ = #{notice_seq}
+		FROM (
+				 SELECT ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ) NUM, C.*
+				 FROM COMMENTS C
+				 WHERE NOTICE_SEQ = #{notice_seq}
+				 order by REF asc, REG_DT asc
+			 )
+		WHERE NUM BETWEEN #{start} and #{finish}
 		order by REF asc, REG_DT asc
 	</select>
 

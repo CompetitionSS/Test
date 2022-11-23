@@ -19,7 +19,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
 
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <link rel="icon" href="" type="image/x-icon" />
@@ -88,6 +90,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+            <a href="/main/main"><img src="/img/asd.gif" style="float: left; height: 70%"></a>
         </div>
         <div class="col-md-4">
             <a href="/main/main"style="text-decoration: none"> <h1 style="text-align: center">"constory" <span class="badge bg-secondary">"너를 위한 공모전 "</span></h1></a>

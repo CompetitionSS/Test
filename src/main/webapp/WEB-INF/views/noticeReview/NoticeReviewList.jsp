@@ -34,7 +34,7 @@
 
         //상세보기 이동
         function doDetail(seq) {
-            location.href = "/notice/NoticeInfo?nSeq=" + seq;
+            location.href = "/noticeReview/NoticeReviewInfo?nSeq=" + seq;
         }
 
     </script>
@@ -74,16 +74,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+            <a href="/main/main"><img src="/img/asd.gif" style="float: left; height: 70%"></a>
         </div>
         <div class="col-md-4">
             <a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center">"constory" <span class="badge bg-secondary">"공모전 리뷰"</span></h1></a>
         </div>
         <div class="col-md-4">
         </div>
-    </div>
-
-
-    <div class="col-md-4">
     </div>
 </div>
 </div>
@@ -193,7 +190,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReg'" style="float: right";>글쓰기</button>
+            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
         </div>
     </div>
 </div>

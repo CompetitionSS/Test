@@ -41,6 +41,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
+                <a href="/main/main"><img src="/img/asd.gif" style="float: left; height: 70%"></a>
             </div>
             <div class="col-md-4">
                 <a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center" >"constory" <span class="badge bg-secondary">"로그인"</span></h1></a>

@@ -1,12 +1,13 @@
 	<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="pcs.css.util.CmmUtil" %>
-	<%@ page import="pcs.css.dto.NoticeReviewDTO" %>
+	<%@ page import="pcs.css.dto.NoticeDTO" %>
+	<%@ page import="pcs.css.dto.NoticeDTO" %>
 	<%
-NoticeReviewDTO rDTO = (NoticeReviewDTO)request.getAttribute("rDTO");
+NoticeDTO rDTO = (NoticeDTO)request.getAttribute("rDTO");
 
 //공지글 정보를 못불러왔다면, 객체 생성
 if (rDTO==null){
-	rDTO = new NoticeReviewDTO();
+	rDTO = new NoticeDTO();
 
 }
 

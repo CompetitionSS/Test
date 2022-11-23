@@ -268,7 +268,7 @@ public class NoticeController {
 
         }
 
-        return "/notice/MsgToListReview";
+        return "/noticeReview/MsgToListReview";
     }
     @PostMapping(value = "notice/InsertComment")
     @ResponseBody

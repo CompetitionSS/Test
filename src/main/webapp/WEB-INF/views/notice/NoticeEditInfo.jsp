@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="pcs.css.util.CmmUtil" %>PCS
+<%@ page import="pcs.css.util.CmmUtil" %>
 <%@ page import="pcs.css.dto.NoticeDTO" %>
 <%
 NoticeDTO rDTO = (NoticeDTO)request.getAttribute("rDTO");
@@ -106,7 +106,9 @@ function calBytes(str){
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<a href="/main/main"><img src="/img/asd.gif" style="float: left; height: 70%"></a>
+		</div>
 		<div class="col-md-4">
 			<a href="/main/main" style="text-decoration: none"> <h1 style="text-align: center" >"constory" <span class="badge bg-secondary">"게시글 수정"</span></h1></a>
 		</div>
@@ -144,7 +146,7 @@ function calBytes(str){
 
 <form name="f" method="post" action="/notice/NoticeUpdate" onsubmit="return doSubmit(this);">
 <input type="hidden" name="nSeq" value="<%=CmmUtil.nvl(request.getParameter("nSeq")) %>" />
-	<table border="1">
+	<%--<table border="1">
 		<col width="100px" />
 		<col width="500px" />
 		<tr>
@@ -176,7 +178,55 @@ function calBytes(str){
 			<input type="reset" value="다시 작성" />
 		</td>
 	</tr>		
-	</table>
+	</table>--%>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">제목</span>
+					<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" name="title" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>">
+				</div>
+			</div>
+			<div class="col-3">
+				<%--<div class="form-check form-switch">
+					<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked name="noticeYn" value="Y" <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "Y") %>>
+					<label class="form-check-label" for="flexSwitchCheckChecked">공지글여부</label>
+				</div>--%>
+					예<input type="radio" name="noticeYn" value="1"
+						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>	/>
+					아니오<input type="radio" name="noticeYn" value="2"
+						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>	/>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<textarea name="contents" style="width: 100%; height: 500px"><%=CmmUtil.nvl(rDTO.getContents()) %></textarea>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+
+
+
+	<div class="container" style="">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<div class="btn-group" role="group" aria-label="Basic outlined example" style="float: right">
+					<input  type="submit"  class ="btn btn-outline-primary" value="등록" />
+					<input  type="reset"  class ="btn btn-outline-primary" value="다시 작성" />
+				</div>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
 </form>	
 </body>
 </html>

@@ -129,11 +129,14 @@ function calBytes(str){
 						<input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
 
 						<input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 
 
 
 						<%}else{%>
 						<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+
 
 
 

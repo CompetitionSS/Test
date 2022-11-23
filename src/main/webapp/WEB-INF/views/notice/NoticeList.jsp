@@ -123,7 +123,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12"  width: 600px" >
+        <div class="col-md-12"  <%--width: 600px"--%> >
 <table class="table table-striped table-bordered mt-4" >
     <tr>
 

@@ -35,8 +35,9 @@ public class NoticeService implements INoticeService {
     }
     @Transactional
     @Override
-    public CommentDTO commentUpdate(CommentDTO cDTO) throws Exception {
-        return noticeMapper.commentUpdate(cDTO);
+    public void commentUpdate(CommentDTO cDTO) throws Exception {
+        log.info("되는거맞제?");
+         noticeMapper.commentUpdate(cDTO);
     }
 
     @Override
@@ -44,6 +45,10 @@ public class NoticeService implements INoticeService {
         return noticeMapper.commentcheck(cDTO);
     }
 
+    @Override
+    public void deleteComment(CommentDTO cDTO) throws Exception {
+       noticeMapper.deleteComment(cDTO);
+    }
 
 
     @Transactional

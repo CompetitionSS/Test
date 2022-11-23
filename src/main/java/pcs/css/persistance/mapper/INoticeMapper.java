@@ -26,7 +26,7 @@ public interface INoticeMapper {
 
     //게시판 글 수정
     void updateNoticeInfo(NoticeDTO pDTO) throws Exception;
-    CommentDTO commentUpdate(CommentDTO cDTO) throws Exception;
+    void commentUpdate(CommentDTO cDTO) throws Exception;
     //게시판 글 삭제
     void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
 
@@ -36,4 +36,6 @@ public interface INoticeMapper {
     int commentCount(CommentDTO nDTO) throws Exception;
 
     CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
+
+    void deleteComment(CommentDTO cDTO) throws Exception;
 }

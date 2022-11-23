@@ -34,7 +34,7 @@
 
         //상세보기 이동
         function doDetail(seq) {
-            location.href = "/noticeReview/NoticeReviewInfo?nSeq=" + seq;
+            location.href = "/notice/NoticeInfo?nSeq=" + seq;
         }
 
     </script>
@@ -193,7 +193,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
+            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReg'" style="float: right";>글쓰기</button>
         </div>
     </div>
 </div>

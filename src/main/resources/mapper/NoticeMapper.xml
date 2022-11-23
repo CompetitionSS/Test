@@ -19,10 +19,10 @@
 
 	</select>
     <select id="getCommentsList" parameterType="NoticeDTO" resultType="CommentDTO">
-		SELECT C.USER_ID, C.CONTENTS, C.CHG_DT,C.REF, C.REF_RANK
+		SELECT *
 		FROM COMMENTS C
 		WHERE NOTICE_SEQ = #{notice_seq}
-		order by REF ASC, REF_RANK ASC
+		order by REF asc, REG_DT asc
 	</select>
 
 	<select id="getReviewList" parameterType="NoticeDTO" resultType="NoticeDTO">
@@ -55,7 +55,7 @@
 			NOTICE_SEQ,USER_ID,CONTENTS,REG_DT,CHG_DT,COMMENT_SEQ, REF, REF_RANK
 		)
 		VALUES(
-				  #{notice_seq}, #{user_id},#{contents},SYSDATE,SYSDATE,(SELECT NVL(MAX(A.COMMENT_SEQ),0)+1 FROM COMMENTS A),
+				  #{notice_seq}, #{user_id},#{contents},SYSDATE,SYSDATE,COMMENT_SEQ.NEXTVAL,
 		       #{ref},#{ref_rank}
 			  )
 	</insert>
@@ -120,10 +120,10 @@
 		WHERE
 			NOTICE_SEQ = #{notice_seq}
 	</update>
-	<update id="updateComment" parameterType="CommentDTO">
+	<update id="commentUpdate" parameterType="CommentDTO">
 		UPDATE COMMENTS SET
-						  CONTENTS = #{contents}
-
+						  CONTENTS = #{contents},
+						CHG_DT = SYSDATE
 		WHERE
 			COMMENT_SEQ = #{comment_seq}
 	</update>

@@ -151,9 +151,9 @@
                         html += "<div>" + chg_dt + "</div>";
                     }
 
-                    html += "<input class = 'updatestart' type ='button'  value='수정'>";
-                    html += "<input class = 'insertReply' type ='button'  value='대댓글'>";
-                    html += "<input class = 'delete' type ='button' value='삭제'>";
+                    html += "<button class = 'updatestart btn btn-primary' type ='button'  >"+"수정"+"</button>"+"&nbsp";
+                    html += "<button class = 'insertReply btn btn-primary' type ='button'  >"+"대댓글"+"</button>"+"&nbsp";
+                    html += "<button class = 'delete btn btn-primary' type ='button' >"+"삭제"+"</button>"+"&nbsp";
                     html += "</div>";
 
                     if (ref_rank > 0) {

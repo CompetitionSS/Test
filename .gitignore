@@ -3,8 +3,12 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+<<<<<<< HEAD
 src/main/resources/application.properties
 src/main/resources/application-secret.properties
+=======
+
+>>>>>>> parent of 1cbcfb5 (2022_11_28 git ignore test)
 ### STS ###
 .apt_generated
 .classpath
@@ -19,8 +23,12 @@ src/main/resources/application-secret.properties
 *.iws
 *.iml
 *.ipr
+<<<<<<< HEAD
 application.properties
 application-secret.properties
+=======
+
+>>>>>>> parent of 1cbcfb5 (2022_11_28 git ignore test)
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

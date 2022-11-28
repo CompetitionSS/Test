@@ -19,6 +19,7 @@ src/main/resources/application.properties
 *.iml
 *.ipr
 application.properties
+application-secret.properties
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

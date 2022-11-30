@@ -187,7 +187,7 @@
 </div>
 
 
-<div class="container">
+<div class="container"style="height: 100px">
     <div class="row">
         <div class="col-12">
             <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
@@ -196,20 +196,34 @@
 </div>
 
 
-<div class="container" style="height: 100px" >
+<div class="container" style="height: 100px">
     <div class="row">
+        <div class="col-2">
+            <label>
+                <select name="search" style="height: 40px; width: 100%">
+                    <option value="title">제목</option>
+                    <option value="user_id">작성자</option>
+                    <option value="contents">글 내용</option>
+                </select>
+            </label>
+        </div>
+        <div class="col-7" >
             <form action="/notice/SearchList" method="get" style="text-align: center" >
 
-                <label>
+                <%--<label>
                     <select name="search" style="height: 40px">
                         <option value="title">제목</option>
                         <option value="user_id">작성자</option>
-                        <option value="contents">글 내용</option>
-                    </select>
-                    <input type="text" style="height: 40px; width: 600px"  />
-                </label>
-                <button type="submit" class="btn btn-primary">검색</button>
+                        <option value="contents">글 내용</option>--%>
+                  <%--  </select>--%>
+                    <input type="text" style="height: 40px; width: 100%"  />
+                <%--</label>--%>
+
             </form>
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary">검색</button>
+        </div>
     </div>
 </div>
 
@@ -218,25 +232,23 @@
     <div class="row">
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
-                <div style="text-align: center; margin-bottom: 50px;" class="col-md-12 ">
+                <div style="text-align: center; height: 155px" class="page-link ">
+
                     <% if(prev) {%>
                     <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
                     <%}%>
-                    <div class="col-md-12 " style="margin: 0 auto; display: inline-block;">
+
                         <% for (int i = startPageNum; i <= endPageNum; i++) {
                             if(select == i) {%>
-                        <div style="color: red;" class="page-link" >
+
                             <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
                                 <%=i%> </button>
-                        </div>
                         <%} else {%>
-                        <div style=""  class="page-link">
                             <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
                                 <%=i%>
-                            </button></div>
+                            </button>
                         <% }
                         } %>
-                    </div>
                     <% if(next) {%>
                     <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
                     <% } %>

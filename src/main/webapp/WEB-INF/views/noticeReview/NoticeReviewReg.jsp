@@ -138,18 +138,12 @@ function calBytes(str){
 				<div class="col-md-4">
 					<div class="btn-group" role="group" aria-label="Basic outlined example">
 						<% if(session.getAttribute("SS_USER_ID") == null){%>
-
 						<input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
-
 						<input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
-
-
-
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 						<%}else{%>
 						<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
-
-
-
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
 						<%}%>
 					</div>
 				</div>
@@ -181,7 +175,7 @@ function calBytes(str){
 
 
 
-		<div class="container">
+		<div class="container" style="height: 600px">
 			<div class="row">
 				<div class="col-3"></div>
 				<div class="col-6">

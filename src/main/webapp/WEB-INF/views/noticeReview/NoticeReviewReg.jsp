@@ -114,6 +114,7 @@
 
 					<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
+<<<<<<< HEAD
 					<input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
 
 					<%}else{%>
@@ -125,6 +126,23 @@
 					<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
 					<%}%>
+=======
+		<div class="container" style="height: 100px">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<div class="btn-group" role="group" aria-label="Basic outlined example">
+						<% if(session.getAttribute("SS_USER_ID") == null){%>
+						<input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
+						<input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+						<%}else{%>
+						<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
+						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
+						<%}%>
+					</div>
+>>>>>>> origin/kodong
 				</div>
 			</div>
 		</div>
@@ -146,12 +164,35 @@
 				<input type="hidden" name="user_id" value="<%=ss_user_id%>">
 			</div>
 		</div>
+<<<<<<< HEAD
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-3"></div>
 			<div class="col-6">
 				<textarea name="contents" style="width: 100%; height: 500px"></textarea>
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="container" style="height: 600px">
+			<div class="row">
+				<div class="col-3"></div>
+				<div class="col-6">
+					<textarea name="contents" style="width: 100%; height: 500px"></textarea>
+				</div>
+				<div class="col-3"></div>
+>>>>>>> origin/kodong
 			</div>
 			<div class="col-3"></div>
 		</div>

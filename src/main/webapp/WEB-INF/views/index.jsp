@@ -1,110 +1,62 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Hello WebSocket</title>
-	<link href="css/chatbot.css" rel="stylesheet">
-	<script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<title> SpringBoot & AWS S3</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="/js/jquery-3.6.1.min.js" type="text/javascript"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-	enabled. Please enable
-	Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-	<div class="row">
-		<div class="col-md-6">
-			<form class="form-inline">
-				<div class="form-group">
-					<label for="connect">웹소켓 연결:</label>
-					<button id="connect" class="btn btn-default" type="submit">연결</button>
-					<button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">해제
-					</button>
-				</div>
-			</form>
-		</div>
-		<div class="col-md-6">
-			<form class="form-inline">
-				<div class="form-group">
-					<label for="msg">문의사항</label>
-					<input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
-				</div>
-				<button id="send" class="btn btn-default" disabled type="submit">보내기</button>
-			</form>
-		</div>
+<h1>
+	S3 이미지 업로더
+</h1>
+<div class="col-md-12">
+	<div class="col-md-2">
+		<form id = "img-form"  enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="img">파일 업로드</label>
+				<input type="file" id="img" multiple >
+			</div>
+			<button type="button" class="btn btn-primary" id="btn-save">저장</button>
+		</form>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<table id="conversation" class="table table-striped">
-				<thead>
-				<tr>
-					<th>메세지</th>
-				</tr>
-				</thead>
-				<tbody id="communicate">
-				</tbody>
-			</table>
-		</div>
+	<div class="col-md-10">
+		<p><strong>결과 이미지입니다.</strong></p>
+		<img src="" id="result-image" >
 	</div>
 </div>
-</body>
+
+
 <script>
 
-	var stompClient = null;
+	$('#btn-save').on('click', uploadImage);
 
-	function setConnected(connected) {
-		$("#connect").prop("disabled", connected);
-		$("#disconnect").prop("disabled", !connected);
-		$("#send").prop("disabled", !connected);
-		if (connected) {
-			$("#conversation").show();
+	function uploadImage() {
+		var formData = new FormData();
+		var file = $('#img')[0].files;
+		for(let i = 0; i<file.length;i++ ){
+			formData.append('data', file[i]);
 		}
-		else {
-			$("#conversation").hide();
-		}
-		$("#msg").html("");
+
+
+
+		console.log(file);
+		$.ajax({
+			type: 'POST',
+			url: '/upload',
+			data: formData,
+			processData: false,
+			contentType: false
+		}).done(function (data) {
+			$('#result-image').attr("src", data);
+		}).fail(function (error) {
+			alert(error);
+		})
 	}
-
-	function connect() {
-		var socket = new SockJS("/ws");
-		stompClient = Stomp.over(socket);
-		stompClient.connect({}, function (frame) {
-			setConnected(true);
-			console.log('Connected: ' + frame);
-			stompClient.subscribe('/topic/public', function (message) {
-				showMessage("받은 메시지: " + message.body); //서버에 메시지 전달 후 리턴받는 메시지
-			});
-		});
-	}
-
-	function disconnect() {
-		if (stompClient !== null) {
-			stompClient.disconnect();
-		}
-		setConnected(false);
-		console.log("Disconnected");
-	}
-
-	function sendMessage() {
-		let message = $("#msg").val()
-		showMessage("보낸 메시지: " + message);
-
-		stompClient.send("/app/sendMessage", {}, JSON.stringify(message)); //서버에 보낼 메시지
-	}
-
-	function showMessage(message) {
-		$("#communicate").append("<tr><td>" + message + "</td></tr>");
-	}
-
-	$(function () {
-		$("form").on('submit', function (e) {
-			e.preventDefault();
-		});
-		$( "#connect" ).click(function() { connect(); });
-		$( "#disconnect" ).click(function() { disconnect(); });
-		$( "#send" ).click(function() { sendMessage(); });
-	});
 </script>
+</body>
 </html>

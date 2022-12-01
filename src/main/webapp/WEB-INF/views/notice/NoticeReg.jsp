@@ -169,16 +169,11 @@
 
 			</div>
 			<div class="col-3"></div>
-		</div>
-	</div>
 
 
 
 
 
-
-	<div class="container" style="">
-		<div class="row">
 			<div class="col-3"></div>
 			<div class="col-6">
 				<div class="btn-group" role="group" aria-label="Basic outlined example" style="float: right">
@@ -195,16 +190,20 @@
 <!-- 프로세스 처리용 iframe / form 태그에서 target을 iframe으로 한다. -->
 <iframe name="ifrPrc" style="display:none"></iframe>
 <script type="text/javascript">
+
 	var ckeditor_config = {
 
 		filebrowserUploadUrl: "/notice/upload",
-		height: 500,
+		height: 600,
 		width : '100%',
+
 
 		enterMode : CKEDITOR.ENTER_BR , // 엔터키를 <br> 로 적용함. 
 
 		shiftEnterMode : CKEDITOR.ENTER_P , // 쉬프트 + 엔터를 <p> 로 적용함. 
 
+		autoGrow_minHeight : 200,
+		autoGrow_maxHeight : 600,
 	};
 	CKEDITOR.replace('contents'
 			,ckeditor_config);
@@ -212,6 +211,7 @@
 		var dialogName = ev.data.name;
 		var dialog =ev.data.definition.dialog;
 		var dialogDefinition = ev.data.definition;
+
 		if(dialogName == 'image') {
 			dialog.on('show', function (obj) {
 				this.selectPage('Upload');
@@ -220,6 +220,8 @@
 			dialogDefinition.removeContents('Link');
 		}
 	})
+
+
 </script>
 </body>
 </html>

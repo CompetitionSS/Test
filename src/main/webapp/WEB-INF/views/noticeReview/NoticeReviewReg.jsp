@@ -8,6 +8,9 @@
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<script src="/js/jquery-3.6.1.min.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="../js/ckeditor/ckeditor.js"></script>
 	<title>리뷰 글쓰기</title>
 	<script type="text/javascript">
 
@@ -32,15 +35,10 @@
 				}
 			}
 
-			/*if(noticeCheck==false){
-                alert("공지글 여부를 선택하시기 바랍니다.");
-                f.noticeYn[0].focus();
-                return false;
-            }	*/
-
-			if(f.contents.value == ""){
-				alert("내용을 입력하시기 바랍니다.");
-				f.contents.focus();
+			if(CKEDITOR.instances.contents.getData() ==''
+					|| CKEDITOR.instances.contents.getData().length ==0){
+				alert("내용을 입력해주세요.");
+				$("#contents").focus();
 				return false;
 			}
 
@@ -114,7 +112,6 @@
 
 					<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
-<<<<<<< HEAD
 					<input type="button" class ="btn btn-outline-primary" value="회원관리" onclick="location.href='/user/UserManagement'">
 
 					<%}else{%>
@@ -126,24 +123,8 @@
 					<input type="button" class ="btn btn-outline-primary" value="리뷰게시판" onclick="location.href='/noticeReview/NoticeReviewList'">
 
 					<%}%>
-=======
-		<div class="container" style="height: 100px">
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-4"></div>
-				<div class="col-md-4">
-					<div class="btn-group" role="group" aria-label="Basic outlined example">
-						<% if(session.getAttribute("SS_USER_ID") == null){%>
-						<input type="button" class ="btn btn-outline-primary" value="로그인" onclick="location.href='/user/LoginForm'">
-						<input type="button" class ="btn btn-outline-primary" value="회원가입" onclick="location.href='/user/UserRegForm'">
-						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
-						<%}else{%>
-						<input type="button" class ="btn btn-outline-primary" value="로그아웃" onclick="location.href='/user/LogOut'">
-						<input type="button" class ="btn btn-outline-primary" value="커뮤니티" onclick="location.href='/notice/NoticeList'">
-						<%}%>
-					</div>
->>>>>>> origin/kodong
-				</div>
+
+	</div>
 			</div>
 		</div>
 	</div>
@@ -164,25 +145,8 @@
 				<input type="hidden" name="user_id" value="<%=ss_user_id%>">
 			</div>
 		</div>
-<<<<<<< HEAD
+
 	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-3"></div>
-			<div class="col-6">
-				<textarea name="contents" style="width: 100%; height: 500px"></textarea>
-=======
-
-
-
-
-
-
-
-
-
-
-
 
 
 		<div class="container" style="height: 600px">
@@ -192,12 +156,11 @@
 					<textarea name="contents" style="width: 100%; height: 500px"></textarea>
 				</div>
 				<div class="col-3"></div>
->>>>>>> origin/kodong
+
 			</div>
 			<div class="col-3"></div>
-		</div>
-	</div>
-	<div class="container" style="">
+
+
 		<div class="row">
 			<div class="col-3"></div>
 			<div class="col-6">
@@ -209,9 +172,45 @@
 			<div class="col-3"></div>
 		</div>
 	</div>
+
 	</form>
 	</div>
 <!-- 프로세스 처리용 iframe / form 태그에서 target을 iframe으로 한다. -->
 <iframe name="ifrPrc" style="display:none"></iframe>
+
+				<script type="text/javascript">
+
+					var ckeditor_config = {
+
+						filebrowserUploadUrl: "/notice/upload",
+						height: 600,
+						width : '100%',
+
+
+						enterMode : CKEDITOR.ENTER_BR , // 엔터키를 <br> 로 적용함. 
+
+						shiftEnterMode : CKEDITOR.ENTER_P , // 쉬프트 + 엔터를 <p> 로 적용함. 
+
+						autoGrow_minHeight : 200,
+						autoGrow_maxHeight : 600,
+					};
+					CKEDITOR.replace('contents'
+							,ckeditor_config);
+					CKEDITOR.on('dialogDefinition',function(ev){
+						var dialogName = ev.data.name;
+						var dialog =ev.data.definition.dialog;
+						var dialogDefinition = ev.data.definition;
+
+						if(dialogName == 'image') {
+							dialog.on('show', function (obj) {
+								this.selectPage('Upload');
+							});
+							dialogDefinition.removeContents('advanced');
+							dialogDefinition.removeContents('Link');
+						}
+					})
+
+
+				</script>
 </body>
 </html>

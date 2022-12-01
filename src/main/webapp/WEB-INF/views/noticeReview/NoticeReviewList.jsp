@@ -15,8 +15,13 @@
     int select = (int) request.getAttribute("select");
 
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
+    String ss_user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+    String edit = "1";
 
-
+//로그인 안했다면....
+    if (ss_user_id.equals("")) {
+        edit = "2";
+    }
 //게시판 조회 결과 보여주기
     if (rList == null) {
         rList = new ArrayList<NoticeDTO>();
@@ -36,7 +41,15 @@
         function doDetail(seq) {
             location.href = "/notice/NoticeInfo?nSeq=" + seq;
         }
+        function reg(){
+            let loginyn = "<%=edit%>";
+            if(loginyn!=="2"){
+                location.href='/notice/NoticeReg';
+            }else{
+                alert("로그인 후 이용바랍니다.")
+            }
 
+        }
     </script>
 </head>
 
@@ -55,7 +68,7 @@
 </div>
 
 
-<div class="container" style="height: 150px">
+<div class="container" style="height: 100px">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4"></div>
@@ -96,7 +109,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-<table border="1" width="600px" align="center" class="table table-striped table-bordered mt-4">
+            <table border="1" width="600px" align="center" class="table table-striped table-bordered mt-4">
     <tr>
 
         <td width="100" align="center">순번</td>
@@ -148,50 +161,28 @@
 </div>
 
 
-<div class="container"style="height: 100px">
+
+
+<div>
+    <form action="/notice/SearchList" method="get" style="text-align: center" >
+
+        <label>
+            <select name="search" style="height: 40px">
+                <option value="title">제목</option>
+                <option value="user_id">작성자</option>
+                <option value="contents">글 내용</option>
+            </select>
+            <input type="text" style="height: 40px; width: 600px"  />
+        </label>
+        <button type="submit" class="btn btn-primary">검색</button>
+    </form>
+
+</div>
+<div class="container">
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right";>글쓰기</button>
+            <button class="btn btn-primary" onclick="location='/noticeReview/NoticeReviewReg'" style="float: right">글쓰기</button>
         </div>
-    </div>
-</div>
-
-
-<div class="container" style="height: 100px">
-    <div class="row">
-<<<<<<< HEAD
-        <div class="col-md-12" style="margin: 0 auto; display: inline-block;">
-=======
-        <div class="col-2">
-            <label>
-                <select name="search" style="height: 40px; width: 100%">
-                    <option value="title">제목</option>
-                    <option value="user_id">작성자</option>
-                    <option value="contents">글 내용</option>
-                </select>
-            </label>
-        </div>
-        <div class="col-7" >
->>>>>>> origin/kodong
-            <form action="/notice/SearchList" method="get" style="text-align: center" >
-
-                <%--<label>
-                    <select name="search" style="height: 40px">
-                        <option value="title">제목</option>
-                        <option value="user_id">작성자</option>
-                        <option value="contents">글 내용</option>--%>
-                  <%--  </select>--%>
-                    <input type="text" style="height: 40px; width: 100%"  />
-                <%--</label>--%>
-
-            </form>
-        </div>
-<<<<<<< HEAD
-=======
-        <div class="col-3">
-            <button type="submit" class="btn btn-primary">검색</button>
-        </div>
->>>>>>> origin/kodong
     </div>
 </div>
 
@@ -200,58 +191,30 @@
     <div class="row">
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
-<<<<<<< HEAD
-                <div style="text-align: center; margin-bottom: 50px;" class="col-md-12 ">
-
-                    <div class="col-md-12 " style="margin: 0 auto; display: inline-block;">
-                        <div style="color: red;" class="page-link" >
-                        <% if(prev) {%>
-                        <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
-                        <%}%>
-=======
-                <div style="text-align: center; height: 155px" class="page-link ">
+                <div style="text-align: center" class="page-link">
 
                     <% if(prev) {%>
                     <button type="button" class="btn btn-secondary"  onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select-1%>'"><<</button>
                     <%}%>
 
->>>>>>> origin/kodong
-                        <% for (int i = startPageNum; i <= endPageNum; i++) {
-                            if(select == i) {%>
-
-                            <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
-                                <%=i%> </button>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/kodong
-                        <%} else {%>
-                            <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
-                                <%=i%>
-                            </button>
-                        <% }
-                        } %>
-<<<<<<< HEAD
-                        <% if(next) {%>
-                        <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
-                        <% } %>
-                        </div>
-                    </div>
-
-=======
+                    <% for (int i = startPageNum; i <= endPageNum; i++) {
+                        if(select == i) {%>
+                    <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
+                        <%=i%> </button>
+                    <%} else {%>
+                    <button class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=i%>'">
+                        <%=i%>
+                    </button>
+                    <% }
+                    } %>
                     <% if(next) {%>
                     <button type="button" class="btn btn-secondary" onclick="location.href='/noticeReview/NoticeReviewList?num=<%=select+1%>'">>></button>
                     <% } %>
->>>>>>> origin/kodong
                 </div>
             </nav>
         </div>
     </div>
 </div>
-
-
-
-        </form>
 </body>
 
 </html>

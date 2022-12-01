@@ -1,39 +1,45 @@
-CKEditor 4
-==========
+ImageResize Plugin for CKEditor 4
+=================================
 
-Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-https://ckeditor.com - See LICENSE.md for license information.
+Created by ALL-INKL.COM - Neue Medien Münnich - 29. Jan 2014
 
-CKEditor 4 is a text editor to be used inside web pages. It's not a replacement
-for desktop text editors like Word or OpenOffice, but a component to be used as
-part of web applications and websites.
-
-## Documentation
-
-The full editor documentation is available online at the following address:
-https://ckeditor.com/docs/
+This Plugin provides a small image processor. You can limit the size of images
+directly on the client without upload images on your server. Big images will
+be resized automatically on paste.
 
 ## Installation
 
-Installing CKEditor is an easy task. Just follow these simple steps:
+1. Download the plugin from http://github.com/nmmf/imageresize
+ 
+2. Extract (decompress) the downloaded file into the plugins folder of your 
+   CKEditor installation.
+   Example: http://example.com/ckeditor/plugins/imageresize
 
- 1. **Download** the latest version from the CKEditor website:
-    https://ckeditor.com. You should have already completed this step, but be
-    sure you have the very latest version.
- 2. **Extract** (decompress) the downloaded file into the root of your website.
+3. Enable the plugin by using the extraPlugins configuration setting.
+   Example: CKEDITOR.config.extraPlugins = "imageresize";
 
-**Note:** CKEditor is by default installed in the `ckeditor` folder. You can
-place the files in whichever you want though.
+4. Config:
+   CKEDITOR.config.imageResize = { maxWidth : 800, maxHeight : 800 };
 
-## Checking Your Installation
+## Documentation
 
-The editor comes with a few sample pages that can be used to verify that
-installation proceeded properly. Take a look at the `samples` directory.
+// Resize all images in a node:
+CKEDITOR.plugins.imageresize.resizeAll(
+	CKEditor Instance,
+	(CKEditor node object) parent container,
+	(integer) max-width,
+  (integer) max-height
+);
+ 
+// Resize one image:
+CKEDITOR.plugins.imageresize.resize(
+	CKEditor Instance,
+	(CKEditor node object) image,
+	(integer) max-width,
+  (integer) max-height
+);
+ 
+// Detect browser support:
+// returns boolean true or false
+CKEDITOR.plugins.imageresize.support();
 
-To test your installation, just call the following page at your website:
-
-	http://<your site>/<CKEditor installation path>/samples/index.html
-
-For example:
-
-	http://www.example.com/ckeditor/samples/index.html

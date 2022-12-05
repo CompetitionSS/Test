@@ -11,6 +11,7 @@
     <groupId>css</groupId>
     <artifactId>pcs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>SpringBootOracle</name>
     <description>SpringBootOracle</description>
     <properties>
@@ -49,11 +50,21 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.oracle.database.security</groupId>
+            <artifactId>oraclepki</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.security</groupId>
+            <artifactId>osdt_core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.security</groupId>
+            <artifactId>osdt_cert</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- 메일 발송을 위한 외부라이브러리-->
@@ -174,6 +185,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                        <executable>true</executable>
                     <excludes>
                         <exclude>
                             <groupId>org.project-lombok</groupId>

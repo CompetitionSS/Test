@@ -20,6 +20,8 @@ public class NoticeDTO {
     private String review; // 리뷰 인지 자유게시판인지 확인
     private List<CommentDTO> comments = new ArrayList<>(); //댓글 삭제시 갖고올 댓글 리스트
 
+    private String search;
+    private String s_contents;
     private int start;
     private int finish;
 }

@@ -151,4 +151,41 @@
 		WHERE NOTICE_SEQ = #{notice_seq}
 
 	</select>
+	<select id="SearchCount" resultType="int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE REVIEW=#{review}
+			<choose>
+				<when test='search == title'>
+					<![CDATA[  AND 	title LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+				</when>
+				<when test='search == user_id'>
+					<![CDATA[  AND 	user_id LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+				</when><when test='search == contents'>
+				<![CDATA[  AND contents LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+			</when>
+			</choose>
+		ORDER BY NOTICE_SEQ
+	</select>
+	<select id="SearchList" resultType="NoticeDTO" parameterType="NoticeDTO">
+		SELECT *
+		FROM (
+				 SELECT ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ) NUM, N.*
+				 FROM NOTICE N
+		WHERE REVIEW=#{review}
+		<choose>
+			<when test='search == title'>
+				<![CDATA[  AND 	N.title LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+			</when>
+			<when test='search == user_id'>
+				<![CDATA[  AND 	N.user_id LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+			</when><when test='search == contents'>
+			<![CDATA[  AND N.contents LIKE  '%'||#{s_contents,jdbcType=VARCHAR}||'%' ]]>
+		</when>
+		</choose>
+				 ORDER BY NOTICE_SEQ desc
+			 )
+		WHERE NUM BETWEEN #{start} AND #{finish}
+		ORDER BY NOTICE_SEQ desc
+	</select>
 </mapper>

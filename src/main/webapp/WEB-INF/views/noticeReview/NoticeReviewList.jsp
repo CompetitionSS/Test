@@ -172,7 +172,8 @@
                 <option value="user_id">작성자</option>
                 <option value="contents">글 내용</option>
             </select>
-            <input type="text" style="height: 40px; width: 600px"  />
+            <input type="hidden" name="review" value="N">
+            <input type="text" name ="s_contents" style="height: 40px; width: 600px"  />
         </label>
         <button type="submit" class="btn btn-primary">검색</button>
     </form>

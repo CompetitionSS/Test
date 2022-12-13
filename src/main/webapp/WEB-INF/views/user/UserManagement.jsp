@@ -185,16 +185,8 @@
                 <td><%= uList.get(i).getUser_id()%></td>
                 <td><%= uList.get(i).getUser_name()%></td>
                 <td><%= EncryptUtil.decAES128CBC(uList.get(i).getEmail())%></td>
-
-                <%--<td>
-                    <% if(uList.get(i).getUser_type().equals("0")) {%>
-                    <span>관리자</span>
-                    <% } else {%>
-                    <span>일반 회원</span>
-                    <% } %>
-                </td>--%>
                 <td>
-                    <button type="button" onclick="location.href=''+<%=uList.get(i).getUser_seq()%>"></button>
+                    <button type="button" class="btn-primary btn" onclick="deleteid(<%=uList.get(i).getUser_seq()%>)"></button>
                 </td>
             </tr>
             <% }%>
@@ -229,6 +221,21 @@
         }).scroll();
 
     });
+    function deleteid(user_seq){
+        $.ajax({
+                type:"delete",
+                url:"/user/UserDelete",
+                data:{user_seq:user_seq},
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                success(){
+                    console.log(user_seq+"번째 아이디가 삭제되었습니다.");
+                }
+
+        }
+
+
+        )
+    }
     $(document).ready(function(){
         $('#inventory th').each(function (column) {
             $(this).click(function() {

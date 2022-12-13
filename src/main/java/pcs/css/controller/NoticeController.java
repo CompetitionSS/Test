@@ -378,7 +378,41 @@ public class NoticeController {
 
         return "/notice/NoticeInfo";
     }
+    @GetMapping(value = "notice/SearchList")
+    public String SearchList(HttpServletRequest request, ModelMap model) throws Exception {
+        String review = CmmUtil.nvl(request.getParameter("review")) ;
+        String search = CmmUtil.nvl(request.getParameter("search")) ;
+        String s_contents = CmmUtil.nvl(request.getParameter("s_contents")) ;
+        String no = CmmUtil.nvl(request.getParameter("num"));
+        NoticeDTO nDTO = new NoticeDTO();
+        nDTO.setSearch(search);
+        nDTO.setS_contents(s_contents);
+        nDTO.setReview(review);
+        log.info(search);
+        log.info(s_contents);
+        log.info(review);
+        PageDTO pageDTO;
+        int count = noticeService.SearchCount(nDTO);
+        if(no.isEmpty()){
+            pageDTO = new PageDTO(1,count);
+        }else {
+            pageDTO = new PageDTO(Integer.parseInt(no),count);
+        }
+        nDTO.setStart(pageDTO.getStart());
+        nDTO.setFinish(pageDTO.getFinish());
+        List<NoticeDTO> nList =  noticeService.SearchList(nDTO);
+        model.addAttribute("nList", nList);
+        model.addAttribute("review",review);
+        // 현재 페이지
+        model.addAttribute("select", pageDTO.getNum());
+        model.addAttribute("startPageNum", pageDTO.getStartPageNum());
+        model.addAttribute("endPageNum", pageDTO.getEndPageNum());
 
+        // 이전 및 다음
+        model.addAttribute("prev", pageDTO.isPrev());
+        model.addAttribute("next", pageDTO.isNext());
+        return "notice/SearchList";
+    }
     /**
      * 게시판 수정 보기
      */

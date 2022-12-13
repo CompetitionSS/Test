@@ -25,6 +25,7 @@ public class MainController {
     @Resource(name = "MainService")
     private IMainService mainService;
 
+
     @GetMapping(value = "main/main")
     public String MainInfo(HttpServletRequest request, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".Main start!");

@@ -41,6 +41,11 @@ public class UserInfoService implements IUserInfoService {
 
     }
 
+    @Override
+    public void DeleteID(UserInfoDTO uDTO) {
+        userInfoMapper.DeleteID(uDTO);
+    }
+
 
     @Override
     public UserInfoDTO find_id(UserInfoDTO pDTO) throws Exception{

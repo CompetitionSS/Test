@@ -5,6 +5,7 @@ import pcs.css.dto.CommentDTO;
 import pcs.css.dto.NoticeDTO;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Mapper
 public interface INoticeMapper {
@@ -12,6 +13,7 @@ public interface INoticeMapper {
     //게시판 리스트
     List<NoticeDTO> getNoticeList(NoticeDTO pDTO) throws Exception;
     List<NoticeDTO> getReviewList(NoticeDTO nDTO) throws Exception;
+    List<NoticeDTO> SearchList(NoticeDTO nDTO) throws Exception;
     //게시판 글 등록
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
     void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
@@ -34,7 +36,7 @@ public interface INoticeMapper {
     int noticeCount(NoticeDTO nDTO) throws Exception;
     int reviewCount(NoticeDTO nDTO) throws Exception;
     int commentCount(CommentDTO nDTO) throws Exception;
-
+    int SearchCount(NoticeDTO nDTO) throws Exception;
     CommentDTO commentcheck(CommentDTO cDTO) throws Exception;
 
     void deleteComment(CommentDTO cDTO) throws Exception;

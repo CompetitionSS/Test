@@ -4,9 +4,7 @@ package pcs.css.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pcs.css.dto.MailDTO;
 import pcs.css.dto.NoticeDTO;
 import pcs.css.dto.UserInfoDTO;
@@ -49,6 +47,15 @@ public class UserInfoController {
 
         return "/user/UserRegForm";
     }
+    @DeleteMapping(value = "UserDelete")
+    @ResponseBody
+    public void userDelete(String user_seq) throws Exception{
+
+        UserInfoDTO uDTO = new UserInfoDTO();
+        uDTO.setUser_seq(user_seq);
+        userInfoService.DeleteID(uDTO);
+    }
+
     @GetMapping(value = "UserManagement")
     public String userManagement(HttpServletRequest request,ModelMap model) throws Exception{
         log.info(this.getClass().getName() + ".userManagement start!");

@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pcs.css.dto.CommentDTO;
-import pcs.css.dto.MainDTO;
 import pcs.css.dto.NoticeDTO;
-import pcs.css.dto.PageDTO;
 import pcs.css.persistance.mapper.INoticeMapper;
 import pcs.css.service.INoticeService;
 
@@ -106,6 +104,16 @@ public class NoticeService implements INoticeService {
         log.info(this.getClass().getName() + ".InsertReviewInfo start!");
 
         noticeMapper.InsertReviewInfo(pDTO);
+    }
+    @Override
+    public List<NoticeDTO> SearchList(NoticeDTO nDTO) throws Exception{
+
+        return noticeMapper.SearchList(nDTO);
+    }
+    @Override
+    public int SearchCount (NoticeDTO nDTO) throws Exception{
+
+        return noticeMapper.SearchCount(nDTO);
     }
 
     @Transactional

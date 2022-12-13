@@ -70,4 +70,8 @@
 
         ORDER BY USER_SEQ DESC
     </select>
+    <delete id="DeleteID" parameterType="UserInfoDTO">
+        delete from USERINFO
+        where user_seq = #{user_seq}
+    </delete>
 </mapper>

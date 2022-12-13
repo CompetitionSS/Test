@@ -22,4 +22,6 @@ public interface IUserInfoService {
     int find_ps(UserInfoDTO pDTO) throws Exception;
 
     List<UserInfoDTO> getUserList() throws Exception;
+
+    void DeleteID(UserInfoDTO uDTO);
 }

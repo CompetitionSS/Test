@@ -24,5 +24,7 @@ public interface IUserInfoMapper {
     UserInfoDTO find_pscheck(UserInfoDTO pDTO) throws Exception;
 
     List<UserInfoDTO> getUserList();
+
+    void DeleteID(UserInfoDTO uDTO);
 }
 

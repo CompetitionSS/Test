@@ -16,6 +16,10 @@ public interface INoticeService {
     void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
     void InsertReviewInfo(NoticeDTO pDTO) throws Exception;
 
+    List<NoticeDTO> SearchList(NoticeDTO nDTO) throws Exception;
+
+    int SearchCount(NoticeDTO nDTO) throws Exception;
+
     NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;
 
     void InsertComment(CommentDTO cDTO)throws Exception;
